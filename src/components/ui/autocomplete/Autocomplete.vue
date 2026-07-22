@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import { computed, onBeforeUnmount, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, shallowRef, useId } from 'vue'
 import { cn } from '@/lib/utils'
 
 defineOptions({
@@ -15,6 +15,7 @@ const props = defineProps<{
 }>()
 
 const modelValue = defineModel<string>({ default: '' })
+const listboxId = useId()
 const isFocused = shallowRef(false)
 const isOpen = shallowRef(false)
 const highlightedIndex = shallowRef(-1)
@@ -61,6 +62,11 @@ const filteredOptions = computed(() => {
 })
 
 const showGhost = computed(() => isFocused.value && ghostRemainder.value.length > 0)
+
+const activeOptionId = computed(() =>
+  isOpen.value && highlightedIndex.value >= 0
+    ? `${listboxId}-opt-${highlightedIndex.value}`
+    : undefined)
 
 function clearBlurTimer() {
   if (blurTimer !== undefined) {
@@ -160,7 +166,7 @@ onBeforeUnmount(clearBlurTimer)
 
 <template>
   <div
-    :class="cn('relative w-full rounded-md border border-input bg-background ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2', props.class)"
+    :class="cn('relative w-full rounded-md border border-input bg-background focus-within:ring-2 focus-within:ring-ring', props.class)"
   >
     <div
       v-if="showGhost"
@@ -178,6 +184,8 @@ onBeforeUnmount(clearBlurTimer)
       :disabled="props.disabled"
       role="combobox"
       :aria-expanded="isOpen && filteredOptions.length > 0"
+      :aria-controls="listboxId"
+      :aria-activedescendant="activeOptionId"
       aria-autocomplete="both"
       class="relative z-10 flex h-10 w-full rounded-md border-0 bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50"
       @focus="openDropdown"
@@ -187,11 +195,13 @@ onBeforeUnmount(clearBlurTimer)
     >
     <div
       v-if="isOpen && filteredOptions.length"
+      :id="listboxId"
       role="listbox"
       class="absolute left-0 top-full z-50 mt-1 w-full rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
     >
       <div
         v-for="(option, index) in filteredOptions"
+        :id="`${listboxId}-opt-${index}`"
         :key="option"
         role="option"
         :aria-selected="index === highlightedIndex"

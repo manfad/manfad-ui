@@ -45,6 +45,10 @@ export function presetYfUi(options: YfUiPresetOptions = {}): Preset[] {
   --warning: 48 96% 53%;
   --warning-foreground: 240 10% 4%;
 }
+html,
+body {
+  overscroll-behavior: none;
+}
 body {
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }`,

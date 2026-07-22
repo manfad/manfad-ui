@@ -9,22 +9,30 @@ import {
 import { computed, shallowRef, watch } from 'vue'
 import { cn } from '@/lib/utils'
 import Calendar from './Calendar.vue'
-import { parseDate } from './utils'
+import { parseDate, type RestDay } from './utils'
 
 const props = withDefaults(defineProps<{
   placeholder?: string
   disabled?: boolean
+  range?: boolean
+  restday?: RestDay[]
+  exclude?: string | string[]
+  restdayClass?: HTMLAttributes['class']
+  excludeClass?: HTMLAttributes['class']
   class?: HTMLAttributes['class']
 }>(), {
   placeholder: 'Pick a date',
   disabled: false,
+  range: false,
 })
 
 const modelValue = defineModel<string>()
+const rangeStart = defineModel<string>('start')
+const rangeEnd = defineModel<string>('end')
 const open = shallowRef(false)
 
-const displayValue = computed(() => {
-  const date = parseDate(modelValue.value ?? '')
+function formatValue(value: string | undefined): string | null {
+  const date = parseDate(value ?? '')
 
   if (!date)
     return null
@@ -34,10 +42,29 @@ const displayValue = computed(() => {
     month: '2-digit',
     year: 'numeric',
   }).format(date)
+}
+
+const displayValue = computed(() => {
+  if (!props.range)
+    return formatValue(modelValue.value)
+
+  const start = formatValue(rangeStart.value)
+
+  if (!start)
+    return null
+
+  const end = formatValue(rangeEnd.value)
+
+  return end ? `${start} – ${end}` : `${start} – …`
 })
 
 watch(modelValue, (value, previousValue) => {
-  if (value !== previousValue)
+  if (!props.range && value !== previousValue)
+    open.value = false
+})
+
+watch(rangeEnd, (value, previousValue) => {
+  if (props.range && value && value !== previousValue)
     open.value = false
 })
 </script>
@@ -62,7 +89,16 @@ watch(modelValue, (value, previousValue) => {
         align="start"
         class="z-50 w-auto rounded-md border bg-popover p-3 text-popover-foreground shadow-md outline-none"
       >
-        <Calendar v-model="modelValue" />
+        <Calendar
+          v-model="modelValue"
+          v-model:start="rangeStart"
+          v-model:end="rangeEnd"
+          :range="props.range"
+          :restday="props.restday"
+          :exclude="props.exclude"
+          :restday-class="props.restdayClass"
+          :exclude-class="props.excludeClass"
+        />
       </PopoverContent>
     </PopoverPortal>
   </PopoverRoot>
