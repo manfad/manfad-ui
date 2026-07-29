@@ -6,7 +6,7 @@ export interface ChartContext {
   config: ComputedRef<ChartConfig>
 }
 
-export const CHART_CONTEXT_KEY: InjectionKey<ChartContext> = Symbol('yf-chart')
+export const CHART_CONTEXT_KEY: InjectionKey<ChartContext> = Symbol('manfad-chart')
 
 /** Reads the series config provided by the nearest `ChartContainer`, if any. */
 export function useChartContext(): ChartContext | undefined {

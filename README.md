@@ -1,6 +1,4 @@
-<img src="playground/public/icon.png" alt="yf-ui" width="96" />
-
-# @yf/ui
+# @manfad/ui
 
 Reusable Vue 3 admin UI kit (shadcn-style components on UnoCSS).
 
@@ -9,7 +7,7 @@ Reusable Vue 3 admin UI kit (shadcn-style components on UnoCSS).
 The monorepo template consumes this package via the root pnpm workspace:
 
 ```json
-"@yf/ui": "workspace:*"
+"@manfad/ui": "workspace:*"
 ```
 
 Install and build from the repository root:
@@ -17,22 +15,74 @@ Install and build from the repository root:
 ```bash
 cd ..
 pnpm install
-pnpm --filter @yf/ui build
+pnpm --filter @manfad/ui build
 ```
 
 ## Standalone development
 
 ```bash
 pnpm install
-pnpm dev        # playground
+pnpm dev        # playground (vue-router; one page per component)
 pnpm build      # library dist/
 pnpm typecheck
 ```
 
+The playground is routed (`/buttons`, `/code-block`, `/charts`, …). `/` redirects
+to `/buttons`. The sidebar groups components (Foundations, Forms, Tables, …)
+with a sticky filter, and each page shows a live demo plus a Usage card.
+
 ## Exports
 
-- `@yf/ui` — components, composables, utilities
-- `@yf/ui/preset` — UnoCSS preset for consumer apps
+- `@manfad/ui` — components, composables, utilities
+- `@manfad/ui/preset` — UnoCSS preset for consumer apps
+
+```ts
+presets: [presetWind3(), ...presetManfadUi({ color: 'blue', radius: 0.5 })]
+```
+
+## Code block
+
+`CodeBlock` shows source with line numbers and muted `//` comments. Comments
+after `://` (as in URLs) are left alone.
+
+```vue
+<script setup lang="ts">
+import { CodeBlock } from '@manfad/ui'
+
+const content = `// Apply the active palette
+root.dataset.manfadComponentTheme = 'blue'
+`
+</script>
+
+<template>
+  <CodeBlock :content="content" />
+</template>
+```
+
+## Badge summary
+
+`BadgeSummary` turns selected CheckboxTree leaves into group rows — label,
+`selected/total` count, and expandable leaf badges.
+
+```vue
+<script setup lang="ts">
+import { BadgeSummary } from '@manfad/ui'
+
+const groups = [{
+  key: 'items',
+  label: 'Items',
+  children: [
+    { value: 'item_create', label: 'Create items' },
+    { value: 'item_modify', label: 'Modify items' },
+  ],
+}]
+const values = ['item_create', 'item_modify']
+</script>
+
+<template>
+  <BadgeSummary :groups="groups" :values="values" />
+</template>
+```
 
 ## Charts
 
@@ -42,7 +92,7 @@ exact versions because Unovis peer-depends on itself by exact version).
 
 ```vue
 <script setup lang="ts">
-import { LineChart } from '@yf/ui'
+import { LineChart } from '@manfad/ui'
 
 const data = [{ month: new Date(2025, 0, 1), kuching: 18420, miri: 12980 }]
 const series = [{ key: 'kuching', label: 'Kuching' }, { key: 'miri', label: 'Miri' }]
@@ -61,7 +111,7 @@ switcher without extra work.
 
 Two things a consuming app must know:
 
-- `presetYfUi()` is required, not optional, for charts: it carries the rule that
+- `presetManfadUi()` is required, not optional, for charts: it carries the rule that
   makes Unovis's container fill the height `ChartContainer` sets.
 - If the app widens UnoCSS's `content.pipeline.include` to plain `.ts`/`.js`
   (the default does not include them), exclude `node_modules` as well. Unovis
@@ -75,12 +125,12 @@ Two things a consuming app must know:
   },
   ```
 
-## Blue colour theme
+## Colour theme
 
-Blue is the default preset theme on this variant branch:
+Blue is the default preset theme:
 
 ```ts
-presets: [presetWind3(), ...presetYfUi()]
+presets: [presetWind3(), ...presetManfadUi()]
 ```
 
 It provides a royal-blue primary, a pale-blue secondary surface, a cyan-blue
@@ -94,7 +144,7 @@ stand apart. Blue's rival is red, the neutral palette's is white, and every
 palette picks its own.
 
 All four roles use HSL CSS variables, so an application can still override
-them in its global stylesheet to identify divisions, teams, or other roles:
+them in its global stylesheet:
 
 ```css
 :root {
@@ -125,7 +175,7 @@ independently:
 
 ```vue
 <script setup lang="ts">
-import { ThemePalettePicker } from '@yf/ui'
+import { ThemePalettePicker } from '@manfad/ui'
 </script>
 
 <template>
@@ -134,16 +184,17 @@ import { ThemePalettePicker } from '@yf/ui'
 ```
 
 The selection persists in local storage and sets
-`data-yf-component-theme` and `data-yf-background-theme` on the document root.
-Available palettes are Neutral, Blue, Green, Orange, Rose, and Violet, each
-with light and dark values. White is offered as a background only — untinted
-surfaces, for screens that want the palette to show in the components alone.
+`data-manfad-component-theme` and `data-manfad-background-theme` on the document
+root. Available palettes are Neutral, Blue, Green, Orange, Rose, and Violet,
+each with light and dark values. White is offered as a background only —
+untinted surfaces, for screens that want the palette to show in the components
+alone.
 
 To show the active theme's tokens as labeled swatches, use `ThemePalette`:
 
 ```vue
 <script setup lang="ts">
-import { ThemePalette } from '@yf/ui'
+import { ThemePalette } from '@manfad/ui'
 </script>
 
 <template>

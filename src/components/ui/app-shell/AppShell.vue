@@ -70,6 +70,10 @@ onBeforeUnmount(() => {
           <slot name="sidebar-header" />
         </template>
 
+        <template v-if="$slots['sidebar-toolbar']" #toolbar>
+          <slot name="sidebar-toolbar" :close-mobile-sidebar="closeMobileSidebar" />
+        </template>
+
         <slot name="sidebar" :close-mobile-sidebar="closeMobileSidebar" />
 
         <template v-if="$slots['sidebar-footer']" #footer>
@@ -115,6 +119,10 @@ onBeforeUnmount(() => {
         <Sidebar :class="cn('h-full w-full border-r-0', props.sidebarClass)">
           <template v-if="$slots['sidebar-header']" #header>
             <slot name="sidebar-header" />
+          </template>
+
+          <template v-if="$slots['sidebar-toolbar']" #toolbar>
+            <slot name="sidebar-toolbar" :close-mobile-sidebar="closeMobileSidebar" />
           </template>
 
           <slot name="sidebar" :close-mobile-sidebar="closeMobileSidebar" />

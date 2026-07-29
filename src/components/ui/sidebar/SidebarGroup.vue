@@ -59,7 +59,10 @@ const headerClass = 'px-2 pb-1 text-xs font-medium uppercase tracking-wider text
     <h2 v-else-if="props.label" :class="headerClass">
       {{ props.label }}
     </h2>
-    <div v-show="!showTrigger || isOpen" class="flex flex-col gap-1">
+    <div
+      v-show="!showTrigger || isOpen"
+      class="ml-2 flex flex-col gap-1 border-l border-sidebar-border pl-2"
+    >
       <slot />
     </div>
   </section>

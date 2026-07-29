@@ -1,6 +1,6 @@
 export { default as ThemePalette } from './ThemePalette.vue'
 
-export const yfUiThemeTokens = [
+export const manfadUiThemeTokens = [
   'primary',
   'secondary',
   'tertiary',
@@ -16,14 +16,14 @@ export const yfUiThemeTokens = [
   'border',
 ] as const
 
-export type YfUiThemeToken = typeof yfUiThemeTokens[number]
+export type ManfadUiThemeToken = typeof manfadUiThemeTokens[number]
 
 /**
  * The roles that give a palette its character. The surface tokens are offered
  * through the `tokens` prop but stay out of the default set, where they would
  * read as four grey squares next to the colors worth looking at.
  */
-export const yfUiThemeTokenDefaults: readonly YfUiThemeToken[] = [
+export const manfadUiThemeTokenDefaults: readonly ManfadUiThemeToken[] = [
   'primary',
   'secondary',
   'tertiary',
@@ -41,7 +41,7 @@ export const yfUiThemeTokenDefaults: readonly YfUiThemeToken[] = [
  * series are absent on purpose; they have no paired foreground and no utility,
  * so `ThemePalette` reads them from the custom property instead.
  */
-export const yfUiThemeTokenClasses: Partial<Record<YfUiThemeToken, string>> = {
+export const manfadUiThemeTokenClasses: Partial<Record<ManfadUiThemeToken, string>> = {
   'primary': 'bg-primary',
   'secondary': 'bg-secondary',
   'tertiary': 'bg-tertiary',

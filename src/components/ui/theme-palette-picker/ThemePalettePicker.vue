@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
-import type { YfUiPalette } from '@/theme/palettes'
-import { yfUiPalettes } from '@/theme/palettes'
+import type { ManfadUiPalette } from '@/theme/palettes'
+import { manfadUiPalettes } from '@/theme/palettes'
 import { useThemePalette } from './useThemePalette'
 
 const props = withDefaults(defineProps<{
   storageKey?: string
 }>(), {
-  storageKey: 'yf-ui-theme',
+  storageKey: 'manfad-ui-theme',
 })
 
 const {
@@ -18,14 +18,14 @@ const {
 } = useThemePalette({ storageKey: props.storageKey })
 
 /** A palette can suit one role and not the other, so the two rows differ. */
-const componentPalettes = yfUiPalettes.filter(palette => !palette.backgroundOnly)
-const backgroundPalettes = yfUiPalettes.filter(palette => !palette.componentOnly)
+const componentPalettes = manfadUiPalettes.filter(palette => !palette.backgroundOnly)
+const backgroundPalettes = manfadUiPalettes.filter(palette => !palette.componentOnly)
 
 function swatchStyle(channels: string): CSSProperties {
   return { backgroundColor: `hsl(${channels})` }
 }
 
-function backgroundSwatch(palette: YfUiPalette): CSSProperties {
+function backgroundSwatch(palette: ManfadUiPalette): CSSProperties {
   return swatchStyle(palette.swatch ?? palette.background.light.accent)
 }
 </script>

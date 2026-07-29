@@ -31,7 +31,7 @@ const DOT_STATE = {
     <!-- Rail segment running toward the NEXT item; the last item draws none,
          so the line starts at the first dot and ends at the last. -->
     <span
-      class="yf-timeline-rail absolute"
+      class="manfad-timeline-rail absolute"
       :class="[
         horizontal ? 'left-4 right-0 top-3 h-px' : '-bottom-8 left-0 top-3 w-px -translate-x-1/2',
         state === 'done' ? 'bg-primary' : 'bg-border',
@@ -70,7 +70,7 @@ const DOT_STATE = {
 </template>
 
 <style scoped>
-li:last-child > .yf-timeline-rail {
+li:last-child > .manfad-timeline-rail {
   display: none;
 }
 </style>

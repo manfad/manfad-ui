@@ -3,7 +3,7 @@ import type { ComputedRef, InjectionKey } from 'vue'
 
 export type TimelineOrientation = 'vertical' | 'horizontal'
 
-export const timelineOrientationKey: InjectionKey<ComputedRef<TimelineOrientation>> = Symbol('yf-timeline-orientation')
+export const timelineOrientationKey: InjectionKey<ComputedRef<TimelineOrientation>> = Symbol('manfad-timeline-orientation')
 </script>
 
 <script setup lang="ts">

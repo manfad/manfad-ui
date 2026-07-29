@@ -20,7 +20,7 @@ function registerMain(el: HTMLElement, register: boolean) {
   if (register) {
     if (import.meta.env.DEV && mainElements.size > 0 && !mainElements.has(el)) {
       console.warn(
-        '[yf/ui] Row: multiple main RowItems registered; using the first one.',
+        '[manfad/ui] Row: multiple main RowItems registered; using the first one.',
       )
     }
     mainElements.add(el)
@@ -64,7 +64,7 @@ provide(ROW_INJECTION_KEY, { mainHeight, registerMain })
 
 const style = computed<CSSProperties>(() =>
   mainHeight.value != null
-    ? { '--yf-row-main-height': `${mainHeight.value}px` } as CSSProperties
+    ? { '--manfad-row-main-height': `${mainHeight.value}px` } as CSSProperties
     : {},
 )
 </script>

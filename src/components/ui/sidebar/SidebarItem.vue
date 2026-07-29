@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
+import type { Component, HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'
 
 defineOptions({
@@ -8,7 +8,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<{
   active?: boolean
-  as?: string
+  as?: string | Component
   class?: HTMLAttributes['class']
 }>(), {
   active: false,

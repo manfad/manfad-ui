@@ -40,16 +40,16 @@ const syncHeight = computed(() => !props.main && context?.mainHeight.value != nu
 const classes = computed(() =>
   cn(
     'flex min-h-0 min-w-0 flex-1 flex-col gap-4',
-    props.width && 'w-[var(--yf-row-width)] flex-none',
+    props.width && 'w-[var(--manfad-row-width)] flex-none',
     !props.main && 'overflow-auto',
-    syncHeight.value && 'h-[var(--yf-row-main-height)] max-h-[var(--yf-row-main-height)]',
+    syncHeight.value && 'h-[var(--manfad-row-main-height)] max-h-[var(--manfad-row-main-height)]',
     props.class,
   ),
 )
 
 const style = computed<CSSProperties>(() =>
   props.width
-    ? { '--yf-row-width': props.width } as CSSProperties
+    ? { '--manfad-row-width': props.width } as CSSProperties
     : {},
 )
 </script>

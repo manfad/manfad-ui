@@ -33,8 +33,12 @@ export default defineConfig({
       allow: allowedRoots,
     },
   },
+  preview: {
+    // SPA fallback for vue-router history mode
+  },
   build: {
     // Admin PCs run Chrome/Edge 109, no oklch — CSS stays hsl via presetShadcnV3, JS downleveled here.
     target: 'chrome109',
   },
+  appType: 'spa',
 })

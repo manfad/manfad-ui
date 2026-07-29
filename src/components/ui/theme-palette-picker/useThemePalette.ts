@@ -1,7 +1,7 @@
 import { onMounted, readonly, shallowRef } from 'vue'
 import {
-  isYfUiPaletteName,
-  type YfUiPaletteName,
+  isManfadUiPaletteName,
+  type ManfadUiPaletteName,
 } from '@/theme/palettes'
 
 interface UseThemePaletteOptions {
@@ -9,15 +9,15 @@ interface UseThemePaletteOptions {
 }
 
 export function useThemePalette(options: UseThemePaletteOptions = {}) {
-  const storageKey = options.storageKey ?? 'yf-ui-theme'
-  const componentTheme = shallowRef<YfUiPaletteName>('blue')
-  const backgroundTheme = shallowRef<YfUiPaletteName>('blue')
+  const storageKey = options.storageKey ?? 'manfad-ui-theme'
+  const componentTheme = shallowRef<ManfadUiPaletteName>('blue')
+  const backgroundTheme = shallowRef<ManfadUiPaletteName>('blue')
 
-  function applyTheme(kind: 'component' | 'background', value: YfUiPaletteName) {
+  function applyTheme(kind: 'component' | 'background', value: ManfadUiPaletteName) {
     if (typeof document === 'undefined')
       return
 
-    document.documentElement.dataset[`yf${kind === 'component' ? 'Component' : 'Background'}Theme`] = value
+    document.documentElement.dataset[`manfad${kind === 'component' ? 'Component' : 'Background'}Theme`] = value
   }
 
   function persist() {
@@ -30,13 +30,13 @@ export function useThemePalette(options: UseThemePaletteOptions = {}) {
     }))
   }
 
-  function setComponentTheme(value: YfUiPaletteName) {
+  function setComponentTheme(value: ManfadUiPaletteName) {
     componentTheme.value = value
     applyTheme('component', value)
     persist()
   }
 
-  function setBackgroundTheme(value: YfUiPaletteName) {
+  function setBackgroundTheme(value: ManfadUiPaletteName) {
     backgroundTheme.value = value
     applyTheme('background', value)
     persist()
@@ -50,9 +50,9 @@ export function useThemePalette(options: UseThemePaletteOptions = {}) {
       }
       const savedComponent = saved.component ?? null
       const savedBackground = saved.background ?? null
-      if (isYfUiPaletteName(savedComponent))
+      if (isManfadUiPaletteName(savedComponent))
         componentTheme.value = savedComponent
-      if (isYfUiPaletteName(savedBackground))
+      if (isManfadUiPaletteName(savedBackground))
         backgroundTheme.value = savedBackground
     }
     catch {

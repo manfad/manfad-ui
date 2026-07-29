@@ -2,10 +2,10 @@
 import type { CSSProperties, HTMLAttributes } from 'vue'
 import { computed } from 'vue'
 import { cn } from '@/lib/utils'
-import { type YfUiThemeToken, yfUiThemeTokenClasses, yfUiThemeTokenDefaults } from '.'
+import { type ManfadUiThemeToken, manfadUiThemeTokenClasses, manfadUiThemeTokenDefaults } from '.'
 
 const props = defineProps<{
-  tokens?: readonly YfUiThemeToken[]
+  tokens?: readonly ManfadUiThemeToken[]
   class?: HTMLAttributes['class']
 }>()
 
@@ -13,8 +13,8 @@ const props = defineProps<{
  * Every swatch resolves through the design tokens rather than a color read out
  * in script, so the display follows the palette picker and dark mode on its own.
  */
-const swatches = computed(() => (props.tokens ?? yfUiThemeTokenDefaults).map((token) => {
-  const utility = yfUiThemeTokenClasses[token]
+const swatches = computed(() => (props.tokens ?? manfadUiThemeTokenDefaults).map((token) => {
+  const utility = manfadUiThemeTokenClasses[token]
   return {
     token,
     utility,

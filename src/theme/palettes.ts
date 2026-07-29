@@ -1,4 +1,4 @@
-export const yfUiPaletteNames = [
+export const manfadUiPaletteNames = [
   'neutral',
   'blue',
   'green',
@@ -9,7 +9,7 @@ export const yfUiPaletteNames = [
   'white',
 ] as const
 
-export type YfUiPaletteName = typeof yfUiPaletteNames[number]
+export type ManfadUiPaletteName = typeof manfadUiPaletteNames[number]
 
 type ThemeVariables = Record<string, string>
 
@@ -18,8 +18,8 @@ interface ThemeMode {
   dark: ThemeVariables
 }
 
-export interface YfUiPalette {
-  name: YfUiPaletteName
+export interface ManfadUiPalette {
+  name: ManfadUiPaletteName
   label: string
   component: ThemeMode
   background: ThemeMode
@@ -190,7 +190,7 @@ const whiteBackground: ThemeMode = {
   },
 }
 
-export const yfUiPalettes: readonly YfUiPalette[] = [
+export const manfadUiPalettes: readonly ManfadUiPalette[] = [
   {
     name: 'neutral',
     label: 'Neutral',
@@ -338,8 +338,8 @@ export const yfUiPalettes: readonly YfUiPalette[] = [
   },
 ]
 
-export function isYfUiPaletteName(value: string | null): value is YfUiPaletteName {
-  return yfUiPaletteNames.includes(value as YfUiPaletteName)
+export function isManfadUiPaletteName(value: string | null): value is ManfadUiPaletteName {
+  return manfadUiPaletteNames.includes(value as ManfadUiPaletteName)
 }
 
 function declarations(variables: ThemeVariables): string {
@@ -348,20 +348,20 @@ function declarations(variables: ThemeVariables): string {
     .join('\n')
 }
 
-export function createYfUiPaletteCss(darkSelector: string): string {
-  const defaultPalette = yfUiPalettes.find(palette => palette.name === 'blue')!
-  const lightSelectors = yfUiPalettes.map(palette => `
-[data-yf-component-theme="${palette.name}"] {
+export function createManfadUiPaletteCss(darkSelector: string): string {
+  const defaultPalette = manfadUiPalettes.find(palette => palette.name === 'blue')!
+  const lightSelectors = manfadUiPalettes.map(palette => `
+[data-manfad-component-theme="${palette.name}"] {
 ${declarations(palette.component.light)}
 }
-[data-yf-background-theme="${palette.name}"] {
+[data-manfad-background-theme="${palette.name}"] {
 ${declarations(palette.background.light)}
 }`).join('')
-  const darkSelectors = yfUiPalettes.map(palette => `
-${darkSelector}[data-yf-component-theme="${palette.name}"] {
+  const darkSelectors = manfadUiPalettes.map(palette => `
+${darkSelector}[data-manfad-component-theme="${palette.name}"] {
 ${declarations(palette.component.dark)}
 }
-${darkSelector}[data-yf-background-theme="${palette.name}"] {
+${darkSelector}[data-manfad-background-theme="${palette.name}"] {
 ${declarations(palette.background.dark)}
 }`).join('')
 
