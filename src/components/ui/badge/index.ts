@@ -13,6 +13,8 @@ export const badgeVariants = cva(
           'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
         tertiary:
           'border-transparent bg-tertiary text-tertiary-foreground hover:bg-tertiary/80',
+        rival:
+          'border-rival-foreground/15 bg-rival text-rival-foreground hover:bg-rival/80',
         outline: 'text-foreground',
         danger:
           'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',

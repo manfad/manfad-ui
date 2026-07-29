@@ -18,6 +18,10 @@ export const buttonVariants = cva(
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         tertiary:
           'bg-tertiary text-tertiary-foreground hover:bg-tertiary/90',
+        // The neutral palette's rival is plain white (black theme, white rival),
+        // so the edge is what separates it from the page behind it.
+        rival:
+          'border border-rival-foreground/15 bg-rival text-rival-foreground hover:bg-rival/90',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },

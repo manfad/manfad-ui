@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { AppShell } from '@/components/ui/app-shell'
@@ -79,7 +79,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { SidebarGroup, SidebarItem, WorkspaceSwitcher } from '@/components/ui/sidebar'
+import { SidebarGroup, SidebarItem, SidebarSub, SidebarSubItem, WorkspaceSwitcher } from '@/components/ui/sidebar'
 import { Switch } from '@/components/ui/switch'
 import {
   Tabs,
@@ -89,6 +89,7 @@ import {
 } from '@/components/ui/tabs'
 import { TimePicker } from '@/components/ui/time-picker'
 import { Timetable, type TimetableOrientation } from '@/components/ui/timetable'
+import { ThemePalette } from '@/components/ui/theme-palette'
 import { ThemePalettePicker } from '@/components/ui/theme-palette-picker'
 import { WheelPicker, WheelPickerColumn } from '@/components/ui/wheel-picker'
 import {
@@ -140,6 +141,8 @@ const activeComponentSection = shallowRef('buttons')
 const componentSections = [
   { id: 'buttons', label: 'Buttons' },
   { id: 'badges', label: 'Badges' },
+  { id: 'theme-palette', label: 'Theme Palette' },
+  { id: 'theme-switcher', label: 'Theme switcher' },
   { id: 'form-controls', label: 'Form controls' },
   { id: 'form-field', label: 'Form field' },
   { id: 'number-input', label: 'Number & textarea' },
@@ -177,13 +180,33 @@ const componentSections = [
   { id: 'row', label: 'Row' },
 ] as const
 
+const dialogSizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'] as const
+
+const sidebarFilter = shallowRef('')
+
+const filteredComponentSections = computed(() => {
+  const query = sidebarFilter.value.trim().toLowerCase()
+  if (!query)
+    return componentSections
+  return componentSections.filter(section => section.label.toLowerCase().includes(query))
+})
+
+const componentSectionLabels = componentSections.map(section => section.label)
+
+function onSidebarSearchSelect(label: string, closeMobileSidebar: () => void): void {
+  const section = componentSections.find(item => item.label === label)
+  if (section)
+    scrollToComponent(section.id, closeMobileSidebar)
+}
+
 const fleetGroupOpen = shallowRef(true)
 
 const fleetGroupItems = [
-  { label: 'Vehicles', icon: 'i-lucide-truck' },
   { label: 'Drivers', icon: 'i-lucide-id-card' },
   { label: 'Records', icon: 'i-lucide-clipboard-list' },
 ]
+
+const vehicleSubItems = ['All vehicles', 'Maintenance', 'Inspections']
 
 const adminGroupItems = [
   { label: 'Users', icon: 'i-lucide-users' },
@@ -536,9 +559,18 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
     </template>
 
     <template #sidebar="{ closeMobileSidebar }">
+      <div class="px-3 pt-2">
+        <Autocomplete
+          v-model="sidebarFilter"
+          :options="componentSectionLabels"
+          placeholder="Filter components…"
+          aria-label="Filter component list"
+          @select="onSidebarSearchSelect($event, closeMobileSidebar)"
+        />
+      </div>
       <SidebarGroup label="Components" collapsible>
         <SidebarItem
-          v-for="section in componentSections"
+          v-for="section in filteredComponentSections"
           :key="section.id"
           as="button"
           type="button"
@@ -548,6 +580,9 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
         >
           {{ section.label }}
         </SidebarItem>
+        <p v-if="filteredComponentSections.length === 0" class="px-3 py-2 text-sm text-muted-foreground">
+          No components match “{{ sidebarFilter }}”.
+        </p>
       </SidebarGroup>
     </template>
 
@@ -575,6 +610,7 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
             <Button>Default</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="tertiary">Tertiary</Button>
+            <Button variant="rival">Rival</Button>
             <Button variant="danger">Danger</Button>
             <Button variant="success">Success</Button>
             <Button variant="warning">Warning</Button>
@@ -596,10 +632,59 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
             <Badge>Default</Badge>
             <Badge variant="secondary">Secondary</Badge>
             <Badge variant="tertiary">Tertiary</Badge>
+            <Badge variant="rival">Rival</Badge>
             <Badge variant="danger">Danger</Badge>
             <Badge variant="success">Success</Badge>
             <Badge variant="warning">Warning</Badge>
             <Badge variant="outline">Outline</Badge>
+          </div>
+        </CardContent></Card>
+
+        <Card id="theme-palette" class="scroll-mt-20"><CardContent class="space-y-4 p-6">
+          <h2 class="text-lg font-semibold">Theme Palette</h2>
+          <p class="text-sm text-muted-foreground">
+            The tokens of the active theme. Switch palettes in the sidebar and these follow.
+          </p>
+          <ThemePalette />
+
+          <div class="space-y-2 border-t border-border pt-4">
+            <p class="text-sm text-muted-foreground">
+              A subset, chosen with the <code class="text-xs">tokens</code> prop.
+            </p>
+            <ThemePalette :tokens="['primary', 'rival', 'background', 'muted', 'accent', 'border']" />
+          </div>
+        </CardContent></Card>
+
+        <Card id="theme-switcher" class="scroll-mt-20"><CardContent class="space-y-4 p-6">
+          <h2 class="text-lg font-semibold">Theme switcher</h2>
+          <p class="text-sm text-muted-foreground">
+            <code class="text-xs">ThemePalettePicker</code> is exported from
+            <code class="text-xs">@yf/ui</code> and drops into any app without being rewritten.
+            The sidebar mounts the same component; this is it standing on its own.
+          </p>
+
+          <div class="w-64 rounded-lg border border-sidebar-border bg-sidebar p-4 text-sidebar-foreground">
+            <ThemePalettePicker storage-key="yf-ui-theme-demo" />
+          </div>
+
+          <div class="space-y-1.5 border-t border-border pt-4 text-sm text-muted-foreground">
+            <p>
+              It writes <code class="text-xs">data-yf-component-theme</code> and
+              <code class="text-xs">data-yf-background-theme</code> onto
+              <code class="text-xs">&lt;html&gt;</code>, so every component follows without
+              being told to.
+            </p>
+            <p>
+              The selection persists to local storage under the
+              <code class="text-xs">storageKey</code> prop, default
+              <code class="text-xs">yf-ui-theme</code>. This instance uses its own key, which
+              is why its highlight starts out disagreeing with the sidebar's.
+            </p>
+            <p>
+              Mount one per app. Each instance keeps its own local state, so a second one
+              still retints the whole page on click, but the two disagree about which swatch
+              to highlight until the next reload.
+            </p>
           </div>
         </CardContent></Card>
 
@@ -882,12 +967,28 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
           <p class="text-sm text-muted-foreground">
             <code>SidebarGroup</code> renders a static heading by default. Add
             <code>collapsible</code> to turn the label into a toggle — it keeps its own state
-            unless you bind <code>v-model:open</code>.
+            unless you bind <code>v-model:open</code>. <code>SidebarSub</code> nests
+            <code>SidebarSubItem</code>s under an expandable item, like Vehicles below.
           </p>
 
           <div class="flex flex-wrap items-start gap-6">
             <div class="w-56 rounded-lg border border-sidebar-border bg-sidebar py-2 text-sidebar-foreground">
               <SidebarGroup v-model:open="fleetGroupOpen" label="Fleet" collapsible>
+                <SidebarSub label="Vehicles" default-open>
+                  <template #icon>
+                    <span class="i-lucide-truck h-4 w-4" aria-hidden="true" />
+                  </template>
+                  <SidebarSubItem
+                    v-for="(sub, index) in vehicleSubItems"
+                    :key="sub"
+                    as="button"
+                    type="button"
+                    class="w-full"
+                    :active="index === 0"
+                  >
+                    {{ sub }}
+                  </SidebarSubItem>
+                </SidebarSub>
                 <SidebarItem v-for="item in fleetGroupItems" :key="item.label" as="button" type="button" class="w-full">
                   <template #icon>
                     <span :class="cn(item.icon, 'h-4 w-4')" aria-hidden="true" />
@@ -943,9 +1044,9 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
 
           <div class="flex items-center gap-4">
             <Spinner />
-            <Spinner class="h-8 w-8 text-primary" />
+            <Spinner class="h-8 w-8" />
             <Button disabled>
-              <Spinner class="mr-2 h-4 w-4" />
+              <Spinner class="mr-2 h-4 w-4 text-primary-foreground" />
               Saving…
             </Button>
           </div>
@@ -1134,6 +1235,30 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
 
         <Card id="overlays" class="scroll-mt-20"><CardContent class="space-y-4 p-6">
           <h2 class="text-lg font-semibold">Dialog &amp; Popover</h2>
+          <div class="space-y-2">
+            <p class="text-sm font-medium">Different size</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <Dialog v-for="size in dialogSizes" :key="size">
+                <DialogTrigger as-child>
+                  <Button variant="outline" class="uppercase">{{ size }}</Button>
+                </DialogTrigger>
+                <DialogContent :size="size">
+                  <DialogHeader>
+                    <DialogTitle>Dialog size: {{ size }}</DialogTitle>
+                    <DialogDescription>
+                      Set via the <code>size</code> prop on <code>DialogContent</code>.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <DialogClose as-child>
+                      <Button variant="secondary">Close</Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </div>
+
           <div class="flex flex-wrap items-center gap-2">
             <Dialog>
               <DialogTrigger as-child>
@@ -1560,22 +1685,12 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
         <Card id="timetable" class="scroll-mt-20"><CardContent class="space-y-4 p-6">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <h2 class="text-lg font-semibold">Timetable</h2>
-            <div class="flex gap-2">
-              <Button
-                size="sm"
-                :variant="timetableOrientation === 'vertical' ? 'default' : 'outline'"
-                @click="timetableOrientation = 'vertical'"
-              >
-                Vertical
-              </Button>
-              <Button
-                size="sm"
-                :variant="timetableOrientation === 'horizontal' ? 'default' : 'outline'"
-                @click="timetableOrientation = 'horizontal'"
-              >
-                Horizontal
-              </Button>
-            </div>
+            <Tabs v-model="timetableOrientation">
+              <TabsList>
+                <TabsTrigger value="vertical">Vertical</TabsTrigger>
+                <TabsTrigger value="horizontal">Horizontal</TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
           <Timetable
             :days="timetableDays"

@@ -15,7 +15,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-type DialogSize = 'sm' | 'md' | 'lg' | 'xl'
+type DialogSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl'
 
 interface Props extends DialogContentProps {
   class?: HTMLAttributes['class']
@@ -28,10 +28,13 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits<DialogContentEmits>()
 
 const dialogSizeClasses: Record<DialogSize, string> = {
+  xs: 'max-w-xs',
   sm: 'max-w-sm',
   md: 'max-w-lg',
   lg: 'max-w-xl',
   xl: 'max-w-[50rem]',
+  xxl: 'max-w-[64rem]',
+  xxxl: 'max-w-[80rem]',
 }
 
 const delegatedProps = computed(() => {

@@ -92,6 +92,10 @@ body {
         DEFAULT: 'hsl(var(--tertiary))',
         foreground: 'hsl(var(--tertiary-foreground))',
       }
+      colors.rival = {
+        DEFAULT: 'hsl(var(--rival))',
+        foreground: 'hsl(var(--rival-foreground))',
+      }
 
       for (let index = 1; index <= 5; index += 1) {
         const value = `hsl(var(--chart-${index}))`

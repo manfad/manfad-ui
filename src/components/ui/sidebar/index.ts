@@ -1,5 +1,7 @@
 export { default as Sidebar } from './Sidebar.vue'
 export { default as SidebarGroup } from './SidebarGroup.vue'
 export { default as SidebarItem } from './SidebarItem.vue'
+export { default as SidebarSub } from './SidebarSub.vue'
+export { default as SidebarSubItem } from './SidebarSubItem.vue'
 export { default as WorkspaceSwitcher } from './WorkspaceSwitcher.vue'
 export type { WorkspaceSwitcherItem } from './WorkspaceSwitcher.vue'

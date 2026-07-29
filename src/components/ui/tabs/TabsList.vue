@@ -20,7 +20,7 @@ const props = defineProps<{
     <TabsIndicator
       class="absolute left-0 top-[3px] h-[calc(100%-6px)] w-[var(--radix-tabs-indicator-size)] translate-x-[var(--radix-tabs-indicator-position)] rounded-full transition-[width,transform] duration-200 ease-out"
     >
-      <div class="h-full w-full rounded-full bg-foreground shadow-sm" />
+      <div class="h-full w-full rounded-full bg-primary shadow-sm" />
     </TabsIndicator>
     <slot />
   </RadixTabsList>

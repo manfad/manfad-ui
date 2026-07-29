@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
+import type { YfUiPalette } from '@/theme/palettes'
 import { yfUiPalettes } from '@/theme/palettes'
 import { useThemePalette } from './useThemePalette'
 
@@ -16,8 +17,16 @@ const {
   setBackgroundTheme,
 } = useThemePalette({ storageKey: props.storageKey })
 
+/** A palette can suit one role and not the other, so the two rows differ. */
+const componentPalettes = yfUiPalettes.filter(palette => !palette.backgroundOnly)
+const backgroundPalettes = yfUiPalettes.filter(palette => !palette.componentOnly)
+
 function swatchStyle(channels: string): CSSProperties {
   return { backgroundColor: `hsl(${channels})` }
+}
+
+function backgroundSwatch(palette: YfUiPalette): CSSProperties {
+  return swatchStyle(palette.swatch ?? palette.background.light.accent)
 }
 </script>
 
@@ -25,9 +34,9 @@ function swatchStyle(channels: string): CSSProperties {
   <div class="space-y-3" aria-label="Theme palettes">
     <fieldset class="space-y-2">
       <legend class="text-xs font-medium text-sidebar-foreground">Components</legend>
-      <div class="flex items-center justify-between gap-1.5">
+      <div class="flex flex-wrap items-center justify-between gap-1">
         <button
-          v-for="palette in yfUiPalettes"
+          v-for="palette in componentPalettes"
           :key="`component-${palette.name}`"
           type="button"
           class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-sidebar-border transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar"
@@ -49,14 +58,14 @@ function swatchStyle(channels: string): CSSProperties {
 
     <fieldset class="space-y-2">
       <legend class="text-xs font-medium text-sidebar-foreground">Background</legend>
-      <div class="flex items-center justify-between gap-1.5">
+      <div class="flex flex-wrap items-center justify-between gap-1">
         <button
-          v-for="palette in yfUiPalettes"
+          v-for="palette in backgroundPalettes"
           :key="`background-${palette.name}`"
           type="button"
           class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-sidebar-border transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar"
           :class="backgroundTheme === palette.name && 'ring-2 ring-sidebar-ring ring-offset-2 ring-offset-sidebar'"
-          :style="swatchStyle(palette.background.light.accent)"
+          :style="backgroundSwatch(palette)"
           :aria-label="`${palette.label} background palette`"
           :aria-pressed="backgroundTheme === palette.name"
           :title="palette.label"

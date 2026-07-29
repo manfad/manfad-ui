@@ -14,6 +14,10 @@ const props = defineProps<{
   class?: HTMLAttributes['class']
 }>()
 
+const emit = defineEmits<{
+  select: [option: string]
+}>()
+
 const modelValue = defineModel<string>({ default: '' })
 const listboxId = useId()
 const isFocused = shallowRef(false)
@@ -101,6 +105,7 @@ function selectOption(option: string) {
   modelValue.value = option
   isOpen.value = false
   highlightedIndex.value = -1
+  emit('select', option)
 }
 
 function acceptGhost() {
@@ -156,8 +161,13 @@ function handleKeydown(event: KeyboardEvent) {
 
   if (event.key === 'Escape') {
     event.preventDefault()
-    isOpen.value = false
-    highlightedIndex.value = -1
+    if (isOpen.value) {
+      isOpen.value = false
+      highlightedIndex.value = -1
+    }
+    else if (typedValue.value) {
+      modelValue.value = ''
+    }
   }
 }
 

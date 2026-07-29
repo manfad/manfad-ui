@@ -83,12 +83,17 @@ Blue is the default preset theme on this variant branch:
 presets: [presetWind3(), ...presetYfUi()]
 ```
 
-It provides a royal-blue primary, a pale-blue secondary surface, and a
-cyan-blue tertiary role. Backgrounds, cards, popovers, muted and accent
-surfaces, form controls, borders, and the sidebar all use coordinated blue
-tints in light and dark mode.
+It provides a royal-blue primary, a pale-blue secondary surface, a cyan-blue
+tertiary role, and a red rival role. Backgrounds, cards, popovers, muted and
+accent surfaces, form controls, borders, and the sidebar all use coordinated
+blue tints in light and dark mode.
 
-All three roles use HSL CSS variables, so an application can still override
+The rival is each palette's opposing accent: the hue that argues with the
+primary instead of extending it, for the one element on a screen that has to
+stand apart. Blue's rival is red, the neutral palette's is white, and every
+palette picks its own.
+
+All four roles use HSL CSS variables, so an application can still override
 them in its global stylesheet to identify divisions, teams, or other roles:
 
 ```css
@@ -97,8 +102,10 @@ them in its global stylesheet to identify divisions, teams, or other roles:
   --primary-foreground: 210 40% 98%;
   --secondary: 210 40% 96.1%;
   --secondary-foreground: 222.2 47.4% 11.2%;
-  --tertiary: 199 89% 38%;
+  --tertiary: 199 89% 33%;
   --tertiary-foreground: 0 0% 98%;
+  --rival: 0 72% 45%;
+  --rival-foreground: 0 0% 98%;
 }
 
 .dark {
@@ -108,6 +115,8 @@ them in its global stylesheet to identify divisions, teams, or other roles:
   --secondary-foreground: 210 40% 98%;
   --tertiary: 198 93% 60%;
   --tertiary-foreground: 202 80% 12%;
+  --rival: 0 84% 65%;
+  --rival-foreground: 0 60% 10%;
 }
 ```
 
@@ -127,11 +136,32 @@ import { ThemePalettePicker } from '@yf/ui'
 The selection persists in local storage and sets
 `data-yf-component-theme` and `data-yf-background-theme` on the document root.
 Available palettes are Neutral, Blue, Green, Orange, Rose, and Violet, each
-with light and dark values.
+with light and dark values. White is offered as a background only — untinted
+surfaces, for screens that want the palette to show in the components alone.
+
+To show the active theme's tokens as labeled swatches, use `ThemePalette`:
+
+```vue
+<script setup lang="ts">
+import { ThemePalette } from '@yf/ui'
+</script>
+
+<template>
+  <ThemePalette />
+  <ThemePalette :tokens="['primary', 'rival', 'muted']" />
+</template>
+```
+
+It renders from the tokens themselves, so it follows the picker and dark mode
+without reading any colors in script.
+
+Each palette also defines its own `--chart-1` through `--chart-5` series, built
+around that palette's primary and rival hues, so charts follow the palette
+picker along with everything else.
 
 Values are HSL channels without the surrounding `hsl()` so opacity modifiers
 continue to work. The roles are available as UnoCSS colours such as
-`bg-primary`, `bg-secondary`, `bg-tertiary`, and
-`text-tertiary-foreground`. `Button` and `Badge` also accept
-`variant="tertiary"`; their existing default and secondary variants use the
-primary and secondary roles respectively.
+`bg-primary`, `bg-secondary`, `bg-tertiary`, `bg-rival`, and
+`text-rival-foreground`. `Button` and `Badge` also accept
+`variant="tertiary"` and `variant="rival"`; their existing default and
+secondary variants use the primary and secondary roles respectively.
