@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { AreaChart, BarChart, DonutChart, LineChart } from '@/components/ui/chart'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -88,6 +89,7 @@ import {
 } from '@/components/ui/tabs'
 import { TimePicker } from '@/components/ui/time-picker'
 import { Timetable, type TimetableOrientation } from '@/components/ui/timetable'
+import { ThemePalettePicker } from '@/components/ui/theme-palette-picker'
 import { WheelPicker, WheelPickerColumn } from '@/components/ui/wheel-picker'
 import {
   Table,
@@ -115,6 +117,7 @@ import {
 import { DataTable } from '@/components/ui/data-table'
 import { Expandable } from '@/components/ui/expandable-table'
 import { CheckTable } from '@/components/ui/check-table'
+import { cn } from '@/lib/utils'
 
 const inputValue = shallowRef('')
 const dialogValue = shallowRef('')
@@ -145,6 +148,7 @@ const componentSections = [
   { id: 'tabs', label: 'Tabs' },
   { id: 'pickers', label: 'Time & wheel picker' },
   { id: 'accordion', label: 'Accordion' },
+  { id: 'sidebar-groups', label: 'Sidebar groups' },
   { id: 'progress', label: 'Progress & spinner' },
   { id: 'stepper', label: 'Stepper' },
   { id: 'attachment', label: 'Attachment & dropzone' },
@@ -160,6 +164,7 @@ const componentSections = [
   { id: 'skeleton-empty', label: 'Skeleton & empty state' },
   { id: 'timeline', label: 'Timeline' },
   { id: 'signature-pad', label: 'Signature pad' },
+  { id: 'charts', label: 'Charts' },
   { id: 'table', label: 'Table' },
   { id: 'data-table', label: 'Data table' },
   { id: 'grouped-table', label: 'Grouped table' },
@@ -171,6 +176,120 @@ const componentSections = [
   { id: 'list', label: 'List' },
   { id: 'row', label: 'Row' },
 ] as const
+
+const fleetGroupOpen = shallowRef(true)
+
+const fleetGroupItems = [
+  { label: 'Vehicles', icon: 'i-lucide-truck' },
+  { label: 'Drivers', icon: 'i-lucide-id-card' },
+  { label: 'Records', icon: 'i-lucide-clipboard-list' },
+]
+
+const adminGroupItems = [
+  { label: 'Users', icon: 'i-lucide-users' },
+  { label: 'Settings', icon: 'i-lucide-settings' },
+]
+
+// --- Charts -----------------------------------------------------------------
+// Stand-in for a fleet admin dashboard: ringgit spend and diesel volumes.
+const dieselPricePerLitre = 3.35
+const areaStacked = shallowRef(true)
+
+const fuelSpendByMonth = [
+  { month: new Date(2025, 0, 1), kuching: 18420, miri: 12980, bintulu: 9340 },
+  { month: new Date(2025, 1, 1), kuching: 17150, miri: 13640, bintulu: 8720 },
+  { month: new Date(2025, 2, 1), kuching: 19880, miri: 12310, bintulu: 10460 },
+  { month: new Date(2025, 3, 1), kuching: 21240, miri: 14020, bintulu: 11180 },
+  { month: new Date(2025, 4, 1), kuching: 20110, miri: 15380, bintulu: 10870 },
+  { month: new Date(2025, 5, 1), kuching: 22630, miri: 14790, bintulu: 12040 },
+  { month: new Date(2025, 6, 1), kuching: 23890, miri: 16210, bintulu: 11620 },
+  { month: new Date(2025, 7, 1), kuching: 22470, miri: 15940, bintulu: 12910 },
+  { month: new Date(2025, 8, 1), kuching: 24360, miri: 17080, bintulu: 13240 },
+  { month: new Date(2025, 9, 1), kuching: 25710, miri: 16630, bintulu: 12780 },
+  { month: new Date(2025, 10, 1), kuching: 24080, miri: 18120, bintulu: 13950 },
+  { month: new Date(2025, 11, 1), kuching: 26940, miri: 17460, bintulu: 14380 },
+]
+
+const depotSeries = [
+  { key: 'kuching', label: 'Kuching' },
+  { key: 'miri', label: 'Miri' },
+  { key: 'bintulu', label: 'Bintulu' },
+]
+
+const operatingCostByMonth = fuelSpendByMonth.map((row, index) => ({
+  month: row.month,
+  fuel: row.kuching + row.miri + row.bintulu,
+  maintenance: 8400 + index * 620,
+  tolls: 3100 + (index % 4) * 480,
+  insurance: 5200,
+}))
+
+const operatingCostSeries = [
+  { key: 'fuel', label: 'Fuel' },
+  { key: 'maintenance', label: 'Maintenance' },
+  { key: 'tolls', label: 'Tolls' },
+  { key: 'insurance', label: 'Insurance' },
+]
+
+const monthAbbreviations = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+const fuelLitresByDepot = fuelSpendByMonth.map((row, index) => ({
+  month: monthAbbreviations[index],
+  kuching: Math.round(row.kuching / dieselPricePerLitre),
+  miri: Math.round(row.miri / dieselPricePerLitre),
+  bintulu: Math.round(row.bintulu / dieselPricePerLitre),
+}))
+
+const workshopCostByVehicle = [
+  { vehicle: 'QAA 1234', parts: 4820, labour: 2310, outsourced: 980 },
+  { vehicle: 'QAB 5567', parts: 3110, labour: 1740, outsourced: 2260 },
+  { vehicle: 'QAC 8891', parts: 6480, labour: 3020, outsourced: 540 },
+  { vehicle: 'QSB 2043', parts: 2270, labour: 1490, outsourced: 1310 },
+  { vehicle: 'QTM 7712', parts: 5390, labour: 2680, outsourced: 1870 },
+  { vehicle: 'QMC 3308', parts: 3940, labour: 2050, outsourced: 760 },
+]
+
+const workshopSeries = [
+  { key: 'parts', label: 'Parts' },
+  { key: 'labour', label: 'Labour' },
+  { key: 'outsourced', label: 'Outsourced' },
+]
+
+function totalOperatingCost(key: 'fuel' | 'maintenance' | 'tolls' | 'insurance') {
+  return operatingCostByMonth.reduce((sum, row) => sum + row[key], 0)
+}
+
+const costShareByCategory = [
+  { category: 'Fuel', amount: totalOperatingCost('fuel') },
+  { category: 'Maintenance', amount: totalOperatingCost('maintenance') },
+  { category: 'Tolls', amount: totalOperatingCost('tolls') },
+  { category: 'Insurance', amount: totalOperatingCost('insurance') },
+]
+
+const ringgitFormat = new Intl.NumberFormat('en-MY', {
+  style: 'currency',
+  currency: 'MYR',
+  maximumFractionDigits: 0,
+})
+
+function formatRinggit(value: number) {
+  return ringgitFormat.format(value)
+}
+
+/** Compact money ticks so the y axis stays narrow: RM 24.4k. */
+function formatRinggitAxis(value: number) {
+  return value >= 1000 ? `RM ${Math.round(value / 100) / 10}k` : `RM ${value}`
+}
+
+function formatLitres(value: number) {
+  return `${value.toLocaleString('en-MY')} L`
+}
+
+function formatLitresAxis(value: number) {
+  return value >= 1000 ? `${Math.round(value / 100) / 10}k L` : `${value} L`
+}
+
+const totalFleetCost = costShareByCategory.reduce((sum, row) => sum + row.amount, 0)
 
 const timetableDays = [
   { id: 'mon', label: 'Mon' },
@@ -417,7 +536,7 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
     </template>
 
     <template #sidebar="{ closeMobileSidebar }">
-      <SidebarGroup label="Components">
+      <SidebarGroup label="Components" collapsible>
         <SidebarItem
           v-for="section in componentSections"
           :key="section.id"
@@ -433,9 +552,12 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
     </template>
 
     <template #sidebar-footer>
-      <p class="text-xs text-muted-foreground">
-        {{ componentSections.length }} component groups
-      </p>
+      <div class="space-y-4">
+        <ThemePalettePicker />
+        <p class="text-xs text-muted-foreground">
+          {{ componentSections.length }} component groups
+        </p>
+      </div>
     </template>
 
     <template #header>
@@ -452,6 +574,7 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
           <div class="flex flex-wrap items-center gap-2">
             <Button>Default</Button>
             <Button variant="secondary">Secondary</Button>
+            <Button variant="tertiary">Tertiary</Button>
             <Button variant="danger">Danger</Button>
             <Button variant="success">Success</Button>
             <Button variant="warning">Warning</Button>
@@ -472,6 +595,7 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
           <div class="flex flex-wrap items-center gap-2">
             <Badge>Default</Badge>
             <Badge variant="secondary">Secondary</Badge>
+            <Badge variant="tertiary">Tertiary</Badge>
             <Badge variant="danger">Danger</Badge>
             <Badge variant="success">Success</Badge>
             <Badge variant="warning">Warning</Badge>
@@ -751,6 +875,58 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
               <AccordionContent>Yes, it animates open and close by default.</AccordionContent>
             </AccordionItem>
           </Accordion>
+        </CardContent></Card>
+
+        <Card id="sidebar-groups" class="scroll-mt-20"><CardContent class="space-y-4 p-6">
+          <h2 class="text-lg font-semibold">Sidebar groups</h2>
+          <p class="text-sm text-muted-foreground">
+            <code>SidebarGroup</code> renders a static heading by default. Add
+            <code>collapsible</code> to turn the label into a toggle — it keeps its own state
+            unless you bind <code>v-model:open</code>.
+          </p>
+
+          <div class="flex flex-wrap items-start gap-6">
+            <div class="w-56 rounded-lg border border-sidebar-border bg-sidebar py-2 text-sidebar-foreground">
+              <SidebarGroup v-model:open="fleetGroupOpen" label="Fleet" collapsible>
+                <SidebarItem v-for="item in fleetGroupItems" :key="item.label" as="button" type="button" class="w-full">
+                  <template #icon>
+                    <span :class="cn(item.icon, 'h-4 w-4')" aria-hidden="true" />
+                  </template>
+                  {{ item.label }}
+                </SidebarItem>
+              </SidebarGroup>
+
+              <SidebarGroup label="Admin" collapsible :default-open="false">
+                <SidebarItem v-for="item in adminGroupItems" :key="item.label" as="button" type="button" class="w-full">
+                  <template #icon>
+                    <span :class="cn(item.icon, 'h-4 w-4')" aria-hidden="true" />
+                  </template>
+                  {{ item.label }}
+                </SidebarItem>
+              </SidebarGroup>
+
+              <SidebarGroup label="Reports">
+                <SidebarItem as="button" type="button" class="w-full">
+                  <template #icon>
+                    <span class="i-lucide-file-text h-4 w-4" aria-hidden="true" />
+                  </template>
+                  Monthly summary
+                </SidebarItem>
+              </SidebarGroup>
+            </div>
+
+            <div class="space-y-3 text-sm">
+              <div class="flex items-center gap-2">
+                <Switch id="fleet-group-open" v-model="fleetGroupOpen" />
+                <Label for="fleet-group-open">Fleet group open</Label>
+              </div>
+              <p class="max-w-xs text-xs text-muted-foreground">
+                Fleet is controlled from here, so the switch and the group header stay in sync.
+                Admin starts closed and manages itself. Reports has no
+                <code>collapsible</code>, so its heading stays static.
+              </p>
+            </div>
+          </div>
         </CardContent></Card>
 
         <Card id="progress" class="scroll-mt-20"><CardContent class="space-y-6 p-6">
@@ -1124,6 +1300,125 @@ function scrollToComponent(id: string, closeMobileSidebar: () => void) {
             >
           </div>
           <SignatureDialog v-model:open="signatureOpen" @save="url => signatureUrl = url" />
+        </CardContent></Card>
+
+        <Card id="charts" class="scroll-mt-20"><CardContent class="space-y-8 p-6">
+          <h2 class="text-lg font-semibold">Charts</h2>
+
+          <div class="space-y-2">
+            <div>
+              <h3 class="text-sm font-medium">Fuel spend by depot</h3>
+              <p class="text-xs text-muted-foreground">
+                Time series — x values are <code>Date</code> objects, money ticks compacted to
+                <code>RM 24.4k</code> while the tooltip shows the full amount.
+              </p>
+            </div>
+            <LineChart
+              :data="fuelSpendByMonth"
+              x="month"
+              :series="depotSeries"
+              :height="280"
+              y-label="Diesel spend"
+              :y-formatter="formatRinggitAxis"
+              :tooltip-formatter="formatRinggit"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 class="text-sm font-medium">Operating cost breakdown</h3>
+                <p class="text-xs text-muted-foreground">
+                  Stacked bands by default; flip the switch for overlapping translucent areas.
+                </p>
+              </div>
+              <div class="flex items-center gap-2">
+                <Switch id="area-stacked" v-model="areaStacked" />
+                <Label for="area-stacked" class="text-xs">Stacked</Label>
+              </div>
+            </div>
+            <AreaChart
+              :data="operatingCostByMonth"
+              x="month"
+              :series="operatingCostSeries"
+              :stacked="areaStacked"
+              :height="280"
+              :y-formatter="formatRinggitAxis"
+              :tooltip-formatter="formatRinggit"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <div>
+              <h3 class="text-sm font-medium">Diesel volume by depot</h3>
+              <p class="text-xs text-muted-foreground">
+                Grouped bars over categorical months, litres on the y axis.
+              </p>
+            </div>
+            <BarChart
+              :data="fuelLitresByDepot"
+              x="month"
+              :series="depotSeries"
+              :height="280"
+              :y-formatter="formatLitresAxis"
+              :tooltip-formatter="formatLitres"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <div>
+              <h3 class="text-sm font-medium">Workshop cost per vehicle</h3>
+              <p class="text-xs text-muted-foreground">
+                Stacked bars — each bar totals one vehicle's year-to-date repair bill.
+              </p>
+            </div>
+            <BarChart
+              :data="workshopCostByVehicle"
+              x="vehicle"
+              :series="workshopSeries"
+              variant="stacked"
+              :height="280"
+              :y-formatter="formatRinggitAxis"
+              :tooltip-formatter="formatRinggit"
+            />
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="space-y-2">
+              <div>
+                <h3 class="text-sm font-medium">Cost share by category</h3>
+                <p class="text-xs text-muted-foreground">
+                  Donut with a central total and values beside the legend labels.
+                </p>
+              </div>
+              <DonutChart
+                :data="costShareByCategory"
+                value="amount"
+                label="category"
+                :height="280"
+                legend-values
+                central-label="Total"
+                :central-sub-label="formatRinggit(totalFleetCost)"
+                :value-formatter="formatRinggit"
+              />
+            </div>
+
+            <div class="space-y-2">
+              <div>
+                <h3 class="text-sm font-medium">Empty data</h3>
+                <p class="text-xs text-muted-foreground">
+                  Every chart falls back to a placeholder instead of an empty axis frame.
+                </p>
+              </div>
+              <LineChart
+                :data="[]"
+                x="month"
+                :series="depotSeries"
+                :height="280"
+                empty-message="No fuel records for this period"
+              />
+            </div>
+          </div>
         </CardContent></Card>
 
         <Card id="table" class="scroll-mt-20"><CardContent class="space-y-4 p-6">

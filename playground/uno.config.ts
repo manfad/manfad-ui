@@ -9,9 +9,16 @@ const libSrc = fileURLToPath(new URL('../src', import.meta.url))
 const playgroundSrc = fileURLToPath(new URL('./src', import.meta.url))
 
 export default defineConfig({
-  presets: [presetWind3(), ...presetYfUi({ color: 'zinc', radius: 0.5 })],
+  presets: [presetWind3(), ...presetYfUi({ color: 'blue', radius: 0.5 })],
   content: {
-    pipeline: { include: [/\.(vue|[jt]sx?)($|\?)/] },
+    // The `include` here widens UnoCSS's default to plain .ts/.js so library
+    // sources are scanned. That also drags in dependencies, and Unovis embeds
+    // raw CSS in template literals which UnoCSS turns into unparseable rules —
+    // hence the exclude. Library classes still arrive via `filesystem` above.
+    pipeline: {
+      include: [/\.(vue|[jt]sx?)($|\?)/],
+      exclude: [/[\\/]node_modules[\\/]/],
+    },
     filesystem: [`${libSrc}/**/*.{vue,ts}`, `${playgroundSrc}/**/*.{vue,ts}`],
   },
 })

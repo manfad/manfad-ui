@@ -34,6 +34,12 @@ export default defineConfig({
       external: [
         'vue',
         'radix-vue',
+        '@unovis/ts',
+        '@unovis/vue',
+        // The chart components reach Unovis through deep paths
+        // (`@unovis/vue/components/line`) so consumers only pull in the
+        // visualizations they render, not the map/graph surface.
+        /^@unovis\/(ts|vue)\//,
         'clsx',
         'tailwind-merge',
         'class-variance-authority',

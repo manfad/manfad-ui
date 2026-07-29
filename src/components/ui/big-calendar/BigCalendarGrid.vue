@@ -56,8 +56,8 @@ function accessibleDate(day: BigCalendarDay, locale: string): string {
       <span
         :class="cn(
           'inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1.5 text-sm font-medium transition-transform group-hover:scale-105',
-          day.isToday && !day.isSelected && 'bg-gray-300 text-white',
-          day.isSelected && 'bg-black text-white',
+          day.isToday && !day.isSelected && 'bg-accent text-accent-foreground',
+          day.isSelected && 'bg-primary text-primary-foreground',
         )"
       >
         {{ day.dayNumber }}

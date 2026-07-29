@@ -2,6 +2,7 @@ import type { Preset } from 'unocss'
 import { presetIcons } from 'unocss'
 import presetAnimations from 'unocss-preset-animations'
 import { presetShadcnV3 } from 'unocss-preset-shadcn/v3'
+import { createYfUiPaletteCss } from './theme/palettes'
 
 export interface YfUiPresetOptions {
   color?: string
@@ -24,7 +25,7 @@ export interface YfUiPresetOptions {
  */
 export function presetYfUi(options: YfUiPresetOptions = {}): Preset[] {
   const {
-    color = 'zinc',
+    color = 'blue',
     radius = 0.5,
     darkSelector = '.dark',
   } = options
@@ -39,7 +40,8 @@ export function presetYfUi(options: YfUiPresetOptions = {}): Preset[] {
     name: '@yf/ui-fixup',
     preflights: [
       {
-        getCSS: () => `:root {
+        getCSS: () => `${createYfUiPaletteCss(darkSelector)}
+:root {
   --success: 142 71% 35%;
   --success-foreground: 0 0% 98%;
   --warning: 48 96% 53%;
@@ -51,6 +53,20 @@ body {
 }
 body {
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+/*
+ * Unovis containers take their size from their host element, and the stylesheet
+ * that makes them fill it ships only with the barrel import of @unovis/vue. The
+ * chart components import Unovis by deep path (so consumers don't bundle the
+ * map and graph visualizations), so the rule lives here instead. The height
+ * itself comes from ChartContainer.
+ */
+.unovis-xy-container,
+.unovis-single-container {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }`,
       },
     ],
@@ -71,6 +87,10 @@ body {
       colors.warning = {
         DEFAULT: 'hsl(var(--warning))',
         foreground: 'hsl(var(--warning-foreground))',
+      }
+      colors.tertiary = {
+        DEFAULT: 'hsl(var(--tertiary))',
+        foreground: 'hsl(var(--tertiary-foreground))',
       }
 
       for (let index = 1; index <= 5; index += 1) {
