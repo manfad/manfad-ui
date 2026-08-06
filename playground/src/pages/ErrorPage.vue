@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ErrorPageVariant } from '@manfad/ui'
+import type { ErrorPageVariant } from '@manfad99/ui'
 import { shallowRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { Button, ErrorPage, toast } from '@manfad/ui'
+import { Button, ErrorPage, toast } from '@manfad99/ui'
 import UsageExample from '../components/UsageExample.vue'
 import { useEmbed } from '../use-embed'
 import { usageExamples } from '../usage-examples'

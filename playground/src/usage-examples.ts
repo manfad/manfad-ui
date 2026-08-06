@@ -12,7 +12,7 @@ export const usageExamples: Record<ComponentSectionId, UsageExample> = {
   'sidebar-switcher': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { SidebarSwitcher } from '@manfad/ui'
+import { SidebarSwitcher } from '@manfad99/ui'
 
 const context = shallowRef('docs')
 const items = [
@@ -33,7 +33,7 @@ const items = [
 
   'md-view': vue(`
 <script setup lang="ts">
-import { MdView } from '@manfad/ui/md-view'
+import { MdView } from '@manfad99/ui/md-view'
 import guide from './guide.md?raw'
 </script>
 
@@ -48,7 +48,7 @@ import guide from './guide.md?raw'
 
   gallery: vue(`
 <script setup lang="ts">
-import { Gallery, type GalleryItem } from '@manfad/ui'
+import { Gallery, type GalleryItem } from '@manfad99/ui'
 
 const items: GalleryItem[] = [
   { src: '/media/photo-1.jpg', alt: 'Front view' },
@@ -76,7 +76,7 @@ import {
   createCdnImageProvider,
   Image,
   IMAGE_PROVIDER_KEY,
-} from '@manfad/ui'
+} from '@manfad99/ui'
 
 // App bootstrap (once):
 // const app = createApp(App)
@@ -110,7 +110,7 @@ provide(
 
   buttons: vue(`
 <script setup lang="ts">
-import { Button } from '@manfad/ui'
+import { Button } from '@manfad99/ui'
 </script>
 
 <template>
@@ -122,7 +122,7 @@ import { Button } from '@manfad/ui'
 
   badges: vue(`
 <script setup lang="ts">
-import { Badge } from '@manfad/ui'
+import { Badge } from '@manfad99/ui'
 </script>
 
 <template>
@@ -135,7 +135,7 @@ import { Badge } from '@manfad/ui'
 
   'selection-chips': vue(`
 <script setup lang="ts">
-import { SelectionChips } from '@manfad/ui'
+import { SelectionChips } from '@manfad99/ui'
 
 const groups = [{
   key: 'items',
@@ -157,7 +157,7 @@ const values = ['item_create', 'item_modify', 'item_delete']
 
   'theme-palette': vue(`
 <script setup lang="ts">
-import { ThemePalette } from '@manfad/ui'
+import { ThemePalette } from '@manfad99/ui'
 </script>
 
 <template>
@@ -168,7 +168,7 @@ import { ThemePalette } from '@manfad/ui'
 
   'theme-switcher': vue(`
 <script setup lang="ts">
-import { ThemeSwitcher } from '@manfad/ui'
+import { ThemeSwitcher } from '@manfad99/ui'
 </script>
 
 <template>
@@ -181,7 +181,7 @@ import { ThemeSwitcher } from '@manfad/ui'
   input: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Input, Label } from '@manfad/ui'
+import { Input, Label } from '@manfad99/ui'
 
 const value = shallowRef('')
 </script>
@@ -195,7 +195,7 @@ const value = shallowRef('')
   checkbox: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Checkbox, Label } from '@manfad/ui'
+import { Checkbox, Label } from '@manfad99/ui'
 
 const checked = shallowRef(false)
 </script>
@@ -211,7 +211,7 @@ const checked = shallowRef(false)
   switch: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Label, Switch } from '@manfad/ui'
+import { Label, Switch } from '@manfad99/ui'
 
 const enabled = shallowRef(true)
 </script>
@@ -234,7 +234,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@manfad/ui'
+} from '@manfad99/ui'
 
 const value = shallowRef<string>()
 </script>
@@ -256,7 +256,7 @@ const value = shallowRef<string>()
   autocomplete: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Autocomplete, Label } from '@manfad/ui'
+import { Autocomplete, Label } from '@manfad99/ui'
 
 const city = shallowRef('')
 const cities = ['Kuching', 'Miri', 'Bintulu']
@@ -276,7 +276,7 @@ const cities = ['Kuching', 'Miri', 'Bintulu']
   'form-field': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { FormField, Input } from '@manfad/ui'
+import { FormField, Input } from '@manfad99/ui'
 
 const email = shallowRef('')
 </script>
@@ -291,7 +291,7 @@ const email = shallowRef('')
   'number-input': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { NumberInput } from '@manfad/ui'
+import { NumberInput } from '@manfad99/ui'
 
 const qty = shallowRef<number | null>(0)
 </script>
@@ -304,7 +304,7 @@ const qty = shallowRef<number | null>(0)
   textarea: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Textarea } from '@manfad/ui'
+import { Textarea } from '@manfad99/ui'
 
 const notes = shallowRef('')
 </script>
@@ -317,7 +317,7 @@ const notes = shallowRef('')
   toggle: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Toggle } from '@manfad/ui'
+import { Toggle } from '@manfad99/ui'
 
 const bold = shallowRef(false)
 </script>
@@ -330,7 +330,7 @@ const bold = shallowRef(false)
   'mode-toggle': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Mode, ModeToggle } from '@manfad/ui'
+import { Mode, ModeToggle } from '@manfad99/ui'
 
 const mode = shallowRef('docs')
 </script>
@@ -347,7 +347,7 @@ const mode = shallowRef('docs')
   'icon-input': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { IconInput } from '@manfad/ui'
+import { IconInput } from '@manfad99/ui'
 
 const query = shallowRef('')
 </script>
@@ -369,7 +369,7 @@ import {
   type DateFilterMode,
   type DateSelection,
   type MonthSelection,
-} from '@manfad/ui'
+} from '@manfad99/ui'
 
 const date = shallowRef<string>()
 const dateEnd = shallowRef<string>()
@@ -394,7 +394,7 @@ const monthSelection = shallowRef<MonthSelection>('single')
   radio: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Label, Radio, RadioGroup } from '@manfad/ui'
+import { Label, Radio, RadioGroup } from '@manfad99/ui'
 
 const status = shallowRef('open')
 </script>
@@ -419,7 +419,7 @@ import { shallowRef } from 'vue'
 import {
   Choice,
   type ChoiceOption,
-} from '@manfad/ui'
+} from '@manfad99/ui'
 
 const categories = shallowRef<string[]>(['fuel'])
 const status = shallowRef<string[]>(['open'])
@@ -460,7 +460,7 @@ import { shallowRef } from 'vue'
 import {
   ChoiceCard,
   type ChoiceCardOption,
-} from '@manfad/ui'
+} from '@manfad99/ui'
 
 const plan = shallowRef<string[]>(['plus'])
 const features = shallowRef<string[]>(['analytics'])
@@ -517,7 +517,7 @@ import { shallowRef } from 'vue'
 import {
   Filter,
   type FilterOption,
-} from '@manfad/ui'
+} from '@manfad99/ui'
 
 const categories = shallowRef<string[]>(['fuel'])
 const status = shallowRef<string[]>(['open'])
@@ -553,7 +553,7 @@ const statusOptions: FilterOption[] = [
   'input-clear': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { InputClear } from '@manfad/ui'
+import { InputClear } from '@manfad99/ui'
 
 const query = shallowRef<string | number>()
 </script>
@@ -570,7 +570,7 @@ const query = shallowRef<string | number>()
   'checkbox-tree': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { CheckboxTree } from '@manfad/ui'
+import { CheckboxTree } from '@manfad99/ui'
 
 const checked = shallowRef<string[]>(['item_create'])
 const groups = [{
@@ -590,7 +590,7 @@ const groups = [{
 
   'code-block': vue(`
 <script setup lang="ts">
-import { CodeBlock } from '@manfad/ui'
+import { CodeBlock } from '@manfad99/ui'
 
 const content = \`// Apply the active palette
 root.dataset.manfadComponentTheme = 'blue'
@@ -605,7 +605,7 @@ root.dataset.manfadComponentTheme = 'blue'
   tabs: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@manfad/ui'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@manfad99/ui'
 
 const tab = shallowRef('intake')
 </script>
@@ -634,7 +634,7 @@ const tab = shallowRef('intake')
   wheel: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { WheelPicker, WheelPickerColumn } from '@manfad/ui'
+import { WheelPicker, WheelPickerColumn } from '@manfad99/ui'
 
 const city = shallowRef('Kuching')
 </script>
@@ -649,7 +649,7 @@ const city = shallowRef('Kuching')
   'time-picker': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { TimePicker } from '@manfad/ui'
+import { TimePicker } from '@manfad99/ui'
 
 const time = shallowRef('14:30')
 </script>
@@ -661,7 +661,7 @@ const time = shallowRef('14:30')
 
   accordion: vue(`
 <script setup lang="ts">
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@manfad/ui'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@manfad99/ui'
 </script>
 
 <template>
@@ -676,7 +676,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@m
 
   'sidebar-groups': vue(`
 <script setup lang="ts">
-import { SidebarGroup, SidebarItem, SidebarSub, SidebarSubItem } from '@manfad/ui'
+import { SidebarGroup, SidebarItem, SidebarSub, SidebarSubItem } from '@manfad99/ui'
 </script>
 
 <template>
@@ -693,7 +693,7 @@ import { SidebarGroup, SidebarItem, SidebarSub, SidebarSubItem } from '@manfad/u
   progress: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Progress } from '@manfad/ui'
+import { Progress } from '@manfad99/ui'
 
 const value = shallowRef(33)
 </script>
@@ -711,7 +711,7 @@ const value = shallowRef(33)
 
   spinner: vue(`
 <script setup lang="ts">
-import { Button, Spinner } from '@manfad/ui'
+import { Button, Spinner } from '@manfad99/ui'
 </script>
 
 <template>
@@ -727,7 +727,7 @@ import { Button, Spinner } from '@manfad/ui'
   stepper: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Stepper, type StepperStep } from '@manfad/ui'
+import { Stepper, type StepperStep } from '@manfad99/ui'
 
 const step = shallowRef(1)
 const steps: StepperStep[] = [
@@ -747,7 +747,7 @@ const steps: StepperStep[] = [
   attachment: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Attachment, AttachmentList, Dropzone } from '@manfad/ui'
+import { Attachment, AttachmentList, Dropzone } from '@manfad99/ui'
 
 const files = shallowRef<File[]>([])
 </script>
@@ -768,12 +768,12 @@ const files = shallowRef<File[]>([])
 
   'hover': vue(`
 <script setup lang="ts">
-import { Hover, HoverContent, HoverTrigger } from '@manfad/ui'
+import { Hover, HoverContent, HoverTrigger } from '@manfad99/ui'
 </script>
 
 <template>
   <Hover>
-    <HoverTrigger>@manfad/ui</HoverTrigger>
+    <HoverTrigger>@manfad99/ui</HoverTrigger>
     <HoverContent>
       Shared Vue 3 admin UI kit.
     </HoverContent>
@@ -783,7 +783,7 @@ import { Hover, HoverContent, HoverTrigger } from '@manfad/ui'
 
   'dropdown': vue(`
 <script setup lang="ts">
-import { Button, Dropdown, DropdownContent, DropdownItem, DropdownTrigger } from '@manfad/ui'
+import { Button, Dropdown, DropdownContent, DropdownItem, DropdownTrigger } from '@manfad99/ui'
 </script>
 
 <template>
@@ -801,7 +801,7 @@ import { Button, Dropdown, DropdownContent, DropdownItem, DropdownTrigger } from
 
   'scroll-area': vue(`
 <script setup lang="ts">
-import { ScrollArea } from '@manfad/ui'
+import { ScrollArea } from '@manfad99/ui'
 </script>
 
 <template>
@@ -813,7 +813,7 @@ import { ScrollArea } from '@manfad/ui'
 
   'card-sections': vue(`
 <script setup lang="ts">
-import { Badge, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@manfad/ui'
+import { Badge, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@manfad99/ui'
 </script>
 
 <template>
@@ -832,7 +832,7 @@ import { Badge, Card, CardContent, CardDescription, CardFooter, CardHeader, Card
   'calendar-range': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { DatePicker } from '@manfad/ui'
+import { DatePicker } from '@manfad99/ui'
 
 const start = shallowRef('')
 const end = shallowRef('')
@@ -846,7 +846,7 @@ const end = shallowRef('')
   calendar: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Calendar } from '@manfad/ui'
+import { Calendar } from '@manfad99/ui'
 
 const selectedDate = shallowRef('2026-07-31')
 const rangeStart = shallowRef('2026-07-06')
@@ -885,7 +885,7 @@ const excludedDates = ['2026-07-04', '2026-07-18']
   'month-picker': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { MonthPicker } from '@manfad/ui'
+import { MonthPicker } from '@manfad99/ui'
 
 const month = shallowRef('')
 </script>
@@ -898,7 +898,7 @@ const month = shallowRef('')
   'big-calendar': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { BigCalendar } from '@manfad/ui'
+import { BigCalendar } from '@manfad99/ui'
 
 const date = shallowRef('')
 </script>
@@ -920,7 +920,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@manfad/ui'
+} from '@manfad99/ui'
 </script>
 
 <template>
@@ -945,7 +945,7 @@ import {
 
   popover: vue(`
 <script setup lang="ts">
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@manfad/ui'
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@manfad99/ui'
 </script>
 
 <template>
@@ -960,7 +960,7 @@ import { Button, Popover, PopoverContent, PopoverTrigger } from '@manfad/ui'
 
   toast: vue(`
 <script setup lang="ts">
-import { Button, toast, Toaster } from '@manfad/ui'
+import { Button, toast, Toaster } from '@manfad99/ui'
 </script>
 
 <template>
@@ -971,7 +971,7 @@ import { Button, toast, Toaster } from '@manfad/ui'
 
   confirmation: vue(`
 <script setup lang="ts">
-import { Button, confirm, toast, Toaster, Confirmation } from '@manfad/ui'
+import { Button, confirm, toast, Toaster, Confirmation } from '@manfad99/ui'
 
 async function onDelete() {
   const ok = await confirm({
@@ -993,7 +993,7 @@ async function onDelete() {
 
   skeleton: vue(`
 <script setup lang="ts">
-import { Skeleton } from '@manfad/ui'
+import { Skeleton } from '@manfad99/ui'
 </script>
 
 <template>
@@ -1009,7 +1009,7 @@ import { Skeleton } from '@manfad/ui'
 
   empty: vue(`
 <script setup lang="ts">
-import { Button, Empty } from '@manfad/ui'
+import { Button, Empty } from '@manfad99/ui'
 </script>
 
 <template>
@@ -1021,7 +1021,7 @@ import { Button, Empty } from '@manfad/ui'
 
   error: vue(`
 <script setup lang="ts">
-import { ErrorPage } from '@manfad/ui'
+import { ErrorPage } from '@manfad99/ui'
 
 function retryRequest() {}
 function goHome() {}
@@ -1034,7 +1034,7 @@ function goHome() {}
 
   unauthorized: vue(`
 <script setup lang="ts">
-import { ErrorPage } from '@manfad/ui'
+import { ErrorPage } from '@manfad99/ui'
 
 function signIn() {}
 function goBack() {}
@@ -1047,7 +1047,7 @@ function goBack() {}
 
   'no-permission': vue(`
 <script setup lang="ts">
-import { ErrorPage } from '@manfad/ui'
+import { ErrorPage } from '@manfad99/ui'
 
 function goBack() {}
 function requestAccess() {}
@@ -1060,7 +1060,7 @@ function requestAccess() {}
 
   'page-loading': vue(`
 <script setup lang="ts">
-import { PageLoading } from '@manfad/ui'
+import { PageLoading } from '@manfad99/ui'
 </script>
 
 <template>
@@ -1071,7 +1071,7 @@ import { PageLoading } from '@manfad/ui'
   'loading-dialog': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Button, LoadingDialog } from '@manfad/ui'
+import { Button, LoadingDialog } from '@manfad99/ui'
 
 const open = shallowRef(false)
 </script>
@@ -1089,7 +1089,7 @@ const open = shallowRef(false)
 
   'time-badge': vue(`
 <script setup lang="ts">
-import { TimeBadge } from '@manfad/ui/time-badge'
+import { TimeBadge } from '@manfad99/ui/time-badge'
 
 const createdAt = new Date(Date.now() - 62 * 24 * 60 * 60 * 1000)
 </script>
@@ -1103,7 +1103,7 @@ const createdAt = new Date(Date.now() - 62 * 24 * 60 * 60 * 1000)
 
   timeline: vue(`
 <script setup lang="ts">
-import { Timeline, TimelineItem } from '@manfad/ui'
+import { Timeline, TimelineItem } from '@manfad99/ui'
 </script>
 
 <template>
@@ -1118,7 +1118,7 @@ import { Timeline, TimelineItem } from '@manfad/ui'
   'signature-pad': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Button, SignatureDialog, SignaturePad } from '@manfad/ui'
+import { Button, SignatureDialog, SignaturePad } from '@manfad99/ui'
 
 const open = shallowRef(false)
 const url = shallowRef('')
@@ -1138,7 +1138,7 @@ const url = shallowRef('')
 
   'line-chart': vue(`
 <script setup lang="ts">
-import { LineChart } from '@manfad/ui/chart'
+import { LineChart } from '@manfad99/ui/chart'
 
 const data = [{ month: new Date(2025, 0, 1), kuching: 18420, miri: 12980 }]
 const series = [
@@ -1154,7 +1154,7 @@ const series = [
 
   'area-chart': vue(`
 <script setup lang="ts">
-import { AreaChart } from '@manfad/ui/chart'
+import { AreaChart } from '@manfad99/ui/chart'
 
 const data = [{ month: new Date(2025, 0, 1), fuel: 18, labour: 12 }]
 const series = [
@@ -1170,7 +1170,7 @@ const series = [
 
   'bar-chart': vue(`
 <script setup lang="ts">
-import { BarChart } from '@manfad/ui/chart'
+import { BarChart } from '@manfad99/ui/chart'
 
 const data = [{ month: 'Jan', kuching: 1200, miri: 900 }]
 const series = [
@@ -1186,7 +1186,7 @@ const series = [
 
   'donut-chart': vue(`
 <script setup lang="ts">
-import { DonutChart } from '@manfad/ui/chart'
+import { DonutChart } from '@manfad99/ui/chart'
 </script>
 
 <template>
@@ -1200,7 +1200,7 @@ import { DonutChart } from '@manfad/ui/chart'
 
   table: vue(`
 <script setup lang="ts">
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@manfad/ui'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@manfad99/ui'
 </script>
 
 <template>
@@ -1224,7 +1224,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 
   'data-table': vue(`
 <script setup lang="ts">
-import { DataTable } from '@manfad/ui'
+import { DataTable } from '@manfad99/ui'
 
 const columns = [
   { key: 'name', label: 'Driver' },
@@ -1243,8 +1243,8 @@ const rows = [
   excel: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { DataTable } from '@manfad/ui'
-import { Excel, ExcelExport, ExcelImport, type ExcelColumn } from '@manfad/ui/excel'
+import { DataTable } from '@manfad99/ui'
+import { Excel, ExcelExport, ExcelImport, type ExcelColumn } from '@manfad99/ui/excel'
 
 const columns: ExcelColumn[] = [
   { key: 'id', label: 'ID' },
@@ -1271,7 +1271,7 @@ const rows = shallowRef([
 
   'collapsible-table': vue(`
 <script setup lang="ts">
-import { CollapsibleTable } from '@manfad/ui'
+import { CollapsibleTable } from '@manfad99/ui'
 
 const columns = [
   { key: 'id', label: 'ID', width: '5rem' },
@@ -1304,7 +1304,7 @@ const rows = [
 
   'grouped-table': vue(`
 <script setup lang="ts">
-import { GroupedTable } from '@manfad/ui'
+import { GroupedTable } from '@manfad99/ui'
 
 const groups = [{
   key: 'q1',
@@ -1325,7 +1325,7 @@ const rows = [{ id: '1', units: 320, revenue: 16000 }]
   'editable-table': vue(`
 <script setup lang="ts">
 import { ref } from 'vue'
-import { GroupedTable } from '@manfad/ui'
+import { GroupedTable } from '@manfad99/ui'
 
 const groups = [{
   key: 'stock',
@@ -1350,7 +1350,7 @@ const rows = ref([{ id: '1', product: 'Lamp', quantity: 26 }])
 
   'expandable-table': vue(`
 <script setup lang="ts">
-import { Expandable } from '@manfad/ui'
+import { Expandable } from '@manfad99/ui'
 
 const columns = [
   { key: 'name', label: 'Driver' },
@@ -1376,7 +1376,7 @@ const rows = [{
   'check-table': vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { CheckTable } from '@manfad/ui'
+import { CheckTable } from '@manfad99/ui'
 
 const selected = shallowRef<Array<string | number>>([])
 const columns = [
@@ -1399,7 +1399,7 @@ const rows = [{ id: 'AJ', name: 'Alice', region: 'Berlin' }]
   timetable: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Timetable, type TimetableOrientation } from '@manfad/ui'
+import { Timetable, type TimetableOrientation } from '@manfad99/ui'
 
 const orientation = shallowRef<TimetableOrientation>('vertical')
 const days = [
@@ -1418,7 +1418,7 @@ const events = [
 
   list: vue(`
 <script setup lang="ts">
-import { List, ListItem } from '@manfad/ui'
+import { List, ListItem } from '@manfad99/ui'
 </script>
 
 <template>
@@ -1433,7 +1433,7 @@ import { List, ListItem } from '@manfad/ui'
 
   row: vue(`
 <script setup lang="ts">
-import { Card, CardContent, List, ListItem, Row, RowItem } from '@manfad/ui'
+import { Card, CardContent, List, ListItem, Row, RowItem } from '@manfad99/ui'
 </script>
 
 <template>
@@ -1453,7 +1453,7 @@ import { Card, CardContent, List, ListItem, Row, RowItem } from '@manfad/ui'
   panes: vue(`
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Pane, PaneContainer } from '@manfad/ui'
+import { Pane, PaneContainer } from '@manfad99/ui'
 
 const sizes = shallowRef<number[]>([30, 70])
 </script>

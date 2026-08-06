@@ -1,8 +1,8 @@
-# @manfad/ui
+# @manfad99/ui
 
 > A Vue 3 component library for admin products — accessible primitives, forms, tables, and optional chart/Excel/markdown DLCs — styled with UnoCSS for Chrome 109+ (HSL tokens, no oklch).
 
-Import core components from `@manfad/ui`. Heavy add-ons use subpath exports (`@manfad/ui/chart`, `/excel`, `/md-view`, `/time-badge`) with optional peer dependencies. Prefer Composition API + `<script setup lang="ts">`. Icons use UnoCSS Iconify classes such as `i-lucide-*`.
+Import core components from `@manfad99/ui`. Heavy add-ons use subpath exports (`@manfad99/ui/chart`, `/excel`, `/md-view`, `/time-badge`) with optional peer dependencies. Prefer Composition API + `<script setup lang="ts">`. Icons use UnoCSS Iconify classes such as `i-lucide-*`.
 
 ## Getting Started
 
@@ -102,13 +102,13 @@ Import core components from `@manfad/ui`. Heavy add-ons use subpath exports (`@m
 
 ## Extra (DLC)
 
-- [AreaChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Area chart via `@manfad/ui/chart` (peer `@unovis/*`).
-- [BarChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Bar chart via `@manfad/ui/chart`.
-- [DonutChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Donut chart via `@manfad/ui/chart`.
-- [LineChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Line chart via `@manfad/ui/chart`.
-- [Excel](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/excel): Import/export shell via `@manfad/ui/excel` (peer `xlsx`).
-- [MdView](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/md-view): Markdown viewer via `@manfad/ui/md-view` (peer `markdown-it`).
-- [TimeBadge](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/time-badge): Relative time badge via `@manfad/ui/time-badge` (peer `@vueuse/core`).
+- [AreaChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Area chart via `@manfad99/ui/chart` (peer `@unovis/*`).
+- [BarChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Bar chart via `@manfad99/ui/chart`.
+- [DonutChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Donut chart via `@manfad99/ui/chart`.
+- [LineChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Line chart via `@manfad99/ui/chart`.
+- [Excel](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/excel): Import/export shell via `@manfad99/ui/excel` (peer `xlsx`).
+- [MdView](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/md-view): Markdown viewer via `@manfad99/ui/md-view` (peer `markdown-it`).
+- [TimeBadge](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/time-badge): Relative time badge via `@manfad99/ui/time-badge` (peer `@vueuse/core`).
 
 ## Optional
 

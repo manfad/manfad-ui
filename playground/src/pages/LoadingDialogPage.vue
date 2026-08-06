@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, LoadingDialog } from '@manfad/ui'
+import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, LoadingDialog } from '@manfad99/ui'
 import UsageExample from '../components/UsageExample.vue'
 import { useEmbed } from '../use-embed'
 import { usageExamples } from '../usage-examples'

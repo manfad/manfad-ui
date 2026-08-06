@@ -11,7 +11,7 @@ export interface ManfadUiPresetOptions {
 }
 
 /**
- * Presets required by @manfad/ui.
+ * Presets required by @manfad99/ui.
  *
  * Consumer applications must add `presetWind3()` separately:
  *
@@ -37,7 +37,7 @@ export function presetManfadUi(options: ManfadUiPresetOptions = {}): Preset[] {
    * preset: --chart-1 through --chart-5 and --sidebar.
    */
   const fixupPreset: Preset = {
-    name: '@manfad/ui-fixup',
+    name: '@manfad99/ui-fixup',
     preflights: [
       {
         getCSS: () => `${createManfadUiPaletteCss(darkSelector)}
@@ -134,4 +134,4 @@ body {
   ]
 }
 
-export const manfadUiContent = ['node_modules/@manfad/ui/dist/**/*.mjs']
+export const manfadUiContent = ['node_modules/@manfad99/ui/dist/**/*.mjs']

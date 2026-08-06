@@ -123,7 +123,7 @@ export const componentSectionGroups: ComponentSectionGroup[] = [
   },
 ]
 
-/** Optional DLC surfaces that need peer deps (`@manfad/ui/chart`, `/excel`, etc.). */
+/** Optional DLC surfaces that need peer deps (`@manfad99/ui/chart`, `/excel`, etc.). */
 export const extraSectionGroups: ComponentSectionGroup[] = [
   {
     id: 'charts',

@@ -1,4 +1,4 @@
-# @manfad/ui
+# @manfad99/ui
 
 A Vue 3 component library for admin products — accessible primitives, form controls, tables, and charts, styled with UnoCSS and designed to run on Chrome 109+ (HSL tokens, no `oklch`).
 
@@ -11,7 +11,7 @@ A Vue 3 component library for admin products — accessible primitives, form con
 ## Install
 
 ```bash
-pnpm add @manfad/ui vue @fontsource/inter
+pnpm add @manfad99/ui vue @fontsource/inter
 pnpm add -D unocss
 ```
 
@@ -20,7 +20,7 @@ pnpm add -D unocss
 In your app entry:
 
 ```ts
-import '@manfad/ui/ui.css'
+import '@manfad99/ui/ui.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
 import '@fontsource/inter/600.css'
@@ -33,7 +33,7 @@ Register the library preset and scan published component files for utilities:
 
 ```ts
 import { defineConfig, presetWind3 } from 'unocss'
-import { manfadUiContent, presetManfadUi } from '@manfad/ui/preset'
+import { manfadUiContent, presetManfadUi } from '@manfad99/ui/preset'
 
 export default defineConfig({
   content: {
@@ -53,7 +53,7 @@ presets: [presetWind3(), ...presetManfadUi({ color: 'blue', radius: 0.5 })]
 
 ```vue
 <script setup lang="ts">
-import { Button } from '@manfad/ui'
+import { Button } from '@manfad99/ui'
 </script>
 
 <template>
@@ -65,30 +65,30 @@ import { Button } from '@manfad/ui'
 
 | Export | Purpose |
 | --- | --- |
-| `@manfad/ui` | Core components, composables, and utilities |
-| `@manfad/ui/preset` | UnoCSS preset and content globs |
-| `@manfad/ui/ui.css` | Base component styles |
-| `@manfad/ui/chart` | Charts DLC (optional peer: `@unovis/*`) |
-| `@manfad/ui/time-badge` | TimeBadge DLC (optional peer: `@vueuse/core`) |
-| `@manfad/ui/md-view` | Markdown viewer DLC (optional peer: `markdown-it`) |
-| `@manfad/ui/excel` | Excel import/export DLC (optional peer: `xlsx`) |
+| `@manfad99/ui` | Core components, composables, and utilities |
+| `@manfad99/ui/preset` | UnoCSS preset and content globs |
+| `@manfad99/ui/ui.css` | Base component styles |
+| `@manfad99/ui/chart` | Charts DLC (optional peer: `@unovis/*`) |
+| `@manfad99/ui/time-badge` | TimeBadge DLC (optional peer: `@vueuse/core`) |
+| `@manfad99/ui/md-view` | Markdown viewer DLC (optional peer: `markdown-it`) |
+| `@manfad99/ui/excel` | Excel import/export DLC (optional peer: `xlsx`) |
 
 ## Optional DLCs
 
-Heavy surfaces ship as **subpath add-ons**. Import them from their export and install the peer only when you use that surface — the core `@manfad/ui` barrel does not pull these libraries in.
+Heavy surfaces ship as **subpath add-ons**. Import them from their export and install the peer only when you use that surface — the core `@manfad99/ui` barrel does not pull these libraries in.
 
 | DLC | Import | Install |
 | --- | --- | --- |
-| Charts | `@manfad/ui/chart` | `pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7` |
-| TimeBadge | `@manfad/ui/time-badge` | `pnpm add @vueuse/core` |
-| MdView | `@manfad/ui/md-view` | `pnpm add markdown-it` |
-| Excel | `@manfad/ui/excel` | `pnpm add xlsx` |
+| Charts | `@manfad99/ui/chart` | `pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7` |
+| TimeBadge | `@manfad99/ui/time-badge` | `pnpm add @vueuse/core` |
+| MdView | `@manfad99/ui/md-view` | `pnpm add markdown-it` |
+| Excel | `@manfad99/ui/excel` | `pnpm add xlsx` |
 
 ```ts
-import { LineChart } from '@manfad/ui/chart'
-import { TimeBadge } from '@manfad/ui/time-badge'
-import { MdView } from '@manfad/ui/md-view'
-import { Excel, ExcelExport, ExcelImport } from '@manfad/ui/excel'
+import { LineChart } from '@manfad99/ui/chart'
+import { TimeBadge } from '@manfad99/ui/time-badge'
+import { MdView } from '@manfad99/ui/md-view'
+import { Excel, ExcelExport, ExcelImport } from '@manfad99/ui/excel'
 ```
 
 ## Development
@@ -108,12 +108,12 @@ The playground homepage is **Home** (`/docs`, README via `MdView`; `/` redirects
 From a pnpm workspace root:
 
 ```json
-"@manfad/ui": "workspace:*"
+"@manfad99/ui": "workspace:*"
 ```
 
 ```bash
 pnpm install
-pnpm --filter @manfad/ui build
+pnpm --filter @manfad99/ui build
 ```
 
 ## Theming
@@ -139,7 +139,7 @@ Override tokens with HSL channels (no wrapping `hsl()`), so opacity modifiers ke
 
 ```vue
 <script setup lang="ts">
-import { ThemePalette, ThemeSwitcher } from '@manfad/ui'
+import { ThemePalette, ThemeSwitcher } from '@manfad99/ui'
 </script>
 
 <template>
@@ -161,7 +161,7 @@ pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7
 
 ```vue
 <script setup lang="ts">
-import { LineChart } from '@manfad/ui/chart'
+import { LineChart } from '@manfad99/ui/chart'
 
 const data = [{ month: new Date(2025, 0, 1), kuching: 18420, miri: 12980 }]
 const series = [
@@ -200,8 +200,8 @@ pnpm add xlsx
 ```vue
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { DataTable } from '@manfad/ui'
-import { Excel, ExcelExport, ExcelImport, type ExcelColumn } from '@manfad/ui/excel'
+import { DataTable } from '@manfad99/ui'
+import { Excel, ExcelExport, ExcelImport, type ExcelColumn } from '@manfad99/ui/excel'
 
 const columns: ExcelColumn[] = [
   { key: 'id', label: 'ID' },
@@ -237,7 +237,7 @@ Renders selected `CheckboxTree` leaves as expandable group rows (`label`, `selec
 
 ```vue
 <script setup lang="ts">
-import { SelectionChips } from '@manfad/ui'
+import { SelectionChips } from '@manfad99/ui'
 
 const groups = [{
   key: 'items',
@@ -261,7 +261,7 @@ Source display with line numbers. Muted `//` comments; `://` inside URLs is left
 
 ```vue
 <script setup lang="ts">
-import { CodeBlock } from '@manfad/ui'
+import { CodeBlock } from '@manfad99/ui'
 
 const content = `// Apply the active palette
 root.dataset.manfadComponentTheme = 'blue'
@@ -292,7 +292,7 @@ Button that cycles through declarative `Mode` options. Optional keyboard shortcu
 ```vue
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Mode, ModeToggle } from '@manfad/ui'
+import { Mode, ModeToggle } from '@manfad99/ui'
 
 const mode = shallowRef('docs')
 </script>

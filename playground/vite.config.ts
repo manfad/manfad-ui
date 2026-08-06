@@ -33,12 +33,12 @@ export default defineConfig({
       '@': fileURLToPath(new URL('../src', import.meta.url)),
       // Playground demos import the public package name; resolve to source so
       // CI does not need a prior library build / published dist.
-      '@manfad/ui/chart': fileURLToPath(new URL('../src/chart.ts', import.meta.url)),
-      '@manfad/ui/excel': fileURLToPath(new URL('../src/excel.ts', import.meta.url)),
-      '@manfad/ui/md-view': fileURLToPath(new URL('../src/md-view.ts', import.meta.url)),
-      '@manfad/ui/time-badge': fileURLToPath(new URL('../src/time-badge.ts', import.meta.url)),
-      '@manfad/ui/preset': fileURLToPath(new URL('../src/preset.ts', import.meta.url)),
-      '@manfad/ui': fileURLToPath(new URL('../src/index.ts', import.meta.url)),
+      '@manfad99/ui/chart': fileURLToPath(new URL('../src/chart.ts', import.meta.url)),
+      '@manfad99/ui/excel': fileURLToPath(new URL('../src/excel.ts', import.meta.url)),
+      '@manfad99/ui/md-view': fileURLToPath(new URL('../src/md-view.ts', import.meta.url)),
+      '@manfad99/ui/time-badge': fileURLToPath(new URL('../src/time-badge.ts', import.meta.url)),
+      '@manfad99/ui/preset': fileURLToPath(new URL('../src/preset.ts', import.meta.url)),
+      '@manfad99/ui': fileURLToPath(new URL('../src/index.ts', import.meta.url)),
       vue: fileURLToPath(new URL('../node_modules/vue', import.meta.url)),
     },
   },

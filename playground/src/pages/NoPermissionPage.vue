@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ErrorPage, toast } from '@manfad/ui'
+import { ErrorPage, toast } from '@manfad99/ui'
 import UsageExample from '../components/UsageExample.vue'
 import { useEmbed } from '../use-embed'
 import { usageExamples } from '../usage-examples'

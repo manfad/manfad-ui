@@ -200,7 +200,7 @@ const {
           <h2 class="text-lg font-semibold">ThemeSwitcher</h2>
           <p class="text-sm text-muted-foreground">
             <code class="text-xs">ThemeSwitcher</code> is exported from
-            <code class="text-xs">@manfad/ui</code> and drops into any app without being rewritten.
+            <code class="text-xs">@manfad99/ui</code> and drops into any app without being rewritten.
             The sidebar mounts the same component; this demo shares its state so both stay in sync.
           </p>
 

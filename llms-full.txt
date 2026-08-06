@@ -1,4 +1,4 @@
-# @manfad/ui — full LLM context
+# @manfad99/ui — full LLM context
 
 > Complete consumer guide for the Vue 3 admin UI kit: install, theming, package exports, DLCs, and component usage patterns.
 
@@ -6,7 +6,7 @@ This file is the large-context companion to `/llms.txt`. Prefer `llms.txt` unles
 
 ## Package
 
-Name: `@manfad/ui`
+Name: `@manfad99/ui`
 Stack: Vue 3.4+, UnoCSS 66+, radix-vue, HSL design tokens (Chrome 109+, no oklch)
 Icons: UnoCSS + `@iconify-json/lucide` (`i-lucide-*` classes)
 Font: Inter via `@fontsource/inter`
@@ -14,14 +14,14 @@ Font: Inter via `@fontsource/inter`
 ## Install
 
 ```bash
-pnpm add @manfad/ui vue @fontsource/inter
+pnpm add @manfad99/ui vue @fontsource/inter
 pnpm add -D unocss
 ```
 
 App entry:
 
 ```ts
-import '@manfad/ui/ui.css'
+import '@manfad99/ui/ui.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
 import '@fontsource/inter/600.css'
@@ -32,7 +32,7 @@ UnoCSS:
 
 ```ts
 import { defineConfig, presetWind3 } from 'unocss'
-import { manfadUiContent, presetManfadUi } from '@manfad/ui/preset'
+import { manfadUiContent, presetManfadUi } from '@manfad99/ui/preset'
 
 export default defineConfig({
   content: {
@@ -48,7 +48,7 @@ Basic usage:
 
 ```vue
 <script setup lang="ts">
-import { Button } from '@manfad/ui'
+import { Button } from '@manfad99/ui'
 </script>
 
 <template>
@@ -60,22 +60,22 @@ import { Button } from '@manfad/ui'
 
 | Export | Purpose |
 | --- | --- |
-| `@manfad/ui` | Core components, composables, utilities |
-| `@manfad/ui/preset` | UnoCSS preset and content globs |
-| `@manfad/ui/ui.css` | Base component styles |
-| `@manfad/ui/chart` | Charts DLC — peer `@unovis/ts@1.6.7` + `@unovis/vue@1.6.7` |
-| `@manfad/ui/time-badge` | TimeBadge DLC — peer `@vueuse/core` |
-| `@manfad/ui/md-view` | Markdown viewer DLC — peer `markdown-it` |
-| `@manfad/ui/excel` | Excel import/export DLC — peer `xlsx` |
+| `@manfad99/ui` | Core components, composables, utilities |
+| `@manfad99/ui/preset` | UnoCSS preset and content globs |
+| `@manfad99/ui/ui.css` | Base component styles |
+| `@manfad99/ui/chart` | Charts DLC — peer `@unovis/ts@1.6.7` + `@unovis/vue@1.6.7` |
+| `@manfad99/ui/time-badge` | TimeBadge DLC — peer `@vueuse/core` |
+| `@manfad99/ui/md-view` | Markdown viewer DLC — peer `markdown-it` |
+| `@manfad99/ui/excel` | Excel import/export DLC — peer `xlsx` |
 
 Core barrel does **not** re-export DLC surfaces. Install peers only when you import that subpath.
 
 ```ts
-import { Button, DataTable } from '@manfad/ui'
-import { LineChart } from '@manfad/ui/chart'
-import { TimeBadge } from '@manfad/ui/time-badge'
-import { MdView } from '@manfad/ui/md-view'
-import { Excel, ExcelExport, ExcelImport } from '@manfad/ui/excel'
+import { Button, DataTable } from '@manfad99/ui'
+import { LineChart } from '@manfad99/ui/chart'
+import { TimeBadge } from '@manfad99/ui/time-badge'
+import { MdView } from '@manfad99/ui/md-view'
+import { Excel, ExcelExport, ExcelImport } from '@manfad99/ui/excel'
 ```
 
 ## Theming
@@ -111,7 +111,7 @@ pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7
 
 ```vue
 <script setup lang="ts">
-import { LineChart } from '@manfad/ui/chart'
+import { LineChart } from '@manfad99/ui/chart'
 
 const data = [{ month: new Date(2025, 0, 1), kuching: 18420, miri: 12980 }]
 const series = [
@@ -139,8 +139,8 @@ pnpm add xlsx
 ```vue
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { DataTable } from '@manfad/ui'
-import { Excel, ExcelExport, ExcelImport, type ExcelColumn } from '@manfad/ui/excel'
+import { DataTable } from '@manfad99/ui'
+import { Excel, ExcelExport, ExcelImport, type ExcelColumn } from '@manfad99/ui/excel'
 
 const columns: ExcelColumn[] = [
   { key: 'id', label: 'ID' },
@@ -169,7 +169,7 @@ Compound API — button cycles declarative modes:
 ```vue
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Mode, ModeToggle } from '@manfad/ui'
+import { Mode, ModeToggle } from '@manfad99/ui'
 
 const mode = shallowRef('docs')
 </script>
@@ -189,7 +189,7 @@ const mode = shallowRef('docs')
 
 ```vue
 <script setup lang="ts">
-import { Timeline, TimelineItem } from '@manfad/ui'
+import { Timeline, TimelineItem } from '@manfad99/ui'
 </script>
 
 <template>
@@ -219,7 +219,7 @@ Mount once near the app root, then call `confirm()`:
 
 ```vue
 <script setup lang="ts">
-import { Confirmation, confirm } from '@manfad/ui'
+import { Confirmation, confirm } from '@manfad99/ui'
 
 async function onDelete() {
   const ok = await confirm({
@@ -241,7 +241,7 @@ Renders selected CheckboxTree leaves as expandable group rows:
 
 ```vue
 <script setup lang="ts">
-import { SelectionChips } from '@manfad/ui'
+import { SelectionChips } from '@manfad99/ui'
 
 const groups = [{
   key: 'items',
@@ -263,7 +263,7 @@ const values = ['item_create', 'item_modify']
 
 ```vue
 <script setup lang="ts">
-import { CodeBlock } from '@manfad/ui'
+import { CodeBlock } from '@manfad99/ui'
 const content = `// comment\nroot.dataset.manfadComponentTheme = 'blue'\n`
 </script>
 
@@ -289,7 +289,7 @@ On Save, downloads a PNG unless `:download="false"`, and emits the data URL.
 ```vue
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { SidebarSwitcher } from '@manfad/ui'
+import { SidebarSwitcher } from '@manfad99/ui'
 
 const context = shallowRef('docs')
 const items = [
@@ -302,7 +302,7 @@ const items = [
 <template>
   <SidebarSwitcher
     v-model="context"
-    title="@manfad/ui"
+    title="@manfad99/ui"
     icon="i-lucide-layers"
     :items="items"
   />
@@ -325,12 +325,12 @@ Tables: CheckTable, CollapsibleTable, DataTable, Expandable, GroupedTable (edita
 
 ## Component catalog (DLC / Extra)
 
-Charts (`@manfad/ui/chart`): AreaChart, BarChart, DonutChart, LineChart.
-Add-ons: Excel (`@manfad/ui/excel`), MdView (`@manfad/ui/md-view`), TimeBadge (`@manfad/ui/time-badge`).
+Charts (`@manfad99/ui/chart`): AreaChart, BarChart, DonutChart, LineChart.
+Add-ons: Excel (`@manfad99/ui/excel`), MdView (`@manfad99/ui/md-view`), TimeBadge (`@manfad99/ui/time-badge`).
 
 ## Conventions for AI assistants
 
-1. Import from `@manfad/ui` for core; never assume charts/excel/md-view/time-badge are on the root barrel.
+1. Import from `@manfad99/ui` for core; never assume charts/excel/md-view/time-badge are on the root barrel.
 2. Use `<script setup lang="ts">` and `shallowRef` when deep reactivity is unnecessary.
 3. Style with UnoCSS utility classes and semantic tokens (`bg-primary`, `text-muted-foreground`), not hardcoded greys when a token exists.
 4. Prefer existing components (Dialog, Confirmation, Empty, DataTable) over reinventing admin chrome.

@@ -201,12 +201,12 @@ const {
           <p class="text-sm leading-7">
             The
             <Hover>
-              <HoverTrigger>@manfad/ui</HoverTrigger>
+              <HoverTrigger>@manfad99/ui</HoverTrigger>
               <HoverContent>
                 <div class="flex gap-3">
                   <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-semibold">UI</div>
                   <div class="space-y-1">
-                    <h4 class="text-sm font-semibold">@manfad/ui</h4>
+                    <h4 class="text-sm font-semibold">@manfad99/ui</h4>
                     <p class="text-sm text-muted-foreground">
                       Internal Vue 3 component library on radix-vue primitives and UnoCSS theming.
                     </p>

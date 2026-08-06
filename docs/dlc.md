@@ -4,19 +4,19 @@
 
 | DLC | Import | Install |
 | --- | --- | --- |
-| Charts | `@manfad/ui/chart` | `pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7` |
-| TimeBadge | `@manfad/ui/time-badge` | `pnpm add @vueuse/core` |
-| MdView | `@manfad/ui/md-view` | `pnpm add markdown-it` |
-| Excel | `@manfad/ui/excel` | `pnpm add xlsx` |
+| Charts | `@manfad99/ui/chart` | `pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7` |
+| TimeBadge | `@manfad99/ui/time-badge` | `pnpm add @vueuse/core` |
+| MdView | `@manfad99/ui/md-view` | `pnpm add markdown-it` |
+| Excel | `@manfad99/ui/excel` | `pnpm add xlsx` |
 
 ```ts
-import { LineChart } from '@manfad/ui/chart'
-import { TimeBadge } from '@manfad/ui/time-badge'
-import { MdView } from '@manfad/ui/md-view'
-import { Excel, ExcelExport, ExcelImport } from '@manfad/ui/excel'
+import { LineChart } from '@manfad99/ui/chart'
+import { TimeBadge } from '@manfad99/ui/time-badge'
+import { MdView } from '@manfad99/ui/md-view'
+import { Excel, ExcelExport, ExcelImport } from '@manfad99/ui/excel'
 ```
 
-The core `@manfad/ui` barrel does not re-export these modules.
+The core `@manfad99/ui` barrel does not re-export these modules.
 
 ## Charts notes
 

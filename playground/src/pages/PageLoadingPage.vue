@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue'
-import { Button, PageLoading } from '@manfad/ui'
+import { Button, PageLoading } from '@manfad99/ui'
 import UsageExample from '../components/UsageExample.vue'
 import { useEmbed } from '../use-embed'
 import { usageExamples } from '../usage-examples'

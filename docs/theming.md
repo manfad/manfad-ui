@@ -1,6 +1,6 @@
 # Theming
 
-> Palettes, CSS variables, and theme switching for `@manfad/ui`.
+> Palettes, CSS variables, and theme switching for `@manfad99/ui`.
 
 Blue is the default palette. Presets expose coordinated roles for primary, secondary, tertiary, rival, surfaces, forms, and the sidebar in light and dark mode.
 
@@ -25,7 +25,7 @@ Override tokens with HSL channels (no wrapping `hsl()`), so opacity modifiers ke
 
 ```vue
 <script setup lang="ts">
-import { ThemePalette, ThemeSwitcher } from '@manfad/ui'
+import { ThemePalette, ThemeSwitcher } from '@manfad99/ui'
 </script>
 
 <template>

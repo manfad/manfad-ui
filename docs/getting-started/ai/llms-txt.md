@@ -1,10 +1,10 @@
 # LLMs.txt
 
-> How to get AI tools like Cursor, Windsurf, GitHub Copilot, ChatGPT, and Claude to understand `@manfad/ui` components, theming, and best practices.
+> How to get AI tools like Cursor, Windsurf, GitHub Copilot, ChatGPT, and Claude to understand `@manfad99/ui` components, theming, and best practices.
 
 ## What is LLMs.txt?
 
-LLMs.txt is a structured documentation format designed for large language models. `@manfad/ui` provides LLMs.txt files with an index of components, setup guidance, and DLC notes so assistants can import the right package paths and follow kit conventions.
+LLMs.txt is a structured documentation format designed for large language models. `@manfad99/ui` provides LLMs.txt files with an index of components, setup guidance, and DLC notes so assistants can import the right package paths and follow kit conventions.
 
 ## Available files
 
@@ -28,7 +28,7 @@ When using tools like Cursor or Windsurf, the `@` symbol for doc references must
 
 ### Cursor
 
-1. Direct reference: paste the LLMs.txt URL when asking questions about `@manfad/ui`.
+1. Direct reference: paste the LLMs.txt URL when asking questions about `@manfad99/ui`.
 2. Add the URLs to project docs context with `@Docs` (type `@` yourself).
 
 Suggested docs entries:
@@ -44,8 +44,8 @@ Suggested docs entries:
 
 ### ChatGPT, Claude, and others
 
-- "Using @manfad/ui documentation from https://raw.githubusercontent.com/manfad/manfad-ui/main/llms.txt"
-- "Follow complete @manfad/ui guidelines from https://raw.githubusercontent.com/manfad/manfad-ui/main/llms-full.txt"
+- "Using @manfad99/ui documentation from https://raw.githubusercontent.com/manfad/manfad-ui/main/llms.txt"
+- "Follow complete @manfad99/ui guidelines from https://raw.githubusercontent.com/manfad/manfad-ui/main/llms-full.txt"
 
 ## Related
 

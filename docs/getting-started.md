@@ -1,6 +1,6 @@
 # Getting started
 
-> Install and configure `@manfad/ui` in a Vue 3 + UnoCSS app.
+> Install and configure `@manfad99/ui` in a Vue 3 + UnoCSS app.
 
 ## Requirements
 
@@ -11,14 +11,14 @@
 ## Install
 
 ```bash
-pnpm add @manfad/ui vue @fontsource/inter
+pnpm add @manfad99/ui vue @fontsource/inter
 pnpm add -D unocss
 ```
 
 ### Styles and fonts
 
 ```ts
-import '@manfad/ui/ui.css'
+import '@manfad99/ui/ui.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
 import '@fontsource/inter/600.css'
@@ -29,7 +29,7 @@ import '@fontsource/inter/700.css'
 
 ```ts
 import { defineConfig, presetWind3 } from 'unocss'
-import { manfadUiContent, presetManfadUi } from '@manfad/ui/preset'
+import { manfadUiContent, presetManfadUi } from '@manfad99/ui/preset'
 
 export default defineConfig({
   content: {
@@ -43,19 +43,19 @@ export default defineConfig({
 
 | Export | Purpose |
 | --- | --- |
-| `@manfad/ui` | Core components, composables, and utilities |
-| `@manfad/ui/preset` | UnoCSS preset and content globs |
-| `@manfad/ui/ui.css` | Base component styles |
-| `@manfad/ui/chart` | Charts DLC |
-| `@manfad/ui/time-badge` | TimeBadge DLC |
-| `@manfad/ui/md-view` | Markdown viewer DLC |
-| `@manfad/ui/excel` | Excel import/export DLC |
+| `@manfad99/ui` | Core components, composables, and utilities |
+| `@manfad99/ui/preset` | UnoCSS preset and content globs |
+| `@manfad99/ui/ui.css` | Base component styles |
+| `@manfad99/ui/chart` | Charts DLC |
+| `@manfad99/ui/time-badge` | TimeBadge DLC |
+| `@manfad99/ui/md-view` | Markdown viewer DLC |
+| `@manfad99/ui/excel` | Excel import/export DLC |
 
 ## Usage
 
 ```vue
 <script setup lang="ts">
-import { Button } from '@manfad/ui'
+import { Button } from '@manfad99/ui'
 </script>
 
 <template>
