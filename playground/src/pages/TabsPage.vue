@@ -14,20 +14,20 @@ import {
 } from '@/components/ui/card'
 import { AreaChart, BarChart, DonutChart, LineChart } from '@/components/ui/chart'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { EmptyState } from '@/components/ui/empty-state'
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownLabel,
+  DropdownSeparator,
+  DropdownShortcut,
+  DropdownTrigger,
+} from '@/components/ui/dropdown'
+import { Empty } from '@/components/ui/empty'
 import { FormField } from '@/components/ui/form-field'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
+import { Hover, HoverContent, HoverTrigger } from '@/components/ui/hover'
 import { MonthPicker } from '@/components/ui/month-picker'
 import { NumberInput } from '@/components/ui/number-input'
-import { Progress } from '@/components/ui/progress'
+import { ProgressBar } from '@/components/ui/progress'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Stepper } from '@/components/ui/stepper'
@@ -35,7 +35,7 @@ import { Timeline, TimelineItem } from '@/components/ui/timeline'
 import { SignatureDialog, SignaturePad } from '@/components/ui/signature-pad'
 import { Spinner } from '@/components/ui/spinner'
 import { Textarea } from '@/components/ui/textarea'
-import { ToggleButton } from '@/components/ui/toggle-button'
+import { Toggle } from '@/components/ui/toggle'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CheckboxTree } from '@/components/ui/checkbox-tree'
 import { CodeBlock } from '@/components/ui/code-block'
@@ -80,7 +80,7 @@ import {
 import { TimePicker } from '@/components/ui/time-picker'
 import { Timetable } from '@/components/ui/timetable'
 import { ThemePalette } from '@/components/ui/theme-palette'
-import { ThemePalettePicker } from '@/components/ui/theme-palette-picker'
+import { ThemeSwitcher } from '@/components/ui/theme-switcher'
 import { WheelPicker, WheelPickerColumn } from '@/components/ui/wheel-picker'
 import {
   Table,
@@ -217,6 +217,97 @@ const {
               </TabsContent>
             </Tabs>
             <p class="text-sm text-muted-foreground">Active range: {{ selectedRange }}</p>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-sm font-medium">Square</p>
+            <Tabs model-value="week">
+              <TabsList square>
+                <TabsTrigger value="day">Day</TabsTrigger>
+                <TabsTrigger value="week">Week</TabsTrigger>
+                <TabsTrigger value="month">Month</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-sm font-medium">Underline</p>
+            <Tabs model-value="intake">
+              <TabsList variant="underline">
+                <TabsTrigger value="intake">Intake area</TabsTrigger>
+                <TabsTrigger value="booking">Booking strength</TabsTrigger>
+                <TabsTrigger value="hold">Hold risk</TabsTrigger>
+              </TabsList>
+              <TabsContent value="intake">
+                <p class="pt-3 text-sm text-muted-foreground">Intake area content.</p>
+              </TabsContent>
+              <TabsContent value="booking">
+                <p class="pt-3 text-sm text-muted-foreground">Booking strength content.</p>
+              </TabsContent>
+              <TabsContent value="hold">
+                <p class="pt-3 text-sm text-muted-foreground">Hold risk content.</p>
+              </TabsContent>
+            </Tabs>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-sm font-medium">Variants</p>
+            <div class="flex flex-wrap gap-3">
+              <Tabs model-value="a">
+                <TabsList variant="danger">
+                  <TabsTrigger value="a">Danger</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Tabs model-value="a">
+                <TabsList variant="success">
+                  <TabsTrigger value="a">Success</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Tabs model-value="a">
+                <TabsList variant="warning">
+                  <TabsTrigger value="a">Warning</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Tabs model-value="a">
+                <TabsList variant="secondary">
+                  <TabsTrigger value="a">Secondary</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Tabs model-value="a">
+                <TabsList variant="tertiary">
+                  <TabsTrigger value="a">Tertiary</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Tabs model-value="a">
+                <TabsList variant="rival">
+                  <TabsTrigger value="a">Rival</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Tabs model-value="a">
+                <TabsList variant="outline">
+                  <TabsTrigger value="a">Outline</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Tabs model-value="a">
+                <TabsList variant="ghost">
+                  <TabsTrigger value="a">Ghost</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Tabs model-value="a">
+                <TabsList square variant="success">
+                  <TabsTrigger value="a">Square + success</TabsTrigger>
+                  <TabsTrigger value="b">Alt</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
           </div>
 
           <div class="space-y-2">

@@ -2,8 +2,24 @@
   "name": "@manfad/ui",
   "version": "0.1.0",
   "description": "Shared admin UI kit: shadcn-style Vue components on UnoCSS, compatible with old browsers (no oklch, Chrome 109+)",
-  "private": true,
+  "private": false,
+  "license": "MIT",
+  "author": "manfad",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manfad/manfad-ui.git"
+  },
+  "homepage": "https://manfad.github.io/manfad-ui/",
+  "bugs": {
+    "url": "https://github.com/manfad/manfad-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist"
   ],
@@ -16,10 +32,27 @@
       "types": "./dist/preset.d.ts",
       "default": "./dist/preset.mjs"
     },
+    "./chart": {
+      "types": "./dist/chart.d.ts",
+      "default": "./dist/chart.mjs"
+    },
+    "./time-badge": {
+      "types": "./dist/time-badge.d.ts",
+      "default": "./dist/time-badge.mjs"
+    },
+    "./md-view": {
+      "types": "./dist/md-view.d.ts",
+      "default": "./dist/md-view.mjs"
+    },
+    "./excel": {
+      "types": "./dist/excel.d.ts",
+      "default": "./dist/excel.mjs"
+    },
     "./ui.css": "./dist/ui.css"
   },
   "scripts": {
     "build": "vite build",
+    "prepack": "pnpm typecheck && pnpm test && pnpm build",
     "dev": "vite --config playground/vite.config.ts",
     "preview": "vite preview --config playground/vite.config.ts",
     "build:playground": "vite build --config playground/vite.config.ts",
@@ -30,8 +63,6 @@
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
     "@iconify-json/lucide": "^1.2.68",
-    "@unovis/ts": "1.6.7",
-    "@unovis/vue": "1.6.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "radix-vue": "^1.9.17",
@@ -40,20 +71,49 @@
     "unocss-preset-shadcn": "^1.0.1"
   },
   "peerDependencies": {
+    "@unovis/ts": "1.6.7",
+    "@unovis/vue": "1.6.7",
+    "@vueuse/core": "^14.0.0",
+    "markdown-it": "^14.0.0",
     "unocss": ">=66.0.0",
-    "vue": "^3.4.0"
+    "vue": "^3.4.0",
+    "xlsx": "^0.18.5"
+  },
+  "peerDependenciesMeta": {
+    "@unovis/ts": {
+      "optional": true
+    },
+    "@unovis/vue": {
+      "optional": true
+    },
+    "@vueuse/core": {
+      "optional": true
+    },
+    "markdown-it": {
+      "optional": true
+    },
+    "xlsx": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^26.1.1",
     "@unocss/reset": "^66.0.0",
+    "@unovis/ts": "1.6.7",
+    "@unovis/vue": "1.6.7",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
+    "@vueuse/core": "^14.4.0",
+    "markdown-it": "^14.3.0",
     "typescript": "^5.7.2",
     "unocss": "^66.0.0",
     "vite": "^6.0.0",
     "vite-plugin-dts": "^4.4.0",
+    "vitest": "^3.0.9",
     "vue": "^3.5.13",
     "vue-router": "4",
-    "vue-tsc": "^2.2.0"
+    "vue-tsc": "^2.2.0",
+    "xlsx": "^0.18.5"
   }
 }

@@ -14,20 +14,20 @@ import {
 } from '@/components/ui/card'
 import { AreaChart, BarChart, DonutChart, LineChart } from '@/components/ui/chart'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { EmptyState } from '@/components/ui/empty-state'
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownLabel,
+  DropdownSeparator,
+  DropdownShortcut,
+  DropdownTrigger,
+} from '@/components/ui/dropdown'
+import { Empty } from '@/components/ui/empty'
 import { FormField } from '@/components/ui/form-field'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
+import { Hover, HoverContent, HoverTrigger } from '@/components/ui/hover'
 import { MonthPicker } from '@/components/ui/month-picker'
 import { NumberInput } from '@/components/ui/number-input'
-import { Progress } from '@/components/ui/progress'
+import { ProgressBar } from '@/components/ui/progress'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Stepper } from '@/components/ui/stepper'
@@ -35,7 +35,7 @@ import { Timeline, TimelineItem } from '@/components/ui/timeline'
 import { SignatureDialog, SignaturePad } from '@/components/ui/signature-pad'
 import { Spinner } from '@/components/ui/spinner'
 import { Textarea } from '@/components/ui/textarea'
-import { ToggleButton } from '@/components/ui/toggle-button'
+import { Toggle } from '@/components/ui/toggle'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CheckboxTree } from '@/components/ui/checkbox-tree'
 import { CodeBlock } from '@/components/ui/code-block'
@@ -80,7 +80,7 @@ import {
 import { TimePicker } from '@/components/ui/time-picker'
 import { Timetable } from '@/components/ui/timetable'
 import { ThemePalette } from '@/components/ui/theme-palette'
-import { ThemePalettePicker } from '@/components/ui/theme-palette-picker'
+import { ThemeSwitcher } from '@/components/ui/theme-switcher'
 import { WheelPicker, WheelPickerColumn } from '@/components/ui/wheel-picker'
 import {
   Table,
@@ -197,15 +197,15 @@ const {
   <div class="space-y-8">
   <Card>
 <CardContent class="space-y-4 p-6">
-          <h2 class="text-lg font-semibold">Theme switcher</h2>
+          <h2 class="text-lg font-semibold">ThemeSwitcher</h2>
           <p class="text-sm text-muted-foreground">
-            <code class="text-xs">ThemePalettePicker</code> is exported from
+            <code class="text-xs">ThemeSwitcher</code> is exported from
             <code class="text-xs">@manfad/ui</code> and drops into any app without being rewritten.
-            The sidebar mounts the same component; this is it standing on its own.
+            The sidebar mounts the same component; this demo shares its state so both stay in sync.
           </p>
 
           <div class="w-64 rounded-lg border border-sidebar-border bg-sidebar p-4 text-sidebar-foreground">
-            <ThemePalettePicker storage-key="manfad-ui-theme-demo" />
+            <ThemeSwitcher />
           </div>
 
           <div class="space-y-1.5 border-t border-border pt-4 text-sm text-muted-foreground">
@@ -218,13 +218,8 @@ const {
             <p>
               The selection persists to local storage under the
               <code class="text-xs">storageKey</code> prop, default
-              <code class="text-xs">manfad-ui-theme</code>. This instance uses its own key, which
-              is why its highlight starts out disagreeing with the sidebar's.
-            </p>
-            <p>
-              Mount one per app. Each instance keeps its own local state, so a second one
-              still retints the whole page on click, but the two disagree about which swatch
-              to highlight until the next reload.
+              <code class="text-xs">manfad-ui-theme</code>. Instances that share a key also share
+              live state, so the sidebar and this page highlight the same swatches.
             </p>
           </div>
         </CardContent>

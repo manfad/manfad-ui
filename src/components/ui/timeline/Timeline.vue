@@ -22,7 +22,12 @@ provide(timelineOrientationKey, computed(() => props.orientation))
 </script>
 
 <template>
-  <ol :class="cn(props.orientation === 'horizontal' ? 'flex' : 'ml-3 space-y-6', props.class)">
+  <ol
+    :class="cn(
+      props.orientation === 'horizontal' ? 'flex' : 'flex flex-col',
+      props.class,
+    )"
+  >
     <slot />
   </ol>
 </template>

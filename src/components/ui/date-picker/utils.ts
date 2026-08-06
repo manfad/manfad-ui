@@ -6,6 +6,42 @@ export function formatDate(date: Date): string {
   return `${year}-${month}-${day}`
 }
 
+export function formatMonth(date: Date): string {
+  const year = String(date.getFullYear()).padStart(4, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+
+  return `${year}-${month}`
+}
+
+export function parseMonth(value: string): Date | null {
+  const match = /^(\d{4})-(\d{2})$/.exec(value)
+
+  if (!match)
+    return null
+
+  const year = Number(match[1])
+  const month = Number(match[2]) - 1
+
+  if (month < 0 || month > 11)
+    return null
+
+  return new Date(year, month, 1)
+}
+
+/** Sunday-start week bounds, matching the calendar grid. */
+export function startOfWeek(date: Date): Date {
+  const result = new Date(date)
+  result.setHours(0, 0, 0, 0)
+  result.setDate(result.getDate() - result.getDay())
+  return result
+}
+
+export function endOfWeek(date: Date): Date {
+  const result = startOfWeek(date)
+  result.setDate(result.getDate() + 6)
+  return result
+}
+
 /** A day of the week: a JS `getDay()` index (0=Sunday…6=Saturday) or a day name (full or 3-letter, case-insensitive). */
 export type RestDay = number | string
 

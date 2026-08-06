@@ -13,16 +13,28 @@ function pageLoader(id: string) {
 }
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', redirect: '/buttons' },
+    { path: '/', redirect: '/docs' },
+    {
+      path: '/docs',
+      name: 'docs',
+      component: () => import('./pages/DocsPage.vue'),
+      meta: { title: 'Home', wide: true, mode: 'docs' },
+    },
+    {
+      path: '/docs/llms-txt',
+      name: 'llms-txt',
+      component: () => import('./pages/LlmsTxtPage.vue'),
+      meta: { title: 'LLMs.txt', wide: true, mode: 'docs' },
+    },
     ...componentSections.map(section => ({
       path: `/${section.id}`,
       name: section.id,
       component: pageLoader(section.id),
-      meta: { title: section.label },
+      meta: { title: section.label, wide: section.wide },
     })),
-    { path: '/:pathMatch(.*)*', redirect: '/buttons' },
+    { path: '/:pathMatch(.*)*', redirect: '/docs' },
   ],
   scrollBehavior() {
     return { top: 0 }

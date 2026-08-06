@@ -1,1 +1,2 @@
-export { default as ToggleButton } from './ToggleButton.vue'
+/** @deprecated Import from `@/components/ui/toggle` instead. */
+export { Toggle, ToggleButton } from '../toggle'

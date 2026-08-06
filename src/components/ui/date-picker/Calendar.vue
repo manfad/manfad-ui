@@ -6,17 +6,23 @@ import CalendarDaysGrid from './CalendarDaysGrid.vue'
 import CalendarMonthsGrid from './CalendarMonthsGrid.vue'
 import CalendarYearsGrid from './CalendarYearsGrid.vue'
 import type { CalendarDay } from './types'
-import { formatDate, normalizeExclude, normalizeRestday, parseDate, type RestDay } from './utils'
+import { endOfWeek, formatDate, formatMonth, normalizeExclude, normalizeRestday, parseDate, parseMonth, startOfWeek, type RestDay } from './utils'
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes['class']
   range?: boolean
+  /** Pick a month (`YYYY-MM`) instead of a day (`YYYY-MM-DD`). */
+  month?: boolean
+  /** Snap range selection to full weeks (Sunday–Saturday). */
+  week?: boolean
   restday?: RestDay[]
   exclude?: string | string[]
   restdayClass?: HTMLAttributes['class']
   excludeClass?: HTMLAttributes['class']
 }>(), {
   range: false,
+  month: false,
+  week: false,
 })
 
 type CalendarView = 'days' | 'months' | 'years'
@@ -24,14 +30,21 @@ type CalendarView = 'days' | 'months' | 'years'
 const modelValue = defineModel<string>()
 const rangeStart = defineModel<string>('start')
 const rangeEnd = defineModel<string>('end')
-const initialDate = parseDate(modelValue.value ?? '')
-  ?? parseDate(rangeStart.value ?? '')
-  ?? new Date()
+
+const initialDate = props.month
+  ? (parseMonth((props.range ? rangeStart.value : modelValue.value) ?? '')
+    ?? parseMonth(modelValue.value ?? '')
+    ?? new Date())
+  : (parseDate(modelValue.value ?? '')
+    ?? parseDate(rangeStart.value ?? '')
+    ?? new Date())
+
 const displayedMonth = shallowRef(initialDate.getMonth())
 const displayedYear = shallowRef(initialDate.getFullYear())
 const today = formatDate(new Date())
+const todayMonth = formatMonth(new Date())
 
-const view = shallowRef<CalendarView>('days')
+const view = shallowRef<CalendarView>(props.month ? 'months' : 'days')
 const yearPageStart = shallowRef(initialDate.getFullYear() - 6)
 
 const restdaySet = computed(() => normalizeRestday(props.restday))
@@ -43,9 +56,92 @@ const monthLabel = computed(() => new Intl.DateTimeFormat('en', {
 }).format(new Date(displayedYear.value, displayedMonth.value, 1)))
 
 const monthNames = computed(() => {
-  const format = new Intl.DateTimeFormat('en', { month: 'short' })
+  const format = new Intl.DateTimeFormat('en', {
+    month: props.month ? 'long' : 'short',
+  })
   return Array.from({ length: 12 }, (_, month) =>
     format.format(new Date(2000, month, 1)))
+})
+
+const monthSelectionValues = computed(() => {
+  if (!props.month)
+    return { start: undefined as string | undefined, end: undefined as string | undefined }
+
+  if (props.range) {
+    return {
+      start: rangeStart.value,
+      end: rangeEnd.value,
+    }
+  }
+
+  return {
+    start: modelValue.value,
+    end: undefined as string | undefined,
+  }
+})
+
+const selectedMonths = computed(() => {
+  if (!props.month)
+    return [displayedMonth.value]
+
+  const selected: number[] = []
+  const { start, end } = monthSelectionValues.value
+  const startDate = parseMonth(start ?? '')
+  const endDate = parseMonth(end ?? '')
+
+  if (startDate && startDate.getFullYear() === displayedYear.value)
+    selected.push(startDate.getMonth())
+
+  if (
+    endDate
+    && endDate.getFullYear() === displayedYear.value
+    && endDate.getMonth() !== startDate?.getMonth()
+  ) {
+    selected.push(endDate.getMonth())
+  }
+
+  return selected
+})
+
+const inRangeMonths = computed(() => {
+  if (!props.month || !props.range)
+    return []
+
+  const { start, end } = monthSelectionValues.value
+
+  if (!start || !end)
+    return []
+
+  return Array.from({ length: 12 }, (_, month) => {
+    const value = formatMonth(new Date(displayedYear.value, month, 1))
+    return value > start && value < end ? month : -1
+  }).filter(month => month >= 0)
+})
+
+const rangeStartMonth = computed(() => {
+  if (!props.month || !props.range)
+    return undefined
+
+  const { start, end } = monthSelectionValues.value
+
+  if (!start || !end)
+    return undefined
+
+  const date = parseMonth(start)
+  return date && date.getFullYear() === displayedYear.value ? date.getMonth() : undefined
+})
+
+const rangeEndMonth = computed(() => {
+  if (!props.month || !props.range)
+    return undefined
+
+  const { start, end } = monthSelectionValues.value
+
+  if (!start || !end)
+    return undefined
+
+  const date = parseMonth(end)
+  return date && date.getFullYear() === displayedYear.value ? date.getMonth() : undefined
 })
 
 const yearPage = computed(() =>
@@ -94,20 +190,28 @@ const days = computed<CalendarDay[]>(() => {
       isExcluded,
       isDisabled: isRestday || isExcluded,
       isInRange: props.range && !!start && !!end && value > start && value < end,
+      isRangeStart: props.range && !!start && !!end && value === start,
+      isRangeEnd: props.range && !!start && !!end && value === end,
     }
   })
 })
 
 watch([modelValue, rangeStart], ([value, start]) => {
-  const date = parseDate((props.range ? start : value) ?? '')
+  const date = props.month
+    ? parseMonth((props.range ? start : value) ?? '') ?? parseMonth(value ?? '')
+    : parseDate((props.range ? start : value) ?? '')
 
   if (date) {
     displayedMonth.value = date.getMonth()
     displayedYear.value = date.getFullYear()
   }
 
-  view.value = 'days'
+  if (!props.month)
+    view.value = 'days'
+  else if (view.value === 'days')
+    view.value = 'months'
 })
+
 
 function changeMonth(offset: number) {
   const date = new Date(displayedYear.value, displayedMonth.value + offset, 1)
@@ -134,8 +238,37 @@ function onHeaderLabel() {
   }
 }
 
+function selectRangeMonth(value: string) {
+  const start = rangeStart.value
+  const end = rangeEnd.value
+
+  if (!start || (start && end)) {
+    rangeStart.value = value
+    rangeEnd.value = undefined
+  }
+  else if (value >= start) {
+    rangeEnd.value = value
+  }
+  else {
+    rangeStart.value = value
+    rangeEnd.value = undefined
+  }
+}
+
 function selectMonth(month: number) {
   displayedMonth.value = month
+
+  if (props.month) {
+    const value = formatMonth(new Date(displayedYear.value, month, 1))
+
+    if (props.range)
+      selectRangeMonth(value)
+    else
+      modelValue.value = value
+
+    return
+  }
+
   view.value = 'days'
 }
 
@@ -144,7 +277,30 @@ function selectYear(year: number) {
   view.value = 'months'
 }
 
+function weekBounds(value: string) {
+  const date = parseDate(value)
+
+  if (!date)
+    return null
+
+  return {
+    start: formatDate(startOfWeek(date)),
+    end: formatDate(endOfWeek(date)),
+  }
+}
+
 function selectRangeDay(value: string) {
+  if (props.week) {
+    const bounds = weekBounds(value)
+
+    if (!bounds)
+      return
+
+    rangeStart.value = bounds.start
+    rangeEnd.value = bounds.end
+    return
+  }
+
   const start = rangeStart.value
   const end = rangeEnd.value
 
@@ -177,43 +333,84 @@ function selectDay(day: CalendarDay) {
 
   view.value = 'days'
 }
+
+function goToToday() {
+  const now = new Date()
+  displayedMonth.value = now.getMonth()
+  displayedYear.value = now.getFullYear()
+  yearPageStart.value = now.getFullYear() - 6
+
+  if (props.month) {
+    view.value = 'months'
+
+    if (props.range) {
+      rangeStart.value = todayMonth
+      rangeEnd.value = undefined
+    }
+    else {
+      modelValue.value = todayMonth
+    }
+
+    return
+  }
+
+  view.value = 'days'
+
+  if (props.range) {
+    if (props.week) {
+      rangeStart.value = formatDate(startOfWeek(now))
+      rangeEnd.value = formatDate(endOfWeek(now))
+    }
+    else {
+      rangeStart.value = today
+      rangeEnd.value = undefined
+    }
+  }
+  else {
+    modelValue.value = today
+  }
+}
+
+defineExpose({
+  goToToday,
+})
 </script>
 
 <template>
-  <div :class="cn('w-[252px]', props.class)">
-    <div class="relative flex items-center justify-center pb-3">
+  <div :class="cn('w-[224px]', props.class)">
+    <div class="relative flex items-center justify-center pb-2">
       <button
         type="button"
-        class="absolute left-0 inline-flex h-7 w-7 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+        class="absolute left-0 inline-flex size-6 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
         :aria-label="view === 'months' ? 'Previous year' : view === 'years' ? 'Previous years' : 'Previous month'"
         @click="stepHeader(-1)"
       >
-        <span class="i-lucide-chevron-left h-4 w-4" />
+        <span class="i-lucide-chevron-left size-3.5" />
       </button>
       <button
         v-if="view !== 'years'"
         type="button"
-        class="rounded-md px-2 py-1 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        class="rounded-md px-1.5 py-0.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         aria-label="Change month and year"
         @click="onHeaderLabel"
       >
         {{ headerLabel }}
       </button>
-      <div v-else class="px-2 py-1 text-sm font-medium">
+      <div v-else class="px-1.5 py-0.5 text-xs font-medium">
         {{ headerLabel }}
       </div>
       <button
         type="button"
-        class="absolute right-0 inline-flex h-7 w-7 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
+        class="absolute right-0 inline-flex size-6 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
         :aria-label="view === 'months' ? 'Next year' : view === 'years' ? 'Next years' : 'Next month'"
         @click="stepHeader(1)"
       >
-        <span class="i-lucide-chevron-right h-4 w-4" />
+        <span class="i-lucide-chevron-right size-3.5" />
       </button>
     </div>
 
     <CalendarDaysGrid
-      v-if="view === 'days'"
+      v-if="view === 'days' && !month"
       :days="days"
       :restday-class="restdayClass"
       :exclude-class="excludeClass"
@@ -223,7 +420,10 @@ function selectDay(day: CalendarDay) {
     <CalendarMonthsGrid
       v-else-if="view === 'months'"
       :months="monthNames"
-      :selected="displayedMonth"
+      :selected="selectedMonths"
+      :in-range="inRangeMonths"
+      :range-start="rangeStartMonth"
+      :range-end="rangeEndMonth"
       @select="selectMonth"
     />
 

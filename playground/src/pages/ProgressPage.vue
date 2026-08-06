@@ -1,223 +1,49 @@
 <script setup lang="ts">
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Attachment, AttachmentList, Dropzone } from '@/components/ui/attachment'
-import { Badge } from '@/components/ui/badge'
-import { BigCalendar } from '@/components/ui/big-calendar'
+import { shallowRef } from 'vue'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { AreaChart, BarChart, DonutChart, LineChart } from '@/components/ui/chart'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { EmptyState } from '@/components/ui/empty-state'
-import { FormField } from '@/components/ui/form-field'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
-import { MonthPicker } from '@/components/ui/month-picker'
-import { NumberInput } from '@/components/ui/number-input'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Stepper } from '@/components/ui/stepper'
-import { Timeline, TimelineItem } from '@/components/ui/timeline'
-import { SignatureDialog, SignaturePad } from '@/components/ui/signature-pad'
-import { Spinner } from '@/components/ui/spinner'
-import { Textarea } from '@/components/ui/textarea'
-import { ToggleButton } from '@/components/ui/toggle-button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { CheckboxTree } from '@/components/ui/checkbox-tree'
-import { CodeBlock } from '@/components/ui/code-block'
-import { DatePicker } from '@/components/ui/date-picker'
-import { GroupedTable } from '@/components/ui/grouped-table'
-import { IconInput } from '@/components/ui/icon-input'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import {
-  InputGroup,
-  InputGroupAddon,
-  inputGroupInputClass,
-} from '@/components/ui/input-group'
-import { Label } from '@/components/ui/label'
-import { List, ListItem } from '@/components/ui/list'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Row, RowItem } from '@/components/ui/row'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { SidebarGroup, SidebarItem, SidebarSub, SidebarSubItem } from '@/components/ui/sidebar'
-import { Switch } from '@/components/ui/switch'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs'
-import { TimePicker } from '@/components/ui/time-picker'
-import { Timetable } from '@/components/ui/timetable'
-import { ThemePalette } from '@/components/ui/theme-palette'
-import { ThemePalettePicker } from '@/components/ui/theme-palette-picker'
-import { WheelPicker, WheelPickerColumn } from '@/components/ui/wheel-picker'
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { toast } from '@/components/ui/toast'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import { DataTable } from '@/components/ui/data-table'
-import { Expandable } from '@/components/ui/expandable-table'
-import { CheckTable } from '@/components/ui/check-table'
-import { cn } from '@/lib/utils'
 import UsageExample from '../components/UsageExample.vue'
 import { usageExamples } from '../usage-examples'
-import * as demo from '../demo-state'
 
-const usage = usageExamples['progress']
-
-const {
-  totalOperatingCost,
-  formatRinggit,
-  formatRinggitAxis,
-  formatLitres,
-  formatLitresAxis,
-  onDropFiles,
-  removeDroppedFile,
-  onStockSave,
-  onStockSaveAll,
-  onImperativeConfirm,
-  inputValue,
-  dialogValue,
-  amount,
-  notificationsEnabled,
-  autoSaveEnabled,
-  selectedDate,
-  selectedWorkday,
-  selectedBigCalendarDate,
-  selectedCountry,
-  selectedCity,
-  cityOptions,
-  selectedRange,
-  time12,
-  time24,
-  wheelValue,
-  timetableOrientation,
-  dialogSizes,
-  codeBlockSample,
-  fleetGroupOpen,
-  fleetGroupItems,
-  vehicleSubItems,
-  adminGroupItems,
-  dieselPricePerLitre,
-  areaStacked,
-  fuelSpendByMonth,
-  depotSeries,
-  operatingCostByMonth,
-  operatingCostSeries,
-  monthAbbreviations,
-  fuelLitresByDepot,
-  workshopCostByVehicle,
-  workshopSeries,
-  costShareByCategory,
-  ringgitFormat,
-  totalFleetCost,
-  timetableDays,
-  timetableEvents,
-  driverColumns,
-  selectedDrivers,
-  drivers,
-  searchQuery,
-  weightKg,
-  treeChecked,
-  treeGroups,
-  treeItems,
-  quarterGroups,
-  quarterRows,
-  stockGroups,
-  stockRows,
-  quantityValue,
-  temperatureValue,
-  notesText,
-  toggleBold,
-  toggleItalic,
-  progressValue,
-  droppedFiles,
-  scrollRows,
-  pickerRangeStart,
-  pickerRangeEnd,
-  payrollMonth,
-  demoPage,
-  checkoutSteps,
-  checkoutStep,
-  signatureOpen,
-  signatureUrl,
-} = demo
-
+const usage = usageExamples.progress
+const progressValue = shallowRef(33)
 </script>
 
 <template>
-  <div class="space-y-8">
-  <Card>
-<CardContent class="space-y-6 p-6">
-          <h2 class="text-lg font-semibold">Progress &amp; spinner</h2>
+  <div class="flex flex-col gap-8">
+    <Card>
+      <CardHeader>
+        <CardTitle>Progress</CardTitle>
+        <CardDescription>
+          Determinate progress for long-running work. Default variant is
+          <code class="text-xs">bar</code>.
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="flex flex-col gap-4">
+        <Progress v-model="progressValue" />
+        <div class="flex flex-wrap items-center gap-6">
+          <Progress v-model="progressValue" variant="circle" />
+          <Progress v-model="progressValue" variant="circle" :size="64" :stroke-width="5">
+            <template #default="{ percent }">
+              {{ Math.round(percent) }}%
+            </template>
+          </Progress>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <Button size="sm" variant="outline" @click="progressValue = 33">
+            33%
+          </Button>
+          <Button size="sm" variant="outline" @click="progressValue = 66">
+            66%
+          </Button>
+          <Button size="sm" variant="outline" @click="progressValue = 100">
+            100%
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
 
-          <div class="space-y-2">
-            <Progress v-model="progressValue" />
-            <div class="flex gap-2">
-              <Button size="sm" variant="outline" @click="progressValue = 33">33%</Button>
-              <Button size="sm" variant="outline" @click="progressValue = 66">66%</Button>
-              <Button size="sm" variant="outline" @click="progressValue = 100">100%</Button>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <Spinner />
-            <Spinner class="h-8 w-8" />
-            <Button disabled>
-              <Spinner class="mr-2 h-4 w-4 text-primary-foreground" />
-              Saving…
-            </Button>
-          </div>
-        </CardContent>
-  </Card>
     <UsageExample :example="usage" />
   </div>
 </template>

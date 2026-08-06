@@ -3,14 +3,26 @@ import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'
 import { badgeVariants, type BadgeVariants } from '.'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   variant?: BadgeVariants['variant']
+  /** Renders as a button with pointer cursor. */
+  clickable?: boolean
   class?: HTMLAttributes['class']
-}>()
+}>(), {
+  clickable: false,
+})
 </script>
 
 <template>
-  <div :class="cn(badgeVariants({ variant: props.variant }), props.class)">
+  <component
+    :is="props.clickable ? 'button' : 'div'"
+    :type="props.clickable ? 'button' : undefined"
+    :class="cn(
+      badgeVariants({ variant: props.variant }),
+      props.clickable && 'cursor-pointer',
+      props.class,
+    )"
+  >
     <slot />
-  </div>
+  </component>
 </template>

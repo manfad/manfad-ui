@@ -37,7 +37,7 @@ function settle(value: boolean) {
 }
 
 /**
- * Imperatively open a confirmation dialog. Requires a `<ConfirmDialog />`
+ * Imperatively open a confirmation dialog. Requires a `<Confirmation />`
  * host to be mounted once in the app. Resolves `true` when confirmed and
  * `false` when cancelled, dismissed via escape, or the overlay is clicked.
  */
@@ -62,7 +62,7 @@ export function useConfirm() {
   return { confirm }
 }
 
-// Internal helpers for the ConfirmDialog host component.
+// Internal helpers for the Confirmation host component.
 export const confirmState = readonly(state)
 
 export function handleConfirm() {

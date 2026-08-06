@@ -12,15 +12,19 @@ import {
 } from '@/components/ui/dialog'
 import SignaturePad from './SignaturePad.vue'
 
-interface Props {
+export interface SignatureDialogProps {
   class?: HTMLAttributes['class']
   title?: string
   description?: string
+  filename?: string
+  download?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<SignatureDialogProps>(), {
   title: 'Add signature',
   description: 'Draw your signature below.',
+  filename: 'signature.png',
+  download: true,
 })
 
 const emit = defineEmits<{
@@ -45,7 +49,21 @@ function save() {
   const pad = padRef.value
   if (!pad || pad.isEmpty())
     return
-  emit('save', pad.toDataURL('image/png'))
+
+  const dataUrl = pad.toDataURL('image/png')
+  if (props.download) {
+    const filename = props.filename.toLowerCase().endsWith('.png')
+      ? props.filename
+      : `${props.filename}.png`
+    const link = document.createElement('a')
+    link.href = dataUrl
+    link.download = filename
+    document.body.append(link)
+    link.click()
+    link.remove()
+  }
+
+  emit('save', dataUrl)
   open.value = false
 }
 
@@ -65,9 +83,9 @@ watch(open, (isOpen) => {
         <DialogTitle>{{ props.title }}</DialogTitle>
         <DialogDescription>{{ props.description }}</DialogDescription>
       </DialogHeader>
-      <SignaturePad ref="pad" @change="syncEmpty" />
+      <SignaturePad ref="pad" controls="none" @change="syncEmpty" />
       <DialogFooter>
-        <Button variant="ghost" :disabled="empty" @click="clear">
+        <Button class="sm:mr-auto" variant="ghost" :disabled="empty" @click="clear">
           Clear
         </Button>
         <Button variant="secondary" @click="open = false">

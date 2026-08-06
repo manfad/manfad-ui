@@ -32,7 +32,7 @@ export interface ManfadUiPalette {
   /** The mirror of `backgroundOnly`: offered as a component theme only. */
   componentOnly?: boolean
   /**
-   * Swatch shown by `ThemePalettePicker`, when the background's accent tint is
+   * Swatch shown by `ThemeSwitcher`, when the background's accent tint is
    * not a fair likeness of the palette.
    */
   swatch?: string

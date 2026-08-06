@@ -17,6 +17,8 @@ if (process.env.T3CODE_HOME)
 
 export default defineConfig({
   root: playgroundRoot,
+  // GitHub Pages project site: https://manfad.github.io/manfad-ui/
+  base: process.env.GITHUB_ACTIONS ? '/manfad-ui/' : '/',
   plugins: [
     vue(),
     UnoCSS({
@@ -24,8 +26,12 @@ export default defineConfig({
     }),
   ],
   resolve: {
+    // Keep a single Vue copy so radix-vue slots don't hit
+    // `Cannot read properties of null (reading 'ce')`.
+    dedupe: ['vue'],
     alias: {
       '@': fileURLToPath(new URL('../src', import.meta.url)),
+      vue: fileURLToPath(new URL('../node_modules/vue', import.meta.url)),
     },
   },
   server: {

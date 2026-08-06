@@ -5,6 +5,10 @@ import {
   type GroupedTableRowEdits,
   type GroupedTableSave,
 } from '@/components/ui/grouped-table'
+import {
+  type CollapsibleTableColumn,
+  type CollapsibleTableGroup,
+} from '@/components/ui/collapsible-table'
 import { type TimetableOrientation } from '@/components/ui/timetable'
 import { toast } from '@/components/ui/toast'
 import { confirm } from '@/components/ui/alert-dialog'
@@ -252,6 +256,35 @@ export const treeGroups = [
   },
 ]
 export const treeItems = [{ value: 'report_export', label: 'Export reports' }]
+
+export const memberColumns: CollapsibleTableColumn[] = [
+  { key: 'id', label: 'ID', width: '5rem' },
+  { key: 'name', label: 'Name', width: '9rem' },
+  { key: 'email', label: 'Email', width: '12rem' },
+  { key: 'role', label: 'Role', width: '6.5rem' },
+  { key: 'country', label: 'Country', width: '6rem' },
+]
+
+export const memberColumnGroups: CollapsibleTableGroup[] = [
+  { id: 'info', label: 'Info', columns: ['id', 'name', 'email'] },
+]
+
+export const memberRows = [
+  { id: 'u1', name: 'Alice Johnson', email: 'alice@acme.co', role: 'admin', country: 'US' },
+  { id: 'u2', name: 'Bob Smith', email: 'bob@acme.co', role: 'member', country: 'MY' },
+  { id: 'u3', name: 'Carol Williams', email: 'carol@acme.co', role: 'viewer', country: 'SG' },
+  { id: 'u4', name: 'Dan Park', email: 'dan@acme.co', role: 'member', country: 'ID' },
+  { id: 'u5', name: 'Eve Davis', email: 'eve@acme.co', role: 'admin', country: 'US' },
+  { id: 'u6', name: 'Frank Liu', email: 'frank@acme.co', role: 'member', country: 'TH' },
+]
+
+export function memberRoleVariant(role: string): 'success' | 'default' | 'outline' {
+  if (role === 'admin')
+    return 'success'
+  if (role === 'member')
+    return 'default'
+  return 'outline'
+}
 
 export const quarterGroups: GroupedTableGroup[] = [
   {

@@ -14,17 +14,17 @@ import {
 } from '@/components/ui/card'
 import { AreaChart, BarChart, DonutChart, LineChart } from '@/components/ui/chart'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { EmptyState } from '@/components/ui/empty-state'
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownLabel,
+  DropdownSeparator,
+  DropdownShortcut,
+  DropdownTrigger,
+} from '@/components/ui/dropdown'
+import { Empty } from '@/components/ui/empty'
 import { FormField } from '@/components/ui/form-field'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
+import { Hover, HoverContent, HoverTrigger } from '@/components/ui/hover'
 import { MonthPicker } from '@/components/ui/month-picker'
 import { NumberInput } from '@/components/ui/number-input'
 import { Progress } from '@/components/ui/progress'
@@ -35,7 +35,7 @@ import { Timeline, TimelineItem } from '@/components/ui/timeline'
 import { SignatureDialog, SignaturePad } from '@/components/ui/signature-pad'
 import { Spinner } from '@/components/ui/spinner'
 import { Textarea } from '@/components/ui/textarea'
-import { ToggleButton } from '@/components/ui/toggle-button'
+import { Toggle } from '@/components/ui/toggle'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CheckboxTree } from '@/components/ui/checkbox-tree'
 import { CodeBlock } from '@/components/ui/code-block'
@@ -80,7 +80,7 @@ import {
 import { TimePicker } from '@/components/ui/time-picker'
 import { Timetable } from '@/components/ui/timetable'
 import { ThemePalette } from '@/components/ui/theme-palette'
-import { ThemePalettePicker } from '@/components/ui/theme-palette-picker'
+import { ThemeSwitcher } from '@/components/ui/theme-switcher'
 import { WheelPicker, WheelPickerColumn } from '@/components/ui/wheel-picker'
 import {
   Table,

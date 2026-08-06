@@ -8,4 +8,6 @@ export interface CalendarDay {
   isExcluded: boolean
   isDisabled: boolean
   isInRange?: boolean
+  isRangeStart?: boolean
+  isRangeEnd?: boolean
 }

@@ -1,49 +1,263 @@
 # @manfad/ui
 
-Reusable Vue 3 admin UI kit (shadcn-style components on UnoCSS).
+A Vue 3 component library for admin products — accessible primitives, form controls, tables, and charts, styled with UnoCSS and designed to run on Chrome 109+ (HSL tokens, no `oklch`).
 
-## Usage in the template
+## Requirements
 
-The monorepo template consumes this package via the root pnpm workspace:
+- Vue 3.4+
+- UnoCSS 66+
+- Inter via `@fontsource/inter` (or an equivalent font load)
 
-```json
-"@manfad/ui": "workspace:*"
-```
-
-Install and build from the repository root:
+## Install
 
 ```bash
-cd ..
-pnpm install
-pnpm --filter @manfad/ui build
+pnpm add @manfad/ui vue @fontsource/inter
+pnpm add -D unocss
 ```
 
-## Standalone development
+### Styles and fonts
 
-```bash
-pnpm install
-pnpm dev        # playground (vue-router; one page per component)
-pnpm build      # library dist/
-pnpm typecheck
+In your app entry:
+
+```ts
+import '@manfad/ui/ui.css'
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/600.css'
+import '@fontsource/inter/700.css'
 ```
 
-The playground is routed (`/buttons`, `/code-block`, `/charts`, …). `/` redirects
-to `/buttons`. The sidebar groups components (Foundations, Forms, Tables, …)
-with a sticky filter, and each page shows a live demo plus a Usage card.
+### UnoCSS
 
-## Exports
+Register the library preset and scan published component files for utilities:
 
-- `@manfad/ui` — components, composables, utilities
-- `@manfad/ui/preset` — UnoCSS preset for consumer apps
+```ts
+import { defineConfig, presetWind3 } from 'unocss'
+import { manfadUiContent, presetManfadUi } from '@manfad/ui/preset'
+
+export default defineConfig({
+  content: {
+    filesystem: manfadUiContent,
+  },
+  presets: [presetWind3(), ...presetManfadUi()],
+})
+```
+
+Optional preset options:
 
 ```ts
 presets: [presetWind3(), ...presetManfadUi({ color: 'blue', radius: 0.5 })]
 ```
 
-## Code block
+### Usage
 
-`CodeBlock` shows source with line numbers and muted `//` comments. Comments
-after `://` (as in URLs) are left alone.
+```vue
+<script setup lang="ts">
+import { Button } from '@manfad/ui'
+</script>
+
+<template>
+  <Button>Continue</Button>
+</template>
+```
+
+## Package exports
+
+| Export | Purpose |
+| --- | --- |
+| `@manfad/ui` | Core components, composables, and utilities |
+| `@manfad/ui/preset` | UnoCSS preset and content globs |
+| `@manfad/ui/ui.css` | Base component styles |
+| `@manfad/ui/chart` | Charts DLC (optional peer: `@unovis/*`) |
+| `@manfad/ui/time-badge` | TimeBadge DLC (optional peer: `@vueuse/core`) |
+| `@manfad/ui/md-view` | Markdown viewer DLC (optional peer: `markdown-it`) |
+| `@manfad/ui/excel` | Excel import/export DLC (optional peer: `xlsx`) |
+
+## Optional DLCs
+
+Heavy surfaces ship as **subpath add-ons**. Import them from their export and install the peer only when you use that surface — the core `@manfad/ui` barrel does not pull these libraries in.
+
+| DLC | Import | Install |
+| --- | --- | --- |
+| Charts | `@manfad/ui/chart` | `pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7` |
+| TimeBadge | `@manfad/ui/time-badge` | `pnpm add @vueuse/core` |
+| MdView | `@manfad/ui/md-view` | `pnpm add markdown-it` |
+| Excel | `@manfad/ui/excel` | `pnpm add xlsx` |
+
+```ts
+import { LineChart } from '@manfad/ui/chart'
+import { TimeBadge } from '@manfad/ui/time-badge'
+import { MdView } from '@manfad/ui/md-view'
+import { Excel, ExcelExport, ExcelImport } from '@manfad/ui/excel'
+```
+
+## Development
+
+```bash
+pnpm install
+pnpm dev         # component playground
+pnpm build       # library → dist/
+pnpm typecheck
+pnpm test
+```
+
+The playground homepage is **Home** (`/docs`, README via `MdView`; `/` redirects there). Use the header **ModeToggle** (or `D`) to switch to the component playground or Extra DLCs. Each component has its own route and a Usage example.
+
+### Workspace consumers
+
+From a pnpm workspace root:
+
+```json
+"@manfad/ui": "workspace:*"
+```
+
+```bash
+pnpm install
+pnpm --filter @manfad/ui build
+```
+
+## Theming
+
+Blue is the default palette. Presets expose coordinated roles for primary, secondary, tertiary, rival, surfaces, forms, and the sidebar in light and dark mode.
+
+**Rival** is the opposing accent — the hue that stands apart from the primary (for example red against blue). Use it sparingly for emphasis.
+
+Override tokens with HSL channels (no wrapping `hsl()`), so opacity modifiers keep working:
+
+```css
+:root {
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --rival: 0 72% 45%;
+  --rival-foreground: 0 0% 98%;
+}
+```
+
+`ThemeSwitcher` persists component and background palette choices on `document.documentElement` as `data-manfad-component-theme` and `data-manfad-background-theme`. Available palettes: Neutral, Blue, Green, Orange, Rose, Violet. White is background-only.
+
+`ThemePalette` renders live token swatches from CSS variables (no hardcoded colors in script):
+
+```vue
+<script setup lang="ts">
+import { ThemePalette, ThemeSwitcher } from '@manfad/ui'
+</script>
+
+<template>
+  <ThemeSwitcher />
+  <ThemePalette />
+  <ThemePalette :tokens="['primary', 'rival', 'muted']" />
+</template>
+```
+
+UnoCSS colour utilities follow the same roles (`bg-primary`, `bg-rival`, `text-rival-foreground`, …). `Button` and `Badge` accept `variant="tertiary"` and `variant="rival"`.
+
+## Charts (DLC)
+
+`LineChart`, `AreaChart`, `BarChart`, and `DonutChart` wrap [Unovis](https://unovis.dev). Keep `@unovis/vue` and `@unovis/ts` on matching exact versions.
+
+```bash
+pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7
+```
+
+```vue
+<script setup lang="ts">
+import { LineChart } from '@manfad/ui/chart'
+
+const data = [{ month: new Date(2025, 0, 1), kuching: 18420, miri: 12980 }]
+const series = [
+  { key: 'kuching', label: 'Kuching' },
+  { key: 'miri', label: 'Miri' },
+]
+</script>
+
+<template>
+  <LineChart :data="data" x="month" :series="series" />
+</template>
+```
+
+Series colours use `--chart-1` … `--chart-5` from the active palette. `ChartContainer` maps Unovis `--vis-*` variables onto popover/border/muted tokens so charts follow theme changes.
+
+**Consumer notes**
+
+1. `presetManfadUi()` is required for charts — it includes the rule that lets Unovis fill the height set by `ChartContainer`.
+2. If you widen UnoCSS `content.pipeline.include` to plain `.ts`/`.js`, also exclude `node_modules`. Unovis embeds CSS in template strings; scanning those packages breaks the build:
+
+```ts
+pipeline: {
+  include: [/\.(vue|[jt]sx?)($|\?)/],
+  exclude: [/[\\/]node_modules[\\/]/],
+},
+```
+
+## Excel (DLC)
+
+Client-side spreadsheet import/export powered by [SheetJS `xlsx`](https://sheetjs.com), following the same round-trip pattern as kpom-ems bulk entry.
+
+```bash
+pnpm add xlsx
+```
+
+```vue
+<script setup lang="ts">
+import { shallowRef } from 'vue'
+import { DataTable } from '@manfad/ui'
+import { Excel, ExcelExport, ExcelImport, type ExcelColumn } from '@manfad/ui/excel'
+
+const columns: ExcelColumn[] = [
+  { key: 'id', label: 'ID' },
+  { key: 'phone', label: 'Phone' },
+  { key: 'workhour', label: 'Work hours', type: 'number' },
+  { key: 'salary', label: 'Salary', type: 'number' },
+]
+const rows = shallowRef([
+  { id: '001', phone: '012-3456789', workhour: 160, salary: 3200 },
+])
+</script>
+
+<template>
+  <Excel v-model:rows="rows" :columns="columns" filename="payroll">
+    <ExcelExport text="Export Excel" format="xlsx" />
+    <ExcelExport text="Export CSV" format="csv" />
+    <ExcelImport text="Import" />
+  </Excel>
+  <DataTable :columns="columns" :rows="rows" row-key="id" />
+</template>
+```
+
+- Import **replaces** `rows`.
+- Headers match column **label**, then **key** (normalized like kpom-ems).
+- Default cell type is `string` (keeps MY phone leading zeros); opt into `type: 'number'`.
+- Export writes string columns as Excel text (`@` format).
+
+## Selected components
+
+### SelectionChips
+
+Renders selected `CheckboxTree` leaves as expandable group rows (`label`, `selected/total`, chips):
+
+```vue
+<script setup lang="ts">
+import { SelectionChips } from '@manfad/ui'
+
+const groups = [{
+  key: 'items',
+  label: 'Items',
+  children: [
+    { value: 'item_create', label: 'Create items' },
+    { value: 'item_modify', label: 'Modify items' },
+  ],
+}]
+const values = ['item_create', 'item_modify']
+</script>
+
+<template>
+  <SelectionChips :groups="groups" :values="values" />
+</template>
+```
+
+### CodeBlock
+
+Source display with line numbers. Muted `//` comments; `://` inside URLs is left alone.
 
 ```vue
 <script setup lang="ts">
@@ -59,160 +273,57 @@ root.dataset.manfadComponentTheme = 'blue'
 </template>
 ```
 
-## Badge summary
+### SignatureDialog
 
-`BadgeSummary` turns selected CheckboxTree leaves into group rows — label,
-`selected/total` count, and expandable leaf badges.
+On Save, downloads a PNG (unless `:download="false"`) and emits the data URL:
+
+```vue
+<SignatureDialog
+  v-model:open="open"
+  filename="customer-signature.png"
+  @save="signatureUrl = $event"
+/>
+```
+
+### ModeToggle
+
+Button that cycles through declarative `Mode` options. Optional keyboard shortcut cycles values — useful for view/mode switching:
 
 ```vue
 <script setup lang="ts">
-import { BadgeSummary } from '@manfad/ui'
+import { shallowRef } from 'vue'
+import { Mode, ModeToggle } from '@manfad/ui'
 
-const groups = [{
-  key: 'items',
-  label: 'Items',
-  children: [
-    { value: 'item_create', label: 'Create items' },
-    { value: 'item_modify', label: 'Modify items' },
-  ],
-}]
-const values = ['item_create', 'item_modify']
+const mode = shallowRef('docs')
 </script>
 
 <template>
-  <BadgeSummary :groups="groups" :values="values" />
+  <ModeToggle v-model="mode" shortcut="d">
+    <Mode value="docs">Document</Mode>
+    <Mode value="playground">Playground</Mode>
+    <Mode value="extra">Extra</Mode>
+  </ModeToggle>
 </template>
 ```
 
-## Charts
+## AI / LLMs.txt
 
-`LineChart`, `AreaChart`, `BarChart` and `DonutChart` wrap
-[Unovis](https://unovis.dev) (`@unovis/vue` + `@unovis/ts`, pinned to matching
-exact versions because Unovis peer-depends on itself by exact version).
+Structured context files for Cursor, Windsurf, ChatGPT, Claude, and similar tools:
 
-```vue
-<script setup lang="ts">
-import { LineChart } from '@manfad/ui'
+| File | Purpose |
+| --- | --- |
+| [`llms.txt`](./llms.txt) | Index of getting-started docs and every component |
+| [`llms-full.txt`](./llms-full.txt) | Full install, theming, DLC, and usage patterns |
 
-const data = [{ month: new Date(2025, 0, 1), kuching: 18420, miri: 12980 }]
-const series = [{ key: 'kuching', label: 'Kuching' }, { key: 'miri', label: 'Miri' }]
-const money = (value: number) => `RM ${value.toLocaleString('en-MY')}`
-</script>
+Guide: [`docs/getting-started/ai/llms-txt.md`](./docs/getting-started/ai/llms-txt.md).
 
-<template>
-  <LineChart :data="data" x="month" :series="series" :y-formatter="money" />
-</template>
-```
+With the playground running (`pnpm dev`), they are also served at `/llms.txt` and `/llms-full.txt`.
 
-Series colours default to `--chart-1` … `--chart-5`, and `ChartContainer`
-re-points Unovis's `--vis-*` variables at `--popover`, `--border` and
-`--muted-foreground`, so charts follow light/dark and the runtime palette
-switcher without extra work.
+Raw GitHub URLs (for `@Docs` / pasted context):
 
-Two things a consuming app must know:
+- https://raw.githubusercontent.com/manfad/manfad-ui/main/llms.txt
+- https://raw.githubusercontent.com/manfad/manfad-ui/main/llms-full.txt
 
-- `presetManfadUi()` is required, not optional, for charts: it carries the rule that
-  makes Unovis's container fill the height `ChartContainer` sets.
-- If the app widens UnoCSS's `content.pipeline.include` to plain `.ts`/`.js`
-  (the default does not include them), exclude `node_modules` as well. Unovis
-  embeds raw CSS in template literals, which UnoCSS otherwise extracts into
-  unparseable rules and the build fails:
+## License
 
-  ```ts
-  pipeline: {
-    include: [/\.(vue|[jt]sx?)($|\?)/],
-    exclude: [/[\\/]node_modules[\\/]/],
-  },
-  ```
-
-## Colour theme
-
-Blue is the default preset theme:
-
-```ts
-presets: [presetWind3(), ...presetManfadUi()]
-```
-
-It provides a royal-blue primary, a pale-blue secondary surface, a cyan-blue
-tertiary role, and a red rival role. Backgrounds, cards, popovers, muted and
-accent surfaces, form controls, borders, and the sidebar all use coordinated
-blue tints in light and dark mode.
-
-The rival is each palette's opposing accent: the hue that argues with the
-primary instead of extending it, for the one element on a screen that has to
-stand apart. Blue's rival is red, the neutral palette's is white, and every
-palette picks its own.
-
-All four roles use HSL CSS variables, so an application can still override
-them in its global stylesheet:
-
-```css
-:root {
-  --primary: 221.2 83.2% 53.3%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --tertiary: 199 89% 33%;
-  --tertiary-foreground: 0 0% 98%;
-  --rival: 0 72% 45%;
-  --rival-foreground: 0 0% 98%;
-}
-
-.dark {
-  --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --tertiary: 198 93% 60%;
-  --tertiary-foreground: 202 80% 12%;
-  --rival: 0 84% 65%;
-  --rival-foreground: 0 60% 10%;
-}
-```
-
-The `ThemePalettePicker` lets users select component and background palettes
-independently:
-
-```vue
-<script setup lang="ts">
-import { ThemePalettePicker } from '@manfad/ui'
-</script>
-
-<template>
-  <ThemePalettePicker />
-</template>
-```
-
-The selection persists in local storage and sets
-`data-manfad-component-theme` and `data-manfad-background-theme` on the document
-root. Available palettes are Neutral, Blue, Green, Orange, Rose, and Violet,
-each with light and dark values. White is offered as a background only —
-untinted surfaces, for screens that want the palette to show in the components
-alone.
-
-To show the active theme's tokens as labeled swatches, use `ThemePalette`:
-
-```vue
-<script setup lang="ts">
-import { ThemePalette } from '@manfad/ui'
-</script>
-
-<template>
-  <ThemePalette />
-  <ThemePalette :tokens="['primary', 'rival', 'muted']" />
-</template>
-```
-
-It renders from the tokens themselves, so it follows the picker and dark mode
-without reading any colors in script.
-
-Each palette also defines its own `--chart-1` through `--chart-5` series, built
-around that palette's primary and rival hues, so charts follow the palette
-picker along with everything else.
-
-Values are HSL channels without the surrounding `hsl()` so opacity modifiers
-continue to work. The roles are available as UnoCSS colours such as
-`bg-primary`, `bg-secondary`, `bg-tertiary`, `bg-rival`, and
-`text-rival-foreground`. `Button` and `Badge` also accept
-`variant="tertiary"` and `variant="rival"`; their existing default and
-secondary variants use the primary and secondary roles respectively.
+MIT

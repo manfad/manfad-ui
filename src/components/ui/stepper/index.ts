@@ -1,1 +1,1 @@
-export { default as Stepper, type StepperStep } from './Stepper.vue'
+export { default as Stepper, type StepperStep, type StepperVariant } from './Stepper.vue'
