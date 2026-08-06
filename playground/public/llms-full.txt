@@ -1,0 +1,342 @@
+# @manfad/ui — full LLM context
+
+> Complete consumer guide for the Vue 3 admin UI kit: install, theming, package exports, DLCs, and component usage patterns.
+
+This file is the large-context companion to `/llms.txt`. Prefer `llms.txt` unless you need implementation detail in one shot.
+
+## Package
+
+Name: `@manfad/ui`
+Stack: Vue 3.4+, UnoCSS 66+, radix-vue, HSL design tokens (Chrome 109+, no oklch)
+Icons: UnoCSS + `@iconify-json/lucide` (`i-lucide-*` classes)
+Font: Inter via `@fontsource/inter`
+
+## Install
+
+```bash
+pnpm add @manfad/ui vue @fontsource/inter
+pnpm add -D unocss
+```
+
+App entry:
+
+```ts
+import '@manfad/ui/ui.css'
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/600.css'
+import '@fontsource/inter/700.css'
+```
+
+UnoCSS:
+
+```ts
+import { defineConfig, presetWind3 } from 'unocss'
+import { manfadUiContent, presetManfadUi } from '@manfad/ui/preset'
+
+export default defineConfig({
+  content: {
+    filesystem: manfadUiContent,
+  },
+  presets: [presetWind3(), ...presetManfadUi()],
+})
+```
+
+Optional preset options: `presetManfadUi({ color: 'blue', radius: 0.5 })`.
+
+Basic usage:
+
+```vue
+<script setup lang="ts">
+import { Button } from '@manfad/ui'
+</script>
+
+<template>
+  <Button>Continue</Button>
+</template>
+```
+
+## Package exports
+
+| Export | Purpose |
+| --- | --- |
+| `@manfad/ui` | Core components, composables, utilities |
+| `@manfad/ui/preset` | UnoCSS preset and content globs |
+| `@manfad/ui/ui.css` | Base component styles |
+| `@manfad/ui/chart` | Charts DLC — peer `@unovis/ts@1.6.7` + `@unovis/vue@1.6.7` |
+| `@manfad/ui/time-badge` | TimeBadge DLC — peer `@vueuse/core` |
+| `@manfad/ui/md-view` | Markdown viewer DLC — peer `markdown-it` |
+| `@manfad/ui/excel` | Excel import/export DLC — peer `xlsx` |
+
+Core barrel does **not** re-export DLC surfaces. Install peers only when you import that subpath.
+
+```ts
+import { Button, DataTable } from '@manfad/ui'
+import { LineChart } from '@manfad/ui/chart'
+import { TimeBadge } from '@manfad/ui/time-badge'
+import { MdView } from '@manfad/ui/md-view'
+import { Excel, ExcelExport, ExcelImport } from '@manfad/ui/excel'
+```
+
+## Theming
+
+Default palette: Blue. Roles include primary, secondary, tertiary, rival, surfaces, forms, and sidebar (light/dark).
+
+Rival is the opposing accent (for example red against blue). Use sparingly.
+
+Override with HSL channels (no wrapping `hsl()`):
+
+```css
+:root {
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --rival: 0 72% 45%;
+  --rival-foreground: 0 0% 98%;
+}
+```
+
+`ThemeSwitcher` persists choices on `document.documentElement` as:
+- `data-manfad-component-theme`
+- `data-manfad-background-theme`
+
+Palettes: Neutral, Blue, Green, Orange, Rose, Violet. White is background-only.
+
+UnoCSS utilities: `bg-primary`, `bg-rival`, `text-rival-foreground`, etc. `Button` and `Badge` accept `variant="tertiary"` and `variant="rival"`.
+
+## Charts DLC
+
+```bash
+pnpm add @unovis/ts@1.6.7 @unovis/vue@1.6.7
+```
+
+```vue
+<script setup lang="ts">
+import { LineChart } from '@manfad/ui/chart'
+
+const data = [{ month: new Date(2025, 0, 1), kuching: 18420, miri: 12980 }]
+const series = [
+  { key: 'kuching', label: 'Kuching' },
+  { key: 'miri', label: 'Miri' },
+]
+</script>
+
+<template>
+  <LineChart :data="data" x="month" :series="series" />
+</template>
+```
+
+Also: `AreaChart`, `BarChart`, `DonutChart`, `ChartContainer`, `ChartLegend`, `ChartEmpty`.
+Series colours: `--chart-1` … `--chart-5`.
+`presetManfadUi()` is required so Unovis can fill `ChartContainer` height.
+If you widen UnoCSS `content.pipeline.include` to plain `.ts`/`.js`, exclude `node_modules` or Unovis template-string CSS can break the build.
+
+## Excel DLC
+
+```bash
+pnpm add xlsx
+```
+
+```vue
+<script setup lang="ts">
+import { shallowRef } from 'vue'
+import { DataTable } from '@manfad/ui'
+import { Excel, ExcelExport, ExcelImport, type ExcelColumn } from '@manfad/ui/excel'
+
+const columns: ExcelColumn[] = [
+  { key: 'id', label: 'ID' },
+  { key: 'phone', label: 'Phone' },
+  { key: 'workhour', label: 'Work hours', type: 'number' },
+]
+const rows = shallowRef([{ id: '001', phone: '012-3456789', workhour: 160 }])
+</script>
+
+<template>
+  <Excel v-model:rows="rows" :columns="columns" filename="payroll">
+    <ExcelExport text="Export Excel" format="xlsx" />
+    <ExcelExport text="Export CSV" format="csv" />
+    <ExcelImport text="Import" />
+  </Excel>
+  <DataTable :columns="columns" :rows="rows" row-key="id" />
+</template>
+```
+
+Import replaces `rows`. Headers match label then key (normalized). Default cell type `string` (keeps MY phone leading zeros). Opt into `type: 'number'`.
+
+## ModeToggle
+
+Compound API — button cycles declarative modes:
+
+```vue
+<script setup lang="ts">
+import { shallowRef } from 'vue'
+import { Mode, ModeToggle } from '@manfad/ui'
+
+const mode = shallowRef('docs')
+</script>
+
+<template>
+  <ModeToggle v-model="mode" shortcut="d">
+    <Mode value="docs">Document</Mode>
+    <Mode value="playground">Playground</Mode>
+    <Mode value="extra">Extra</Mode>
+  </ModeToggle>
+</template>
+```
+
+`Mode` is options-only (does not render UI). Label from default slot text or `label` prop.
+
+## Timeline
+
+```vue
+<script setup lang="ts">
+import { Timeline, TimelineItem } from '@manfad/ui'
+</script>
+
+<template>
+  <Timeline>
+    <TimelineItem time="09:12" title="Order placed" icon="i-lucide-shopping-cart" state="done">
+      Payment authorized.
+    </TimelineItem>
+    <TimelineItem time="09:40" title="Processing" state="done" />
+    <TimelineItem time="14:05" title="Shipped" state="active" />
+    <TimelineItem time="Est. Jul 24" title="Out for delivery" />
+  </Timeline>
+
+  <Timeline orientation="horizontal">
+    <TimelineItem time="09:12" title="Placed" icon="i-lucide-shopping-cart" state="done" />
+    <TimelineItem time="09:40" title="Processing" state="done" />
+    <TimelineItem time="14:05" title="Shipped" state="active" />
+    <TimelineItem time="Jul 24" title="Delivered" />
+  </Timeline>
+</template>
+```
+
+States: `done` | `active` | `upcoming`. Done/active icons are filled so the rail connects through markers.
+
+## Confirmation
+
+Mount once near the app root, then call `confirm()`:
+
+```vue
+<script setup lang="ts">
+import { Confirmation, confirm } from '@manfad/ui'
+
+async function onDelete() {
+  const ok = await confirm({
+    title: 'Delete item?',
+    description: 'This cannot be undone.',
+  })
+  if (ok) { /* … */ }
+}
+</script>
+
+<template>
+  <Confirmation />
+</template>
+```
+
+## SelectionChips
+
+Renders selected CheckboxTree leaves as expandable group rows:
+
+```vue
+<script setup lang="ts">
+import { SelectionChips } from '@manfad/ui'
+
+const groups = [{
+  key: 'items',
+  label: 'Items',
+  children: [
+    { value: 'item_create', label: 'Create items' },
+    { value: 'item_modify', label: 'Modify items' },
+  ],
+}]
+const values = ['item_create', 'item_modify']
+</script>
+
+<template>
+  <SelectionChips :groups="groups" :values="values" />
+</template>
+```
+
+## CodeBlock
+
+```vue
+<script setup lang="ts">
+import { CodeBlock } from '@manfad/ui'
+const content = `// comment\nroot.dataset.manfadComponentTheme = 'blue'\n`
+</script>
+
+<template>
+  <CodeBlock :content="content" />
+</template>
+```
+
+## SignatureDialog
+
+```vue
+<SignatureDialog
+  v-model:open="open"
+  filename="customer-signature.png"
+  @save="signatureUrl = $event"
+/>
+```
+
+On Save, downloads a PNG unless `:download="false"`, and emits the data URL.
+
+## SidebarSwitcher
+
+```vue
+<script setup lang="ts">
+import { shallowRef } from 'vue'
+import { SidebarSwitcher } from '@manfad/ui'
+
+const context = shallowRef('docs')
+const items = [
+  { value: 'docs', label: 'Document' },
+  { value: 'playground', label: 'Playground' },
+  { value: 'extra', label: 'Extra' },
+]
+</script>
+
+<template>
+  <SidebarSwitcher
+    v-model="context"
+    title="@manfad/ui"
+    icon="i-lucide-layers"
+    :items="items"
+  />
+</template>
+```
+
+## Component catalog (core)
+
+Primitive: Accordion, Badge, Button, Calendar, Card, Checkbox, Dialog, Dropdown, Hover, Image, Input, List, ModeToggle, Popover, Progress, RadioGroup, Row, ScrollArea, Select, Skeleton, Spinner, Switch, Table, Tabs, Textarea, Toast, Toggle, Wheel.
+
+Forms: Autocomplete, CheckboxTree, Choice, ChoiceCard, DatePicker, DateFilter, FormField, IconInput, InputClear, MonthPicker, NumberInput, Stepper, TimePicker, Timetable.
+
+Layout: AppShell, PaneContainer, Sidebar (+ SidebarSwitcher), ThemePalette, ThemeSwitcher.
+
+Feedback: Confirmation / AlertDialog, Empty, ErrorPage, UnauthorizedPage, NoPermissionPage, LoadingDialog, PageLoading.
+
+Content: Attachment, BigCalendar, CodeBlock, Filter, Gallery, SelectionChips, SignaturePad / SignatureDialog, Timeline.
+
+Tables: CheckTable, CollapsibleTable, DataTable, Expandable, GroupedTable (editable patterns in playground).
+
+## Component catalog (DLC / Extra)
+
+Charts (`@manfad/ui/chart`): AreaChart, BarChart, DonutChart, LineChart.
+Add-ons: Excel (`@manfad/ui/excel`), MdView (`@manfad/ui/md-view`), TimeBadge (`@manfad/ui/time-badge`).
+
+## Conventions for AI assistants
+
+1. Import from `@manfad/ui` for core; never assume charts/excel/md-view/time-badge are on the root barrel.
+2. Use `<script setup lang="ts">` and `shallowRef` when deep reactivity is unnecessary.
+3. Style with UnoCSS utility classes and semantic tokens (`bg-primary`, `text-muted-foreground`), not hardcoded greys when a token exists.
+4. Prefer existing components (Dialog, Confirmation, Empty, DataTable) over reinventing admin chrome.
+5. Icons: pass UnoCSS icon classes (`i-lucide-search`), not SVG blobs, unless the component API requires otherwise.
+6. Target Chrome 109+: HSL CSS variables only — do not introduce oklch in consumer overrides meant to match this kit.
+
+## License
+
+MIT — https://raw.githubusercontent.com/manfad/manfad-ui/main/LICENSE

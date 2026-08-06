@@ -3,7 +3,7 @@ import type { ComputedRef, InjectionKey } from 'vue'
 
 export type TimelineOrientation = 'vertical' | 'horizontal'
 
-export const timelineOrientationKey: InjectionKey<ComputedRef<TimelineOrientation>> = Symbol('yf-timeline-orientation')
+export const timelineOrientationKey: InjectionKey<ComputedRef<TimelineOrientation>> = Symbol('manfad-timeline-orientation')
 </script>
 
 <script setup lang="ts">
@@ -22,7 +22,12 @@ provide(timelineOrientationKey, computed(() => props.orientation))
 </script>
 
 <template>
-  <ol :class="cn(props.orientation === 'horizontal' ? 'flex' : 'ml-3 space-y-6', props.class)">
+  <ol
+    :class="cn(
+      props.orientation === 'horizontal' ? 'flex' : 'flex flex-col',
+      props.class,
+    )"
+  >
     <slot />
   </ol>
 </template>

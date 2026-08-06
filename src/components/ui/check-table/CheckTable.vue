@@ -74,7 +74,7 @@ const pinned = computed<PinnedColumns>({
 
 if (import.meta.env.DEV && props.rowKey == null) {
   console.warn(
-    '[yf/ui] CheckTable: no `row-key` provided, so the array index is used as '
+    '[manfad/ui] CheckTable: no `row-key` provided, so the array index is used as '
     + 'the selection key. Selection will attach to the wrong rows when the list '
     + 'reorders — provide `row-key`.',
   )

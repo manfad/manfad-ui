@@ -95,14 +95,14 @@ const props = withDefaults(
   }>(),
   {
     rowKey: undefined,
-    saveAllLabel: 'Save all',
+    saveAllLabel: 'Save changes',
   },
 )
 
 const emit = defineEmits<{
   /** A single cell's Save button. The draft is dropped on emit — apply the change to `rows`. */
   save: [edit: GroupedTableSave<T>]
-  /** The Save all button; one entry per row with its changed cells. Drafts are dropped on emit. */
+  /** Save changes while in edit mode; one entry per row with its changed cells. Drafts are dropped on emit. */
   saveAll: [edits: GroupedTableRowEdits<T>[]]
 }>()
 
@@ -176,6 +176,18 @@ function toggleEditMode(): void {
   editingCell.value = null
 }
 
+function cancelEditMode(): void {
+  drafts.value = {}
+  editingCell.value = null
+  editMode.value = false
+}
+
+function saveEditMode(): void {
+  saveAll()
+  editingCell.value = null
+  editMode.value = false
+}
+
 function cellId(rowKey: string | number, columnKey: string): string {
   return `${rowKey}::${columnKey}`
 }
@@ -204,10 +216,6 @@ const dirtyByRow = computed(() => {
   }
   return edits
 })
-
-const dirtyCount = computed(() =>
-  dirtyByRow.value.reduce((sum, edit) => sum + Object.keys(edit.changes).length, 0),
-)
 
 function startEdit(rowKey: string | number, column: GroupedTableColumn, row: T): void {
   if (!column.editable)
@@ -291,10 +299,24 @@ defineExpose({ clearDrafts: () => (drafts.value = {}) })
 
 <template>
   <div :class="cn('space-y-2', props.class)">
-    <div v-if="hasEditableColumns" class="flex justify-end">
-      <Button size="sm" :variant="editMode ? 'default' : 'outline'" @click="toggleEditMode">
-        <span :class="editMode ? 'i-lucide-check' : 'i-lucide-pencil'" class="mr-1.5 h-4 w-4" aria-hidden="true" />
-        {{ editMode ? 'Done' : 'Edit' }}
+    <div v-if="hasEditableColumns" class="flex justify-end gap-2">
+      <template v-if="editMode">
+        <Button size="sm" variant="outline" @click="cancelEditMode">
+          Cancel
+        </Button>
+        <Button size="sm" @click="saveEditMode">
+          <span class="i-lucide-check mr-1.5 h-4 w-4" aria-hidden="true" />
+          {{ props.saveAllLabel }}
+        </Button>
+      </template>
+      <Button
+        v-else
+        size="sm"
+        variant="outline"
+        @click="toggleEditMode"
+      >
+        <span class="i-lucide-pencil mr-1.5 h-4 w-4" aria-hidden="true" />
+        Edit Mode
       </Button>
     </div>
 
@@ -434,13 +456,6 @@ defineExpose({ clearDrafts: () => (drafts.value = {}) })
           </TableRow>
         </TableFooter>
       </Table>
-    </div>
-
-    <div v-if="dirtyCount > 0" class="flex justify-end">
-      <Button size="sm" @click="saveAll">
-        <span class="i-lucide-save mr-1.5 h-4 w-4" aria-hidden="true" />
-        {{ props.saveAllLabel }} ({{ dirtyCount }})
-      </Button>
     </div>
   </div>
 </template>

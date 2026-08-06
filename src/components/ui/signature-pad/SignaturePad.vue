@@ -1,25 +1,36 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import { onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-interface Props {
+export type SignaturePadControls = 'none' | 'top' | 'bottom' | 'left' | 'right'
+
+export interface SignaturePadProps {
   class?: HTMLAttributes['class']
+  canvasClass?: HTMLAttributes['class']
   placeholder?: string
   // Fixed dark ink reads well on the white/bg-background surface in both
   // light and dark themes, so the pen colour is intentionally not theme-aware.
   penColor?: string
   lineWidth?: number
+  controls?: SignaturePadControls
+  filename?: string
+  download?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<SignaturePadProps>(), {
   placeholder: 'Sign here',
   penColor: '#1f2937',
   lineWidth: 2,
+  controls: 'bottom',
+  filename: 'signature.png',
+  download: true,
 })
 
 const emit = defineEmits<{
   change: []
+  save: [dataUrl: string]
 }>()
 
 const canvasRef = useTemplateRef<HTMLCanvasElement>('canvas')
@@ -32,6 +43,9 @@ let lastY = 0
 let lastMidX = 0
 let lastMidY = 0
 let resizeObserver: ResizeObserver | null = null
+
+const controlsAreVertical = computed(() => props.controls === 'left' || props.controls === 'right')
+const controlsComeFirst = computed(() => props.controls === 'top' || props.controls === 'left')
 
 function getContext(): CanvasRenderingContext2D | null {
   if (!ctx && canvasRef.value)
@@ -158,6 +172,7 @@ function clear() {
   c.clearRect(0, 0, canvas.width, canvas.height)
   c.restore()
   empty.value = true
+  emit('change')
 }
 
 function isEmpty(): boolean {
@@ -166,6 +181,27 @@ function isEmpty(): boolean {
 
 function toDataURL(type?: string): string {
   return canvasRef.value?.toDataURL(type) ?? ''
+}
+
+function save(): string {
+  if (empty.value)
+    return ''
+
+  const dataUrl = toDataURL('image/png')
+  if (props.download) {
+    const filename = props.filename.toLowerCase().endsWith('.png')
+      ? props.filename
+      : `${props.filename}.png`
+    const link = document.createElement('a')
+    link.href = dataUrl
+    link.download = filename
+    document.body.append(link)
+    link.click()
+    link.remove()
+  }
+
+  emit('save', dataUrl)
+  return dataUrl
 }
 
 onMounted(() => {
@@ -182,24 +218,54 @@ onBeforeUnmount(() => {
   resizeObserver = null
 })
 
-defineExpose({ clear, isEmpty, toDataURL })
+defineExpose({ clear, isEmpty, save, toDataURL })
 </script>
 
 <template>
-  <div :class="cn('relative h-40 rounded-md border bg-background', props.class)">
-    <canvas
-      ref="canvas"
-      class="block h-full w-full touch-none cursor-crosshair"
-      @pointerdown="onPointerDown"
-      @pointermove="onPointerMove"
-      @pointerup="onPointerUp"
-      @pointercancel="onPointerUp"
-    />
-    <span
-      v-if="empty"
-      class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-muted-foreground"
+  <div
+    :class="cn(
+      'flex w-full gap-2',
+      controlsAreVertical ? 'flex-row' : 'flex-col',
+      props.class,
+    )"
+  >
+    <div
+      :class="cn(
+        'relative h-40 min-w-0 flex-1 rounded-md border bg-background',
+        controlsComeFirst && 'order-2',
+        props.canvasClass,
+      )"
     >
-      {{ props.placeholder }}
-    </span>
+      <canvas
+        ref="canvas"
+        class="block h-full w-full touch-none cursor-crosshair"
+        @pointerdown="onPointerDown"
+        @pointermove="onPointerMove"
+        @pointerup="onPointerUp"
+        @pointercancel="onPointerUp"
+      />
+      <span
+        v-if="empty"
+        class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-muted-foreground"
+      >
+        {{ props.placeholder }}
+      </span>
+    </div>
+
+    <div
+      v-if="props.controls !== 'none'"
+      :class="cn(
+        'flex justify-between gap-2',
+        controlsAreVertical ? 'flex-col' : 'flex-row',
+        controlsComeFirst && 'order-1',
+      )"
+    >
+      <Button type="button" variant="ghost" :disabled="empty" @click="clear">
+        Clear
+      </Button>
+      <Button type="button" :disabled="empty" @click="save">
+        Save
+      </Button>
+    </div>
   </div>
 </template>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { TabsTrigger as RadixTabsTrigger } from 'radix-vue'
+import { computed, inject } from 'vue'
 import { cn } from '@/lib/utils'
+import { tabsListContextKey, tabsTriggerVariants } from '.'
 
 defineOptions({
   inheritAttrs: false,
@@ -12,6 +14,11 @@ const props = defineProps<{
   disabled?: boolean
   class?: HTMLAttributes['class']
 }>()
+
+const listContext = inject(tabsListContextKey, computed(() => ({
+  variant: 'default' as const,
+  square: false,
+})))
 </script>
 
 <template>
@@ -19,7 +26,13 @@ const props = defineProps<{
     :value="props.value"
     :disabled="props.disabled"
     v-bind="$attrs"
-    :class="cn('relative z-10 inline-flex cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full px-4 py-1 text-sm font-medium outline-none transition-colors duration-200 focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-primary-foreground data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground', props.class)"
+    :class="cn(
+      tabsTriggerVariants({
+        square: listContext.square,
+        variant: listContext.variant,
+      }),
+      props.class,
+    )"
   >
     <slot />
   </RadixTabsTrigger>

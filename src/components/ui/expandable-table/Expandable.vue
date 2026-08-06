@@ -73,7 +73,7 @@ const pinned = computed<PinnedColumns>({
 
 if (import.meta.env.DEV && props.rowKey == null) {
   console.warn(
-    '[yf/ui] Expandable: no `row-key` provided, so the array index is used '
+    '[manfad/ui] Expandable: no `row-key` provided, so the array index is used '
     + 'as the row key. Expanded state will attach to the wrong rows when the '
     + 'list reorders — provide `row-key`.',
   )

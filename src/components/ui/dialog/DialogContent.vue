@@ -19,6 +19,7 @@ type DialogSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl'
 
 interface Props extends DialogContentProps {
   class?: HTMLAttributes['class']
+  overlayClass?: HTMLAttributes['class']
   size?: DialogSize
 }
 
@@ -38,7 +39,7 @@ const dialogSizeClasses: Record<DialogSize, string> = {
 }
 
 const delegatedProps = computed(() => {
-  const { class: _, size: __, ...delegated } = props
+  const { class: _, overlayClass: __, size: ___, ...delegated } = props
   return delegated
 })
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
@@ -47,7 +48,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 <template>
   <DialogPortal>
     <DialogOverlay
-      class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+      :class="cn('fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0', props.overlayClass)"
     />
     <DialogContent
       v-bind="{ ...forwarded, ...$attrs }"

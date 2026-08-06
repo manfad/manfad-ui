@@ -2,28 +2,28 @@ import type { Preset } from 'unocss'
 import { presetIcons } from 'unocss'
 import presetAnimations from 'unocss-preset-animations'
 import { presetShadcnV3 } from 'unocss-preset-shadcn/v3'
-import { createYfUiPaletteCss } from './theme/palettes'
+import { createManfadUiPaletteCss } from './theme/palettes'
 
-export interface YfUiPresetOptions {
+export interface ManfadUiPresetOptions {
   color?: string
   radius?: number
   darkSelector?: string
 }
 
 /**
- * Presets required by @yf/ui.
+ * Presets required by @manfad/ui.
  *
  * Consumer applications must add `presetWind3()` separately:
  *
  * ```ts
- * presets: [presetWind3(), ...presetYfUi()]
+ * presets: [presetWind3(), ...presetManfadUi()]
  * ```
  *
  * Icon collections resolve from `@iconify-json/*` packages installed in the
  * consumer dependency tree. Consumers must import the required Inter font CSS
  * themselves using side-effect imports.
  */
-export function presetYfUi(options: YfUiPresetOptions = {}): Preset[] {
+export function presetManfadUi(options: ManfadUiPresetOptions = {}): Preset[] {
   const {
     color = 'blue',
     radius = 0.5,
@@ -37,10 +37,10 @@ export function presetYfUi(options: YfUiPresetOptions = {}): Preset[] {
    * preset: --chart-1 through --chart-5 and --sidebar.
    */
   const fixupPreset: Preset = {
-    name: '@yf/ui-fixup',
+    name: '@manfad/ui-fixup',
     preflights: [
       {
-        getCSS: () => `${createYfUiPaletteCss(darkSelector)}
+        getCSS: () => `${createManfadUiPaletteCss(darkSelector)}
 :root {
   --success: 142 71% 35%;
   --success-foreground: 0 0% 98%;
@@ -134,4 +134,4 @@ body {
   ]
 }
 
-export const yfUiContent = ['node_modules/@yf/ui/dist/**/*.mjs']
+export const manfadUiContent = ['node_modules/@manfad/ui/dist/**/*.mjs']

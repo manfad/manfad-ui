@@ -12,14 +12,14 @@ const emit = defineEmits<{
 
 function yearClass(year: number) {
   return cn(
-    'h-9 w-full rounded-md text-sm font-normal hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+    'h-8 w-full rounded-md text-xs font-normal hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
     year === props.selected && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground',
   )
 }
 </script>
 
 <template>
-  <div class="grid grid-cols-3 gap-2">
+  <div class="grid grid-cols-3 gap-1.5">
     <button
       v-for="year in years"
       :key="year"

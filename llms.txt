@@ -1,0 +1,116 @@
+# @manfad/ui
+
+> A Vue 3 component library for admin products — accessible primitives, forms, tables, and optional chart/Excel/markdown DLCs — styled with UnoCSS for Chrome 109+ (HSL tokens, no oklch).
+
+Import core components from `@manfad/ui`. Heavy add-ons use subpath exports (`@manfad/ui/chart`, `/excel`, `/md-view`, `/time-badge`) with optional peer dependencies. Prefer Composition API + `<script setup lang="ts">`. Icons use UnoCSS Iconify classes such as `i-lucide-*`.
+
+## Getting Started
+
+- [README](https://raw.githubusercontent.com/manfad/manfad-ui/main/README.md): Install, UnoCSS preset, theming, DLC setup, and selected component examples.
+- [Installation & AI context](https://raw.githubusercontent.com/manfad/manfad-ui/main/docs/getting-started.md): Package exports, peer deps, and consumer setup checklist.
+- [Theming](https://raw.githubusercontent.com/manfad/manfad-ui/main/docs/theming.md): Palettes, CSS variables, ThemeSwitcher, and ThemePalette.
+- [Optional DLCs](https://raw.githubusercontent.com/manfad/manfad-ui/main/docs/dlc.md): Charts, TimeBadge, MdView, and Excel subpath exports.
+- [LLMs.txt guide](https://raw.githubusercontent.com/manfad/manfad-ui/main/docs/getting-started/ai/llms-txt.md): How to use these files with Cursor, Windsurf, ChatGPT, and Claude.
+- [Full LLM context](https://raw.githubusercontent.com/manfad/manfad-ui/main/llms-full.txt): Comprehensive documentation in one file for large-context tools.
+
+## Primitive
+
+- [Accordion](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/accordion): Collapsible panels for FAQs and grouped content.
+- [Badge](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/badge): Status and category labels with variants including tertiary and rival.
+- [Button](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/button): Actions with variants (default, secondary, tertiary, rival, danger, outline, ghost, link).
+- [Calendar](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/date-picker): Month grid used by date picking surfaces.
+- [Card](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/card): Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter.
+- [Checkbox](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/checkbox): Boolean checkbox control.
+- [Dialog](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/dialog): Modal dialog primitives.
+- [Dropdown](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/dropdown): Menu with trigger, content, items, labels, separators, shortcuts.
+- [Hover](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/hover): Hover card trigger and content.
+- [Image](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/image): Image with providers, object-fit, and loading states.
+- [Input](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/input): Text input field.
+- [List](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/list): List layout primitives.
+- [ModeToggle](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/mode-toggle): Button that cycles declarative `<Mode>` children; optional keyboard shortcut.
+- [Popover](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/popover): Popover overlay.
+- [Progress](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/progress): Progress bar (also exported as ProgressBar).
+- [RadioGroup](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/radio): Radio and RadioGroup.
+- [Row](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/row): Horizontal row layout helper.
+- [ScrollArea](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/scroll-area): Scrollable region.
+- [Select](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/select): Select, SelectTrigger, SelectContent, SelectItem, SelectValue.
+- [Skeleton](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/skeleton): Loading placeholder.
+- [Spinner](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/spinner): Loading spinner.
+- [Switch](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/switch): Toggle switch.
+- [Table](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/table): Low-level table primitives.
+- [Tabs](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/tabs): Tabs, TabsList, TabsTrigger, TabsContent with pill/underline variants.
+- [Textarea](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/textarea): Multi-line text input.
+- [Toast](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/toast): Toaster and toast helpers.
+- [Toggle](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/toggle): Pressable toggle (also ToggleButton).
+- [Wheel](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/wheel-picker): Wheel picker columns for compact selection.
+
+## Forms
+
+- [Autocomplete](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/autocomplete): Searchable suggestions input.
+- [CheckboxTree](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/checkbox-tree): Nested checkbox groups with select-all.
+- [Choice](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/choice): Option list (single/multi) with variants.
+- [ChoiceCard](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/choice): Card-styled choice options.
+- [DatePicker](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/date-picker): Calendar date / range picker.
+- [DateFilter](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/date-filter): Date/month filter control.
+- [FormField](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/form-field): Label, control, description, and error wiring.
+- [IconInput](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/icon-input): Input with start/end icons.
+- [InputClear](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/input-clear): Input with clear affordance.
+- [MonthPicker](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/month-picker): Month selection.
+- [NumberInput](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/number-input): Numeric stepper input.
+- [Stepper](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/stepper): Horizontal/vertical step progress (default, dots, counter).
+- [TimePicker](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/time-picker): Time selection with wheel columns.
+- [Timetable](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/timetable): Time-grid selection surface.
+
+## Layout
+
+- [AppShell](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/app-shell): App chrome with sidebar and header slots.
+- [PaneContainer](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/panes): Multi-pane layout with Pane children.
+- [Sidebar](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/sidebar): Sidebar, SidebarGroup, SidebarItem, SidebarSub, SidebarSubItem.
+- [SidebarSwitcher](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/sidebar): Compact identity + context select for sidebar headers.
+- [ThemePalette](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/theme-palette): Live token swatches from CSS variables.
+- [ThemeSwitcher](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/theme-switcher): Persist component/background palette choices on `documentElement`.
+
+## Feedback
+
+- [Confirmation](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/alert-dialog): Imperative confirm dialog via `confirm()` / `useConfirm()` (mount `<Confirmation />` once).
+- [Empty](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/empty): Empty state (also EmptyState).
+- [ErrorPage](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/result-page): Full-page error / result states.
+- [UnauthorizedPage](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/result-page): Unauthorized result page alias.
+- [NoPermissionPage](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/result-page): No-permission result page alias.
+- [LoadingDialog](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/loading-dialog): Blocking loading dialog.
+- [PageLoading](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/page-loading): Full-page loading state.
+
+## Content
+
+- [Attachment](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/attachment): File dropzone and attachment list.
+- [BigCalendar](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/big-calendar): Month/week calendar grid.
+- [CodeBlock](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/code-block): Source display with line numbers; mutes `//` comments.
+- [Filter](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/filter): Filter control for option sets.
+- [Gallery](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/gallery): Media gallery with lightbox preview.
+- [SelectionChips](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/selection-chips): Selected CheckboxTree leaves as expandable chip groups.
+- [SignaturePad](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/signature-pad): Canvas signature pad and SignatureDialog.
+- [Timeline](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/timeline): Vertical/horizontal timeline with TimelineItem states.
+
+## Tables
+
+- [CheckTable](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/check-table): Table with row selection checkboxes.
+- [CollapsibleTable](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/collapsible-table): Table sections that expand/collapse.
+- [DataTable](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/data-table): Columnar data table.
+- [EditableTable](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/grouped-table): Inline-editable grouped table patterns (see playground EditableTable).
+- [Expandable](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/expandable-table): Rows that expand to show detail.
+- [GroupedTable](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/grouped-table): Tables with banded column group headers.
+
+## Extra (DLC)
+
+- [AreaChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Area chart via `@manfad/ui/chart` (peer `@unovis/*`).
+- [BarChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Bar chart via `@manfad/ui/chart`.
+- [DonutChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Donut chart via `@manfad/ui/chart`.
+- [LineChart](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/chart): Line chart via `@manfad/ui/chart`.
+- [Excel](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/excel): Import/export shell via `@manfad/ui/excel` (peer `xlsx`).
+- [MdView](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/md-view): Markdown viewer via `@manfad/ui/md-view` (peer `markdown-it`).
+- [TimeBadge](https://github.com/manfad/manfad-ui/tree/main/src/components/ui/time-badge): Relative time badge via `@manfad/ui/time-badge` (peer `@vueuse/core`).
+
+## Optional
+
+- [Repository](https://github.com/manfad/manfad-ui): Source, issues, and releases.
+- [License](https://raw.githubusercontent.com/manfad/manfad-ui/main/LICENSE): MIT.

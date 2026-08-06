@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, presetWind3 } from 'unocss'
-import { presetYfUi } from '../src/preset'
+import { presetManfadUi } from '../src/preset'
 
 // Globs must be absolute: relative filesystem globs resolve against the
 // process cwd, so running `pnpm dev` from the repo root silently matched
@@ -9,7 +9,7 @@ const libSrc = fileURLToPath(new URL('../src', import.meta.url))
 const playgroundSrc = fileURLToPath(new URL('./src', import.meta.url))
 
 export default defineConfig({
-  presets: [presetWind3(), ...presetYfUi({ color: 'blue', radius: 0.5 })],
+  presets: [presetWind3(), ...presetManfadUi({ color: 'blue', radius: 0.5 })],
   content: {
     // The `include` here widens UnoCSS's default to plain .ts/.js so library
     // sources are scanned. That also drags in dependencies, and Unovis embeds

@@ -23,14 +23,19 @@ export default defineConfig({
       entry: {
         index: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
         preset: fileURLToPath(new URL('./src/preset.ts', import.meta.url)),
+        chart: fileURLToPath(new URL('./src/chart.ts', import.meta.url)),
+        'time-badge': fileURLToPath(new URL('./src/time-badge.ts', import.meta.url)),
+        'md-view': fileURLToPath(new URL('./src/md-view.ts', import.meta.url)),
+        excel: fileURLToPath(new URL('./src/excel.ts', import.meta.url)),
       },
       formats: ['es'],
       fileName: (_format, entryName) => `${entryName}.mjs`,
     },
     rollupOptions: {
       // Everything stays external; consumers install these via this package's
-      // dependencies. Keeping class strings in readable ESM output also lets
-      // the consumer's UnoCSS extract utility classes from dist (see preset.ts).
+      // dependencies / optional peers. Keeping class strings in readable ESM
+      // output also lets the consumer's UnoCSS extract utility classes from
+      // dist (see preset.ts).
       external: [
         'vue',
         'radix-vue',
@@ -43,6 +48,9 @@ export default defineConfig({
         'clsx',
         'tailwind-merge',
         'class-variance-authority',
+        'markdown-it',
+        '@vueuse/core',
+        'xlsx',
         'unocss',
         'unocss-preset-animations',
         'unocss-preset-shadcn/v3',

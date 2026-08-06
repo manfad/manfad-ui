@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<{
@@ -15,9 +16,15 @@ const props = defineProps<{
     >
       <slot name="header" />
     </div>
-    <div class="min-h-0 flex-1 overflow-y-auto overscroll-none py-2">
-      <slot />
+    <div
+      v-if="$slots.toolbar"
+      class="shrink-0 border-b border-sidebar-border px-3 py-2"
+    >
+      <slot name="toolbar" />
     </div>
+    <ScrollArea class="min-h-0 flex-1 overscroll-none py-2">
+      <slot />
+    </ScrollArea>
     <div
       v-if="$slots.footer"
       class="border-t border-sidebar-border p-4"

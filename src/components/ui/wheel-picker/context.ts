@@ -8,7 +8,7 @@ export interface WheelPickerContext {
 }
 
 export const WHEEL_PICKER_INJECTION_KEY: InjectionKey<WheelPickerContext>
-  = Symbol('yf-wheel-picker')
+  = Symbol('manfad-wheel-picker')
 
 export const WHEEL_PICKER_ITEM_HEIGHT = 32
 export const WHEEL_PICKER_VISIBLE_COUNT = 5

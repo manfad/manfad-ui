@@ -7,4 +7,4 @@ export interface RowContext {
   registerMain: (el: HTMLElement, register: boolean) => void
 }
 
-export const ROW_INJECTION_KEY: InjectionKey<RowContext> = Symbol('yf-row')
+export const ROW_INJECTION_KEY: InjectionKey<RowContext> = Symbol('manfad-row')
